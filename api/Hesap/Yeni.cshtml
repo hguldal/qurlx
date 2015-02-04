@@ -1,13 +1,13 @@
 ﻿@{
         var ad="";
         var soyad="";
-        var email="";     
+        var ePosta="";     
         var parola="";   
-        var grupURL="";
+        
         var db=Database.Open("u2p");
         ad=Request.Form["txtAd"];
         soyad=Request.Form["txtSoyad"];
-        email=Request.Form["txtEmail"];
+        ePosta=Request.Form["txtEmail"];
         parola=Request.Form["txtParola"];
         grupURL=Request.Form["txtGrupURL"];
 
@@ -19,12 +19,6 @@
            Response.End();
         }
 
-        // kullanıcı adı daha önce kullanılmış mı?
-        if (db.QueryValue("SELECT COUNT(*) FROM Grup WHERE GrupURL=@0",grupURL)!=0)
-        {
-           Response.Write("grupurlkayitli");
-           Response.End();
-        }
 
         //Profile ekle
 
