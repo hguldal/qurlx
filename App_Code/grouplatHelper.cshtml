@@ -1,6 +1,6 @@
 ﻿@helper KisiKunye(int UserID,int Stil=1 /*1 Büyük , 2 Küçük 3 Sadece isim */,bool fotoGoster=true) {
     
-    var db = Database.Open("veritabani");
+    var db = Database.Open("u2p");
     var query = db.QuerySingle("SELECT * FROM Profiles WHERE UserID=@0", UserID);
     var queryGrup=db.QuerySingle("SELECT * FROM Grup WHERE OlusturanKisi=@0 AND KisiselGrup=1",UserID);
     var ad = query.Ad;
@@ -60,7 +60,7 @@
 {
    
   
-    var db=Database.Open("veritabani"); 
+    var db=Database.Open("u2p"); 
    
     var uyeErisim=false;
     var yoneticiErisim=false;

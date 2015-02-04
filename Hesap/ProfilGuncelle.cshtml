@@ -4,7 +4,7 @@
     {
         Response.Redirect("~/Hesap/Giris");
     }
-    var db=Database.Open("veritabani");
+    var db=Database.Open("u2p");
     var queryUser=db.QuerySingle("select * from Profiles WHERE UserID=@0",WebSecurity.CurrentUserId);
    
 }

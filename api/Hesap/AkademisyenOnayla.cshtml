@@ -17,7 +17,7 @@
 
     var UserID=0;
     UserID=Convert.ToInt32(Request.Form["UserID"]);
-    var db=Database.Open("veritabani");
+    var db=Database.Open("u2p");
     db.Execute("UPDATE Profiles SET Onayli=1 WHERE UserID=@0",UserID);
     Response.Write("OK");
     Response.End();

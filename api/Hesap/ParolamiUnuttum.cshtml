@@ -1,7 +1,7 @@
 ﻿@{
     
 var email="";
-var db=Database.Open("veritabani");
+var db=Database.Open("u2p");
 email=Request.Form["txtEmail"];
 if (db.QueryValue("SELECT COUNT(*) FROM Profiles WHERE Email=@0",email)==0)
 {
