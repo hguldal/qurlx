@@ -45,7 +45,7 @@
             @if (WebSecurity.IsAuthenticated)
             {
           <ul class="nav navbar-nav">
-               <li><a href="@Href("~/")/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+               <li><a href="@Href("~/")/"><span class="glyphicon glyphicon-home"></span> Anasayfa</a></li>
                  
             
             <li>
@@ -70,9 +70,9 @@
               </a>
 
               <ul class="dropdown-menu">
-                <li><a href="@Href("~/Hesap/ProfilGuncelle")">Update Profile</a></li>
-                <li><a href="@Href("~/Hesap/ParolaDegistir")">Change Password</a></li>
-                <li><a href="@Href("~/Hesap/Cikis")">Logout</a></li>
+                <li><a href="@Href("~/Hesap/ProfilGuncelle")">Profil Güncelle</a></li>
+                <li><a href="@Href("~/Hesap/ParolaDegistir")">Parolayı Değiştir</a></li>
+                <li><a href="@Href("~/Hesap/Cikis")">Çıkış</a></li>
                
               </ul>
             </li>
@@ -94,10 +94,10 @@
       
       
   <hr>
-      <small>u2P @DateTime.Now.Year</small><small class="pull-right"> <a href="@Href("~/gizlilikpolitikasi")"> Privacy Policy</a> <a href="@Href("~/Kurallar")"> Terms of Use</a>  </small>
+      <small>u2P @DateTime.Now.Year</small><small class="pull-right"></small>
 
        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
-       <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+       <script src="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/darkly/bootstrap.min.css"></script>
        <script src="@Href("~/scripts/jquery.blockUI.js")"></script>
        <script src="@Href("~/scripts/jquery.growl/jquery.growl.js")"></script>
        <script src="@Href("~/scripts/selectize/dist/js/standalone/selectize.js")"></script>

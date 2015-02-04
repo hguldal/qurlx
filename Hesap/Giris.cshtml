@@ -37,32 +37,32 @@
 
 
 <div>
-     <h3>Login</h3>
+     <h3>Giriş</h3>
    
    @if (!string.IsNullOrEmpty(hataMesaji))
    {
         <div class="alert alert-danger">
 				
-				 <strong>Error ! </strong>@hataMesaji 
+				 <strong>Hata ! </strong>@hataMesaji 
 			</div>
    }
     <form class="form center-form" role="form" method="post" action="#">
 				<div class="form-group">
-					 <label for="txtEmail">E-mail</label><input class="form-control" placeholder="Enter your e-mail here..." value="@email" id="txtEmail" name="txtEmail" type="email" required />
+					 <label for="txtEmail">E-Posta</label><input class="form-control" placeholder="Enter your e-mail here..." value="@email" id="txtEmail" name="txtEmail" type="email" required />
 				</div>
 				<div class="form-group">
-					 <label for="txtParola">Password</label><input class="form-control" placeholder="Enter your password here..." id="txtParola" name="txtParola" type="password" required />
+					 <label for="txtParola">Parola</label><input class="form-control" placeholder="Enter your password here..." id="txtParola" name="txtParola" type="password" required />
 				</div>
 				
-				<button type="submit" class="btn btn-primary">Login</button> 
+				<button type="submit" class="btn btn-primary">Giriş</button> 
                   
 			</form>
     <br>
     
 
     <br>
-    <h3>Have a Account ?</h3>
+    <hr>
   
-    <a class="btn btn-success" href="@Href("~/Hesap/Yeni")">Create Account</a> <a class="btn btn-primary" href="@Href("~/Hesap/ParolamiUnuttum")">Forgot Password ?</a>
+    <a class="btn btn-success" href="@Href("~/Hesap/Yeni")"> Yeni Hesap Oluştur</a> <a class="btn btn-primary" href="@Href("~/Hesap/ParolamiUnuttum")">Parolamı Unuttum ?</a>
 </div>
 
