@@ -1,7 +1,6 @@
 ﻿@{
     var db=Database.Open("u2p");
-    var queryGruplarim=db.Query("SELECT * FROM Grup WHERE GrupID IN (SELECT GrupID FROM Grup_Uye WHERE UserID=@0) AND GrupID NOT IN (SELECT GrupID FROM Grup_YasakliGrup) AND KisiselGrup=0",WebSecurity.CurrentUserId);
-  
+   
   
 }
 <!DOCTYPE html>
@@ -9,7 +8,7 @@
 <html>
   <head>
   
-    <title>grouplat</title>
+    <title>u2P</title>
 
 
            <link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
@@ -39,7 +38,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="@Href("~/")"><strong>grouplat</strong> [Beta]</a>
+          <a class="navbar-brand" href="@Href("~/")"><strong>u2P</strong> [Beta]</a>
             
         </div>
         <div class="navbar-collapse collapse">
@@ -47,28 +46,7 @@
             {
           <ul class="nav navbar-nav">
                <li><a href="@Href("~/")/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                 <li class="dropdown">
-
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="glyphicon glyphicon-list-alt"></span>
-                   Groups
-
-               <b class="caret"></b>
-              
-              </a>
-
-              <ul class="dropdown-menu">
-
-                  @foreach (var grup in queryGruplarim)
-                  {
-                    <li><a href="@Href("~/")@grup.GrupURL">@grup.GrupAdi @if (grup.OlusturanKisi==WebSecurity.CurrentUserId) {<text> (Founder)</text>}</a> </li>
-                   }
-                  <li class="divider"></li>
-                <li><a href="@Href("~/Grup/GrubaKatil")">Discover Groups</a></li>
-                <li><a href="@Href("~/Grup/GrupKur")">Create a Group</a></li>               
-               
-              </ul>
-            </li>
+                 
             
             <li>
                 <div class="navbar-form" style="width: 420px;">
@@ -116,7 +94,7 @@
       
       
   <hr>
-      <small>Grouplat @DateTime.Now.Year</small><small class="pull-right"> <a href="@Href("~/gizlilikpolitikasi")"> Privacy Policy</a> <a href="@Href("~/Kurallar")"> Terms of Use</a>  </small>
+      <small>u2P @DateTime.Now.Year</small><small class="pull-right"> <a href="@Href("~/gizlilikpolitikasi")"> Privacy Policy</a> <a href="@Href("~/Kurallar")"> Terms of Use</a>  </small>
 
        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
