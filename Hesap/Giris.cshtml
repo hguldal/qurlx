@@ -1,0 +1,68 @@
+﻿@{
+    Page.Title = "Giriş";
+    Layout = Href("~/Paylasilan/_LayoutMisafir.cshtml"); 
+    var email="";
+    var parola="";
+    var hataMesaji="";
+    
+    //sayfa post edildiğinde...
+    if (IsPost)
+    {
+        //Gelen Formdan email ve parola bilgilerini al.
+        email=Request.Form["txtEmail"];
+        parola=Request.Form["txtParola"];
+
+        //Email adresi veya parola girildi mi ?
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(parola))
+        {
+            hataMesaji="Enter e-mail or password";
+           
+        }
+
+       if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(parola))
+       {
+           //Oturum açmayı dene eğer başarılıysa(Login() true döndürür) anasayfaya git aksi halde hata mesajı
+            if (WebSecurity.Login(email,parola))
+            {
+                Response.Redirect("~/"); //Giriş Başarılı Anasayfaya git...
+            }
+            else
+            {
+                hataMesaji="Login failed";
+            }
+        }
+    }
+}
+
+
+
+<div>
+     <h3>Login</h3>
+   
+   @if (!string.IsNullOrEmpty(hataMesaji))
+   {
+        <div class="alert alert-danger">
+				
+				 <strong>Error ! </strong>@hataMesaji 
+			</div>
+   }
+    <form class="form center-form" role="form" method="post" action="#">
+				<div class="form-group">
+					 <label for="txtEmail">E-mail</label><input class="form-control" placeholder="Enter your e-mail here..." value="@email" id="txtEmail" name="txtEmail" type="email" required />
+				</div>
+				<div class="form-group">
+					 <label for="txtParola">Password</label><input class="form-control" placeholder="Enter your password here..." id="txtParola" name="txtParola" type="password" required />
+				</div>
+				
+				<button type="submit" class="btn btn-primary">Login</button> 
+                  
+			</form>
+    <br>
+    
+
+    <br>
+    <h3>Have a Account ?</h3>
+  
+    <a class="btn btn-success" href="@Href("~/Hesap/Yeni")">Create Account</a> <a class="btn btn-primary" href="@Href("~/Hesap/ParolamiUnuttum")">Forgot Password ?</a>
+</div>
+

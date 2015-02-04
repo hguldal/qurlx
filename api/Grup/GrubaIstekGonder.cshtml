@@ -1,0 +1,26 @@
+﻿@{
+    
+if (!WebSecurity.IsAuthenticated)
+   
+    {
+        Response.StatusCode = 401;
+        Response.End();
+                   
+    }  
+
+var GrupID=Request["GrupID"];
+
+var db=Database.Open("veritabani");
+
+    if (db.QueryValue("SELECT COUNT(*) FROM Grup_UyeIstek WHERE GrupID=@0 AND UserID=@1",GrupID,WebSecurity.CurrentUserId)>0)
+    {
+        Response.Write("zatenistekgonderilmis");
+        Response.End();
+    }
+
+    db.Execute("INSERT INTO Grup_UyeIstek(GrupID,UserID,IstekTarihi) VALUES (@0,@1,@2)",GrupID,WebSecurity.CurrentUserId,DateTime.Now);
+    db.Close();
+    Response.StatusCode = 200;
+    Response.End();         
+}
+

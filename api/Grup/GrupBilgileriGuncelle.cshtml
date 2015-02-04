@@ -1,0 +1,37 @@
+﻿@{
+
+if (!WebSecurity.IsAuthenticated)
+   
+    {
+        Response.StatusCode = 401;
+        Response.End();
+                   
+    }  
+ var db=Database.Open("veritabani");
+ var alan=Request["name"];
+ 
+ //bu işlemi gerçekleştiren kullanıcı grubunu yöneticisi mi ?
+ if (db.QueryValue("SELECT COUNT(*) FROM Grup_Yonetici WHERE GrupID=@0 AND UserID=@1 ",Request["pk"],WebSecurity.CurrentUserId)<1)
+    {
+        db.Close();
+        Response.StatusCode = 401;
+        Response.End();
+    }
+
+//hangi alan güncelleştiriliyor
+ if (alan=="GrupURL")
+ {
+     if (db.QueryValue("SELECT COUNT(*) FROM Grup WHERE GrupURL=@0 AND GrupID<>@1",Request["value"],Request["pk"])>0)
+     {
+         db.Close();
+         Response.Write("grupadialinmis");
+         Response.End();
+     }
+ }
+
+     db.Execute("UPDATE Grup SET " +  alan + "=@0 WHERE GrupID=@1",Request["value"],Request["pk"]);
+     db.Close();
+     Response.Write("OK");
+     Response.End();         
+}
+

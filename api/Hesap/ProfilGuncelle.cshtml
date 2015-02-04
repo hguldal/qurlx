@@ -1,0 +1,54 @@
+﻿@{
+    
+   if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+     var db=Database.Open("veritabani");
+     var ad=Request["txtAd"];
+     var soyad=Request["txtSoyad"];
+
+         if (Request.Files.Count>0)
+            {              
+               var Dosya = Request.Files[0]; 
+                WebImage imageDosya=null;
+                imageDosya=WebImage.GetImageFromRequest();
+                var KayitAdi=Guid.NewGuid().ToString();     
+                var dosyaUzantisi = Dosya.FileName.Substring(Dosya.FileName.LastIndexOf('.')+1); 
+                if (imageDosya.Width>128)
+                {
+                    imageDosya.Resize(128,128,false);
+                }
+                imageDosya.Save(Server.MapPath("~/images/profilresimleri/" + KayitAdi + "." + dosyaUzantisi));
+                
+                db.Execute("UPDATE Profiles SET ad=@0,soyad=@1,FotoURL=@2 WHERE UserID=@3",ad,soyad,KayitAdi + "." + dosyaUzantisi,WebSecurity.CurrentUserId);
+
+            }
+            else
+            {
+                var fotoKaldir=Request["fotoKaldir"];
+              
+                if (fotoKaldir=="true")
+                {
+                     db.Execute("UPDATE Profiles SET ad=@0,soyad=@1,FotoURL=@3 WHERE UserID=@2",ad,soyad,WebSecurity.CurrentUserId,"noimage.jpg");
+                }
+                else
+                {
+                    db.Execute("UPDATE Profiles SET ad=@0,soyad=@1 WHERE UserID=@2",ad,soyad,WebSecurity.CurrentUserId);
+                }
+            }
+
+               db.Close();  
+               
+               
+              
+               Response.StatusCode=200;
+               Response.End();
+                
+           
+}
+

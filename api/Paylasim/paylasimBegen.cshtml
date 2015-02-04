@@ -1,0 +1,29 @@
+﻿@{
+   if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+ var PaylasimID=Request["PaylasimID"];
+ var UserID=WebSecurity.CurrentUserId;
+ 
+ var db=Database.Open("veritabani");
+
+ // Kişi paylaşımın yapıldığı gruba üye mi
+if (db.QueryValue("SELECT COUNT(*) FROM Grup_Paylasim WHERE PaylasimID=@0 AND GrupID IN (SELECT GrupID FROM Grup_Uye WHERE UserID=@1) ",PaylasimID,WebSecurity.CurrentUserId)<1)
+    {
+        db.Close();
+        Response.Write("yetkisizerisim");
+        Response.End();
+    }
+
+ if (db.QueryValue("SELECT COUNT(*) FROM Paylasim_Begeni WHERE PaylasimID=@0 AND UserID=@1",PaylasimID,UserID)<1)
+ {
+    db.Execute("INSERT INTO Paylasim_Begeni(PaylasimID,UserID) VALUES(@0,@1)",PaylasimID,UserID);
+ }
+ db.Close();
+Response.Write("OK");
+ Response.End();      
+}

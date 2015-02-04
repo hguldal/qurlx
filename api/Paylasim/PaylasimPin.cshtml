@@ -1,0 +1,29 @@
+﻿@{
+     if (!WebSecurity.IsAuthenticated)
+        {
+            Response.StatusCode = 401;
+            Response.End();
+                   
+        }
+    
+    var PaylasimID=Request["PaylasimID"];
+    var UserID=WebSecurity.CurrentUserId;
+    var GrupID=Request["GrupID"];
+    using (var db=Database.Open("veritabani"))
+    {
+
+        if (db.QueryValue("SELECT COUNT(*) FROM Grup_Pano WHERE PaylasimID=@0 AND GrupID=@1",PaylasimID,GrupID)>0)
+        {
+            Response.Write("zatenpinli");
+            db.Close();
+            Response.End();
+        }
+
+
+        db.Execute("INSERT INTO Grup_Pano(GrupID,UserID,PaylasimID) VALUES (@0,@1,@2)",GrupID, UserID,PaylasimID);
+         db.Close();
+   
+        Response.Write("OK");
+        Response.End();      
+    }  
+}

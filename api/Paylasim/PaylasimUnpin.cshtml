@@ -1,0 +1,21 @@
+﻿@{
+     if (!WebSecurity.IsAuthenticated)
+        {
+            Response.StatusCode = 401;
+            Response.End();
+                   
+        }
+    
+    var PaylasimID=Request["PaylasimID"];
+    var UserID=WebSecurity.CurrentUserId;
+    var GrupID=Request["GrupID"];
+    using (var db=Database.Open("veritabani"))
+    {
+
+        db.Execute("DELETE FROM Grup_Pano WHERE GrupID=@0 AND PaylasimID=@1",GrupID,PaylasimID);
+         db.Close();
+   
+        Response.Write("OK");
+        Response.End();      
+    }  
+}

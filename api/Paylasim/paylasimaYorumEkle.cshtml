@@ -1,0 +1,29 @@
+﻿@{
+    
+   if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+    var db=Database.Open("veritabani");
+
+    var PaylasimID=Request["PaylasimID"];
+    
+    var UserID=WebSecurity.CurrentUserId;
+
+    var Yorum=Request["Yorum"];
+    var Tarih=DateTime.Now;
+
+    db.Execute("INSERT INTO Paylasim_Yorum(PaylasimID,UserID,Tarih,Yorum) VALUES(@0,@1,@2,@3)",PaylasimID,UserID,Tarih,Yorum);
+    var eklenenYorumID=db.GetLastInsertId();
+    
+    Json.Write(db.QuerySingle("SELECT * FROM Paylasim_Yorum INNER JOIN Profiles ON Paylasim_Yorum.UserID=Profiles.UserID WHERE  Paylasim_Yorum.ID=@0",eklenenYorumID), Response.Output);
+    db.Close();   
+    Response.ContentType = "application/json";
+    Response.End();
+   
+
+}

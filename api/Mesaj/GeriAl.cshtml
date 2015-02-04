@@ -1,0 +1,28 @@
+﻿@{
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.StatusCode = 401;
+        Response.End();
+                   
+    }
+
+ var sorgu=Request["sorgu"];
+   
+    string[] geriAlinacakMesajlar = sorgu.Split(',');
+
+    using (var db=Database.Open("veritabani"))
+    {
+  
+        foreach (var item in geriAlinacakMesajlar)
+          {
+          
+            db.Execute("DELETE FROM Mesaj_Silinen WHERE UserID=@0 AND MesajID=@1",WebSecurity.CurrentUserId,item);
+         
+          }
+  
+        db.Close();    
+
+       Response.Write("OK");
+       Response.End();      
+     }
+}

@@ -1,0 +1,44 @@
+﻿@{
+    
+                if (!WebSecurity.IsAuthenticated)
+                {
+                    Response.StatusCode = 401;
+                    Response.End();
+                   
+                }
+   
+                var db=Database.Open("veritabani");
+                var GrupID=Request["GrupID"];
+
+                var Onayli=0;
+
+                var queryGrup=db.QuerySingle("SELECT * FROM Grup WHERE GrupID=@0",GrupID);
+                
+                var yoneticiMi=false;
+                
+                yoneticiMi=db.QueryValue("SELECT COUNT(*) FROM Grup_Yonetici WHERE GrupID=@0 AND UserID=@1",GrupID,WebSecurity.CurrentUserId)>0;
+                
+                if (yoneticiMi==false && queryGrup.PaylasimIzni==2)
+                {
+                
+                    db.Close();
+                    Response.StatusCode = 401;
+                    Response.End();
+                }
+
+                if (yoneticiMi || queryGrup.GonderiOnayi==2)
+                {
+                    Onayli=1;
+                }
+
+
+                db.Execute("INSERT INTO Paylasim(UserID,Tarih,Metin,Baslik,PaylasimTuru,PaylasimOnayi) VALUES (@0,@1,@2,@3,@4,@5)",WebSecurity.CurrentUserId,DateTime.Now,  Request["Metin"] ," Bir yazı paylaştı",1,Onayli);
+                var eklenenPaylasimID=db.GetLastInsertId();
+                db.Execute("INSERT INTO Grup_Paylasim(PaylasimID,GrupID) VALUES (@0,@1)",eklenenPaylasimID,GrupID);
+                Json.Write(db.QuerySingle("SELECT * FROM Paylasim INNER JOIN Profiles ON Paylasim.UserID=Profiles.UserID  WHERE Paylasim.PaylasimID=@0",eklenenPaylasimID), Response.Output);
+                db.Close();   
+                Response.ContentType = "application/json";
+                Response.End();
+          
+           
+}

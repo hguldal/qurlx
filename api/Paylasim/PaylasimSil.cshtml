@@ -1,0 +1,46 @@
+﻿@{
+                
+        if (!WebSecurity.IsAuthenticated)
+   
+                {
+                    Response.StatusCode=401;
+                    Response.End();
+                   
+                }  
+                var db=Database.Open("veritabani");
+                var PaylasimID=Request["PaylasimID"];
+                
+                var UserID=WebSecurity.CurrentUserId;
+                
+                var silebilir=false;
+               
+                
+                var queryPaylasim=db.QuerySingle("SELECT * FROM Paylasim INNER JOIN Grup_Paylasim ON Paylasim.PaylasimID=Grup_Paylasim.PaylasimID WHERE Paylasim.PaylasimID=@0",PaylasimID);
+                
+                if (queryPaylasim.UserID==UserID)
+                {
+                    silebilir=true;
+                }
+
+                var queryGrup=db.QuerySingle("SELECT * FROM Grup WHERE GrupID=@0",queryPaylasim.GrupID);
+                if (db.QueryValue("SELECT COUNT(*) FROM Grup_Yonetici WHERE GrupID=@0 AND UserID=@1",queryPaylasim.GrupID,WebSecurity.CurrentUserId)>0)
+                {
+                    silebilir=true;
+                }
+
+                if (silebilir)
+                {
+                    db.Execute("UPDATE Paylasim SET Silindi=1 WHERE PaylasimID=@0",PaylasimID);
+                    db.Close();
+                    Response.Write("OK");
+                    Response.End();
+                }
+                else
+                {
+                   Response.StatusCode=401;
+                    Response.End();
+                }
+
+                
+}
+

@@ -1,0 +1,27 @@
+﻿@{
+    if (!WebSecurity.IsAuthenticated)
+   
+    {
+        Response.StatusCode = 401;
+        Response.End();
+                   
+    }  
+    var GrupID=Request["GrupID"];
+ var KategoriID=Request["KategoriID"];
+ var db=Database.Open("veritabani");
+ 
+  //bu işlemi gerçekleştiren kullanıcı grubunu yöneticisi mi ?
+ if (db.QueryValue("SELECT COUNT(*) FROM Grup_Yonetici WHERE GrupID=@0 AND UserID=@1 ",GrupID,WebSecurity.CurrentUserId)<1)
+    {
+        db.Close();
+        Response.StatusCode = 401;
+        Response.End();
+    }
+
+    db.Execute("DELETE FROM Grup_HangiKategori WHERE GrupID=@0 AND KategoriID=@1",GrupID,KategoriID);
+ 
+ db.Close();
+Response.StatusCode = 200;
+ Response.End();        
+}
+

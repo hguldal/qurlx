@@ -1,0 +1,71 @@
+﻿@{
+   if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+    
+         if (Request.Files.Count>0)
+            {
+                var db=Database.Open("veritabani");
+                var GrupID=Request["GrupID"];
+                var Dosya = Request.Files[0]; 
+
+                WebImage imageDosya=null;
+                imageDosya=WebImage.GetImageFromRequest();
+
+                var KayitAdi=Guid.NewGuid().ToString();     
+                var dosyaUzantisi = Dosya.FileName.Substring(Dosya.FileName.LastIndexOf('.')+1); 
+
+                var Onayli=0;
+
+                var queryGrup=db.QuerySingle("SELECT * FROM Grup WHERE GrupID=@0",GrupID);
+                
+                 var yoneticiMi=false;
+                
+                yoneticiMi=db.QueryValue("SELECT COUNT(*) FROM Grup_Yonetici WHERE GrupID=@0 AND UserID=@1",GrupID,WebSecurity.CurrentUserId)>0;
+                
+                if (yoneticiMi==false && queryGrup.PaylasimIzni==2)
+                {
+                
+                    db.Close();
+                    Response.StatusCode = 401;
+                    Response.End();
+                }
+
+
+                if (yoneticiMi || queryGrup.GonderiOnayi==2)
+                {
+                    Onayli=1;
+                }
+
+                db.Execute("INSERT INTO Paylasim(UserID,Tarih,Metin,Baslik,PaylasimTuru,PaylasimOnayi) VALUES (@0,@1,@2,@3,@4,@5)",WebSecurity.CurrentUserId,DateTime.Now,  Request["Metin"] ," Bir fotoğraf paylaştı",2,Onayli);
+                var eklenenPaylasimID=db.GetLastInsertId();
+                db.Execute("INSERT INTO Grup_Paylasim(PaylasimID,GrupID) VALUES (@0,@1)",eklenenPaylasimID,GrupID);
+                if (imageDosya.Width>1024)
+                {
+                    imageDosya.Resize(1024,768,true);
+                }
+                imageDosya.Save(Server.MapPath("~/App_Data/Paylasim_DosyaEkleri/" + KayitAdi + "." + dosyaUzantisi));
+                 imageDosya.Resize(320,240,true);
+                 imageDosya.Save(Server.MapPath("~/App_Data/Paylasim_DosyaEkleri/" + "small" +  KayitAdi + "." + dosyaUzantisi));
+                db.Execute("INSERT INTO Paylasim_DosyaEki(PaylasimID,KayitAdi,DosyaAdi) VALUES (@0,@1,@2)",eklenenPaylasimID,KayitAdi + "." + dosyaUzantisi,Dosya.FileName);
+
+                Json.Write(db.QuerySingle("SELECT * FROM Paylasim INNER JOIN Profiles ON Paylasim.UserID=Profiles.UserID INNER JOIN Paylasim_DosyaEki ON Paylasim.PaylasimID=Paylasim_DosyaEki.PaylasimID WHERE Paylasim.PaylasimID=@0",eklenenPaylasimID), Response.Output);
+                db.Close();   
+                Response.ContentType = "application/json";
+                Response.End();
+                
+            }
+            else
+            {
+                Response.StatusCode=400;
+                Response.End();                   
+            }
+
+   
+        
+           
+}

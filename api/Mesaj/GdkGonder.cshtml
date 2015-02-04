@@ -1,0 +1,34 @@
+﻿@{
+
+
+ if (!WebSecurity.IsAuthenticated)
+   
+    {
+        Response.StatusCode = 401;
+        Response.End();
+                   
+    }   
+
+    var sorgu=Request["sorgu"];
+   
+    string[] silinecekMesajlar   = sorgu.Split(',');
+
+    using (var db=Database.Open("veritabani"))
+    {
+  
+        foreach (var item in silinecekMesajlar)
+          {
+        
+             if (db.QueryValue("SELECT COUNT(*) FROM Mesaj_Silinen WHERE MesajID=@0 AND UserID=@1",item,WebSecurity.CurrentUserId)<1)
+             {
+                db.Execute("INSERT INTO Mesaj_Silinen(UserID,MesajID) VALUES (@0,@1)",WebSecurity.CurrentUserId,item);
+             }
+
+          }
+  
+        db.Close();
+ 
+        Response.Write("OK");
+        Response.End();    
+    }
+}

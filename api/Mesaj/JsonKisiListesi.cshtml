@@ -1,0 +1,30 @@
+﻿@{
+if (!WebSecurity.IsAuthenticated)
+    {
+        Response.StatusCode = 401;
+        Response.End();
+        
+    }
+
+    var q=Request["sorgu"];
+    var db=Database.Open("veritabani");
+    var sorguIfadesi="";
+    using (db)
+    {
+     if (string.IsNullOrEmpty(q))
+     {
+         sorguIfadesi="SELECT UserID,(ad + ' ' + soyad) as adsoyad FROM Profiles";
+     }
+     else
+     {
+          sorguIfadesi="SELECT UserID,(ad + ' ' + soyad) as adsoyad FROM Profiles WHERE ad LIKE '%" + q + "%'  OR soyad LIKE '%" + q + "%'";
+     }
+
+    var sonuclar=db.Query(sorguIfadesi);
+    Json.Write(sonuclar, Response.Output);
+    db.Close();   
+    Response.ContentType = "application/json";
+    Response.End();
+    
+   }
+}

@@ -1,0 +1,134 @@
+﻿@{
+    var db=Database.Open("veritabani");
+    var queryGruplarim=db.Query("SELECT * FROM Grup WHERE GrupID IN (SELECT GrupID FROM Grup_Uye WHERE UserID=@0) AND GrupID NOT IN (SELECT GrupID FROM Grup_YasakliGrup) AND KisiselGrup=0",WebSecurity.CurrentUserId);
+  
+  
+}
+<!DOCTYPE html>
+
+<html>
+  <head>
+  
+    <title>grouplat</title>
+
+
+           <link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.2/yeti/bootstrap.min.css">
+        <link rel="stylesheet" href="@Href("~/scripts/jquery.growl/jquery.growl.css")">
+      <link rel="stylesheet" href="@Href("~/scripts/selectize/dist/css/selectize.bootstrap3.css")">
+      <style>
+          body {
+             min-height: 2000px;
+            padding-top: 70px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+      </style>
+      @RenderSection("styles", required: false)
+  </head>
+
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="@Href("~/")"><strong>grouplat</strong> [Beta]</a>
+            
+        </div>
+        <div class="navbar-collapse collapse">
+            @if (WebSecurity.IsAuthenticated)
+            {
+          <ul class="nav navbar-nav">
+               <li><a href="@Href("~/")/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                 <li class="dropdown">
+
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span class="glyphicon glyphicon-list-alt"></span>
+                   Groups
+
+               <b class="caret"></b>
+              
+              </a>
+
+              <ul class="dropdown-menu">
+
+                  @foreach (var grup in queryGruplarim)
+                  {
+                    <li><a href="@Href("~/")@grup.GrupURL">@grup.GrupAdi @if (grup.OlusturanKisi==WebSecurity.CurrentUserId) {<text> (Founder)</text>}</a> </li>
+                   }
+                  <li class="divider"></li>
+                <li><a href="@Href("~/Grup/GrubaKatil")">Discover Groups</a></li>
+                <li><a href="@Href("~/Grup/GrupKur")">Create a Group</a></li>               
+               
+              </ul>
+            </li>
+            
+            <li>
+                <div class="navbar-form" style="width: 420px;">
+                <select  class="form-control GrupAra" placeholder="Search Group or User...">
+                    <option></option>
+                    </select>
+                    </div>  
+            </li>
+          </ul>
+         
+          <ul class="nav navbar-nav navbar-right">
+            
+              <li class="dropdown">
+
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span class="glyphicon glyphicon-user"></span>
+                   @db.QueryValue("SELECT ad + ' ' + soyad FROM Profiles WHERE UserID=@0",WebSecurity.CurrentUserId)
+                   
+               <b class="caret"></b>
+              
+              </a>
+
+              <ul class="dropdown-menu">
+                <li><a href="@Href("~/Hesap/ProfilGuncelle")">Update Profile</a></li>
+                <li><a href="@Href("~/Hesap/ParolaDegistir")">Change Password</a></li>
+                <li><a href="@Href("~/Hesap/Cikis")">Logout</a></li>
+               
+              </ul>
+            </li>
+
+
+
+            
+          </ul>
+            }
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+        
+     @RenderBody()
+           
+    </div>
+      
+      
+  <hr>
+      <small>Grouplat @DateTime.Now.Year</small><small class="pull-right"> <a href="@Href("~/gizlilikpolitikasi")"> Privacy Policy</a> <a href="@Href("~/Kurallar")"> Terms of Use</a>  </small>
+
+       <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
+       <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+       <script src="@Href("~/scripts/jquery.blockUI.js")"></script>
+       <script src="@Href("~/scripts/jquery.growl/jquery.growl.js")"></script>
+       <script src="@Href("~/scripts/selectize/dist/js/standalone/selectize.js")"></script>
+      <script src="@Href("~/scripts/autolinker/Autolinker.js")"></script>
+       <script src="@Href("~/scripts/grouplatglobal.js")"></script>
+      
+    @RenderSection("scripts", required: false)
+  </body>
+</html>
+@{
+    db.Close();
+}

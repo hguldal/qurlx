@@ -1,0 +1,122 @@
+﻿@helper KisiKunye(int UserID,int Stil=1 /*1 Büyük , 2 Küçük 3 Sadece isim */,bool fotoGoster=true) {
+    
+    var db = Database.Open("veritabani");
+    var query = db.QuerySingle("SELECT * FROM Profiles WHERE UserID=@0", UserID);
+    var queryGrup=db.QuerySingle("SELECT * FROM Grup WHERE OlusturanKisi=@0 AND KisiselGrup=1",UserID);
+    var ad = query.Ad;
+    var soyad = query.Soyad;
+    var fotoUrl = query.FotoURL;
+    var Onayli=query.Onayli;
+    var kullaniciAdi=queryGrup.GrupURL;
+    if (string.IsNullOrEmpty(fotoUrl))
+    {
+        fotoUrl = Href("~/images/profilresimleri/noimage.jpg");
+    }
+    
+    
+    
+    if (Stil==1)
+    {
+        <div>
+    
+             <img src="@Href("~/images/profilresimleri")/@fotoUrl" class="img-thumbnail" /> <a href="#">@ad @soyad </a>@if (Onayli==1){<span class="glyphicon glyphicon-ok-sign" title="Verified Account"></span>}
+        </div>
+     }
+     
+     else if (Stil==2)
+     {
+          <div>
+    
+             <img src="@Href("~/images/profilresimleri")/@fotoUrl" width="48" height="48" class="img-thumbnail" /> <a href="#"> @ad @soyad </a>@if (Onayli==1){<span class="glyphicon glyphicon-ok-sign" title="Verified Account"></span>}
+        </div>
+     }
+     
+     else if (Stil==3)
+     {
+         <a href="#"> @ad @soyad @if (Onayli==1){ <span class="glyphicon glyphicon-ok-sign" title="Verified Account"></span>}</a>
+     }
+     else if(Stil==4)
+     {
+         if (fotoGoster)
+         {
+         <img src="@Href("~/images/profilresimleri")/@fotoUrl" width="32" height="32"/>
+         }
+         <a href="@Href("~/")@kullaniciAdi"><span> @ad @soyad </span></a> if (Onayli==1){ <span class="glyphicon glyphicon-ok-sign" title="Verified Account"></span>}
+     }
+     
+     else if(Stil==5)
+     {
+         
+         <span>@ad @soyad </span>
+     }
+     
+     
+    db.Close();
+}
+
+
+
+@helper GrupUstBilgi(int grupID)
+{
+   
+  
+    var db=Database.Open("veritabani"); 
+   
+    var uyeErisim=false;
+    var yoneticiErisim=false;
+
+    if (db.QueryValue("SELECT count(*) FROM Grup_Uye WHERE GrupID=@0 AND UserID=@1",grupID,WebSecurity.CurrentUserId)>0)
+    {
+        uyeErisim=true;
+    }
+
+    if (db.QueryValue("SELECT count(*) FROM Grup_Yonetici WHERE GrupID=@0 AND UserID=@1",grupID,WebSecurity.CurrentUserId)>0)
+    {
+        yoneticiErisim=true;
+    }
+
+
+    var queryGrup=db.QuerySingle("SELECT * FROM Grup WHERE GrupID=@0",grupID);
+
+
+
+  <div>
+      
+      <h4>@queryGrup.GrupAdi</h4>
+     
+       <div class="row clearfix">
+		
+		    <div class="col-md-4 column center">
+                <span><strong>Üye Sayısı</strong></span><p>12</p>
+                </div>
+             <div class="col-md-4 column">
+                 <span><strong>Üyelik Türü</strong></span><p>@if(queryGrup.UyeOnayTuru==1) {<text>Herkes Üye Olabilir</text>} else if (queryGrup.UyeOnayTuru==2) {<text>Yönetici Onayı Gerekli</text>}</p>
+                </div>
+
+          
+    </div>
+  <hr>
+   
+     <div class="row clearfix">
+		
+		    <div class="col-md-12 column">
+                
+                <div class="btn-toolbar" role="toolbar">
+                        <div class="btn-group">
+                          @if ((!(uyeErisim ||yoneticiErisim)) &&  (queryGrup.UyeOnayTuru==1)) {<button type="button" class="btn btn-default btnGrubaKatil" data-GrupID="@grupID" title="Gruba Katıl" ><span class="glyphicon glyphicon-log-in"></span> Gruba Katıl</button>}
+                           <button type="button" class="btn btn-default btnGrubuSikayetEt" title="Grubu Şikayet Et" data-GrupID="@grupID"><span class="glyphicon glyphicon-volume-off" ></span> Şikaye Et</button>
+                            @if ((!(uyeErisim ||yoneticiErisim)) &&  (queryGrup.UyeOnayTuru==2)) {<button type="button" class="btn btn-default btnGrubaIstekGonder" data-GrupID="@grupID" title="Gruba Katılmak için İstek Gönder"><span class="glyphicon glyphicon-send"> </span> İstek Gönder</button>}
+                            @if (uyeErisim || yoneticiErisim) {<button type="button" class="btn btn-default btnGruptanAyril" data-GrupID="@grupID" title="Grubtan Ayrıl"><span class="glyphicon glyphicon-log-out"></span> Ayrıl </button>}
+    
+                    </div>
+
+                  
+                </div>
+
+            </div>
+            
+    </div>
+  </div>
+ 
+
+}

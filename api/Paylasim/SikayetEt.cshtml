@@ -1,0 +1,37 @@
+﻿@{
+     if (!WebSecurity.IsAuthenticated)
+        {
+            Response.StatusCode = 401;
+            Response.End();
+                   
+        }
+    
+    var PaylasimID=Request["PaylasimID"];
+    var UserID=WebSecurity.CurrentUserId;
+    
+    using (var db=Database.Open("veritabani"))
+    {
+  
+        if (db.QueryValue("SELECT COUNT(*) FROM Paylasim_SikayetEdilenPaylasim WHERE PaylasimID=@0 AND UserID=@1",PaylasimID,UserID)>0)
+        {
+            Response.Write("zatensikayetedilmis");
+            db.Close();
+            Response.End();
+        }
+
+
+        db.Execute("INSERT INTO Paylasim_SikayetEdilenPaylasim(UserID,PaylasimID) VALUES (@0,@1)",UserID,PaylasimID);
+
+        // Paylaşımı 5 kişiden fazla kişi şikayet ettiyse yasakla
+        if (db.QueryValue("SELECT COUNT(*) FROM Paylasim_SikayetEdilenPaylasim WHERE PaylasimID=@0",PaylasimID)>5)
+        {
+            db.Execute("INSERT INTO Paylasim_YasakliPaylasim(PaylasimID) VALUES (@0)",PaylasimID);
+            db.Execute("DELETE FROM Paylasim_SikayetEdilenPaylasim WHERE PaylasimID=@0",PaylasimID);
+        }
+       
+        db.Close();
+   
+        Response.Write("OK");
+        Response.End();      
+    }  
+}

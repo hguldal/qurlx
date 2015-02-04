@@ -1,0 +1,19 @@
+﻿@{
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.StatusCode = 401;
+        Response.End();
+                   
+    }
+       
+    using (var db=Database.Open("veritabani"))
+    {
+        db.Execute("UPDATE Mesaj_Silinen SET Kalici=1 WHERE UserID=@0",WebSecurity.CurrentUserId);
+        db.Execute("DELETE FROM Mesaj_Gelen WHERE MesajID IN (SELECT MesajID FROM Mesaj_Silinen WHERE UserID=@0)",WebSecurity.CurrentUserId);
+        db.Execute("DELETE FROM Mesaj_Gonderilen WHERE MesajID IN (SELECT MesajID FROM Mesaj_Silinen WHERE UserID=@0)",WebSecurity.CurrentUserId);
+        db.Close();   
+        Response.Write("OK");
+        Response.End();      
+    }
+}
+

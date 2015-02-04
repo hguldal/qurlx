@@ -1,0 +1,15 @@
+﻿@{
+    var token=Request.Form["txtSifirlamaKodu"];
+    var parola=Request.Form["txtParola"];
+    
+    if (WebSecurity.ResetPassword(token,parola))
+    {   
+        Response.Write("OK");
+        Response.End();
+        }
+        else
+        {
+            Response.Write("hata");
+            Response.End();
+        }
+}

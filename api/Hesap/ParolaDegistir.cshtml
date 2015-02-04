@@ -1,0 +1,22 @@
+@{
+    if (!WebSecurity.IsAuthenticated)
+    {
+         Response.StatusCode=403;
+        Response.End();
+    }
+   var gecerliParola=Request.Form["txtParola"];
+    var yeniParola=Request.Form["txtYeniParola"];
+   
+   
+    if (WebSecurity.ChangePassword(WebSecurity.CurrentUserName,gecerliParola,yeniParola))
+    {   
+        Response.Write("OK");
+        Response.End();
+        }
+        else
+        {
+            Response.Write("hata");
+            Response.End();
+        }  
+
+}

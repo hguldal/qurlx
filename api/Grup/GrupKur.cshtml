@@ -1,0 +1,81 @@
+﻿@{
+
+if (!WebSecurity.IsAuthenticated)
+   
+    {
+        Response.StatusCode = 401;
+        Response.End();
+                   
+    }  
+        var kategoriler="";
+        var GrupAdi="";
+        var OlusturanKisi=WebSecurity.CurrentUserId;
+        var OlusturmaTarihi=DateTime.Now;
+        var Aciklama="";
+        var Gizlilik=0;
+        var UyeOnayTuru=0;
+
+
+        kategoriler=Request["cmbKategori"];
+        GrupAdi=Request["txtGrupAdi"];
+        Aciklama=Request["txtAciklama"];
+        Gizlilik=Request["cmbGizlilik"].AsInt();
+        UyeOnayTuru=Request["cmbUyeOnayTuru"].AsInt();
+
+        var db=Database.Open("veritabani");
+
+        var queryKullanici=db.QuerySingle("SELECT * FROM Profiles WHERE UserID=@0",WebSecurity.CurrentUserId);
+
+        if (queryKullanici.HesapTuru==1)
+        {
+            var uyeAdedi=db.QueryValue("SELECT COUNT(*) FROM Grup_Uye WHERE UserID=@0",WebSecurity.CurrentUserId);
+            if (uyeAdedi<4)
+            {
+                Response.Write("grupuyeligiyetersiz");
+                db.Close();
+                Response.End();
+            }
+
+            var grupAdedi=db.QueryValue("SELECT COUNT(*) FROM Grup WHERE OlusturanKisi=@0",WebSecurity.CurrentUserId);
+            if (grupAdedi>2)
+            {
+                Response.Write("grupkurmasiniriasilmis");
+                db.Close();
+                Response.End();
+            }
+
+        }
+        // Grup oluştur
+        db.Execute("INSERT INTO Grup(GrupAdi,OlusturanKisi,OlusturmaTarihi,Gizlilik,UyeOnayTuru,Aciklama) VALUES (@0,@1,@2,@3,@4,@5)",GrupAdi,OlusturanKisi,OlusturmaTarihi,Gizlilik,UyeOnayTuru,Aciklama);
+
+        //grubun ID sini al.
+        var KurulanGrupID=db.GetLastInsertId();
+
+        db.Execute("UPDATE Grup SET GrupURL=@0 WHERE GrupID=@1","grup" + KurulanGrupID.ToString(),KurulanGrupID);
+
+        //eğer girilmişse kategorilere ekle
+        if (!string.IsNullOrEmpty(kategoriler))
+        {
+            string[] kategoriListesi=kategoriler.Split(',');
+
+            foreach (var kategori in kategoriListesi)
+            {
+                db.Execute("INSERT INTO Grup_HangiKategori (KategoriID,GrupID) VALUES (@0,@1)",kategori,KurulanGrupID);
+
+            }
+
+        }
+
+        //gruba üye yap
+        db.Execute("INSERT INTO Grup_Uye (GrupID,UserID,UyelikTarihi) VALUES (@0,@1,@2)",KurulanGrupID,WebSecurity.CurrentUserId,DateTime.Now);
+        
+        
+        //gruba yönetici ata
+
+        db.Execute("INSERT INTO Grup_Yonetici (GrupID,UserID,YoneticiOlmaTarihi) VALUES (@0,@1,@2)",KurulanGrupID,WebSecurity.CurrentUserId,DateTime.Now);
+
+
+     Response.StatusCode = 200;
+     Response.End();          
+}
+

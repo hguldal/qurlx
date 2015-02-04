@@ -1,0 +1,60 @@
+﻿@{
+        var ad="";
+        var soyad="";
+        var email="";     
+        var parola="";   
+        var grupURL="";
+        var db=Database.Open("veritabani");
+        ad=Request.Form["txtAd"];
+        soyad=Request.Form["txtSoyad"];
+        email=Request.Form["txtEmail"];
+        parola=Request.Form["txtParola"];
+        grupURL=Request.Form["txtGrupURL"];
+
+      
+        // email adresi daha önce kullanılmış mı?
+        if (db.QueryValue("SELECT COUNT(*) FROM Profiles WHERE Email=@0",email)!=0)
+        {
+           Response.Write("epostakayitli");
+           Response.End();
+        }
+
+        // kullanıcı adı daha önce kullanılmış mı?
+        if (db.QueryValue("SELECT COUNT(*) FROM Grup WHERE GrupURL=@0",grupURL)!=0)
+        {
+           Response.Write("grupurlkayitli");
+           Response.End();
+        }
+
+        //Profile ekle
+
+        db.Execute("INSERT INTO Profiles (Email,Ad,Soyad,Onayli) VALUES (@0,@1,@2,@3)",email,ad,soyad,0);
+        //üyelik oluştur
+        var token= WebSecurity.CreateAccount(email,parola,false);
+      
+        Roles.AddUserToRole(email,"Standart");
+        
+         
+        //Grup oluştur
+        db.Execute("INSERT INTO Grup(GrupAdi,OlusturanKisi,OlusturmaTarihi,Gizlilik,UyeOnayTuru,Aciklama,KisiselGrup,GrupURL) VALUES (@0,@1,@2,@3,@4,@5,1,@6)",ad + " " + soyad + "'s Home Group ",WebSecurity.GetUserId(email),DateTime.Now,2,2,"",grupURL);
+
+        //grubun ID sini al.
+        var KurulanGrupID=db.GetLastInsertId();
+
+      
+        //gruba üye yap
+        db.Execute("INSERT INTO Grup_Uye (GrupID,UserID,UyelikTarihi) VALUES (@0,@1,@2)",KurulanGrupID,WebSecurity.GetUserId(email),DateTime.Now);
+        
+        
+        //gruba yönetici ata
+
+        db.Execute("INSERT INTO Grup_Yonetici (GrupID,UserID,YoneticiOlmaTarihi) VALUES (@0,@1,@2)",KurulanGrupID,WebSecurity.GetUserId(email),DateTime.Now);
+        db.Close();
+       WebSecurity.Login(email,parola);
+        
+        Response.Write("OK");
+                       
+        Response.End();
+
+}
+

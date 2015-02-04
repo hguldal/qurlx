@@ -1,0 +1,67 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+     <title>grouplat</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.2/yeti/bootstrap.min.css">
+
+ 
+      <style>
+          body {
+         min-height: 2000px;
+        padding-top: 70px;
+}
+      </style>
+        @RenderSection("styles", required: false)
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="@Href("~/")"><strong>grouplat</strong> [Beta]</a>
+        </div>
+       
+      </div>
+    </div>
+      
+    <div class="container-fluid">
+      
+        <div class="row-fluid clearfix">
+           
+		    <div class="col-md-12 column">
+                     @RenderBody()
+		    
+            </div>
+		      
+           
+	    </div>
+
+  <hr>
+        <small>Grouplat @DateTime.Now.Year </small><small class="pull-right"> <a href="@Href("~/gizlilikpolitikasi")"> Privacy Policy</a> <a href="@Href("~/Kurallar")"> Terms of Use</a>  </small>
+    </div>
+       <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
+       <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+  
+        @RenderSection("scripts", required: false)
+        
+     
+  </body>
+</html>
+

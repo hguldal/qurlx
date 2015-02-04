@@ -1,0 +1,12 @@
+﻿@using System.Web.Routing
+
+@{
+   WebSecurity.InitializeDatabaseConnection("veritabani", "Profiles", "UserID", "Email",true);
+   WebMail.SmtpServer="smtp.sendgrid.net";
+   WebMail.UserName="azure_cef5cef4c491dc0a424924ed6a831cd6@azure.com";
+   WebMail.Password="ak9cddsu";
+   
+    RouteTable.Routes.MapWebPageRoute("{*groupname}", "~/grup/default.cshtml");
+  
+}
+

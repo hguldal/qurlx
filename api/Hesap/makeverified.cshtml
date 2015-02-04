@@ -1,0 +1,20 @@
+﻿@{
+    
+   if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+     var db=Database.Open("veritabani");
+     var UserID=Request["UserID"];
+     db.Execute("UPDATE Profiles SET Onayli=1 WHERE UserID=@0",UserID);
+     db.Close();  
+     Response.StatusCode=200;
+     Response.End();
+                
+           
+}
+
