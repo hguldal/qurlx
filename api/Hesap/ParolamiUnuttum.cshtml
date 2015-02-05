@@ -1,19 +1,19 @@
 ﻿@{
     
-var email="";
+var ePosta="";
 var db=Database.Open("u2p");
-email=Request.Form["txtEmail"];
-if (db.QueryValue("SELECT COUNT(*) FROM Profiles WHERE Email=@0",email)==0)
+email=Request.Form["txtEposta"];
+if (db.QueryValue("SELECT COUNT(*) FROM Profiles WHERE ePosta=@0",ePosta)==0)
 {
     db.Close();
     Response.Write("epostakayitlidegil");
     Response.End();
 }
 
-var token=WebSecurity.GeneratePasswordResetToken(email);
+var token=WebSecurity.GeneratePasswordResetToken(ePosta);
 var adres = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
 var sifirlamaLinki = adres + VirtualPathUtility.ToAbsolute("~/Hesap/ParolaSifirla?sifirlamaKodu=" + HttpUtility.UrlEncode(token));
-WebMail.Send(email,"u2p Password Recovery","Wellcome to u2p Password Recovery <br><a href='" + sifirlamaLinki + "'>Click here to recover your u2p password</a>");
+WebMail.Send(ePosta,"u2p Parola Sıfırlama","Parolanı sıfırlamak için lütfen  <br><a href='" + sifirlamaLinki + "'> Buraya</a> tıkla");
 
 db.Close();
 Response.Write("OK");

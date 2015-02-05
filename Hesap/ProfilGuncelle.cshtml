@@ -5,38 +5,38 @@
         Response.Redirect("~/Hesap/Giris");
     }
     var db=Database.Open("u2p");
-    var queryUser=db.QuerySingle("select * from Profiles WHERE UserID=@0",WebSecurity.CurrentUserId);
+    var queryUser=db.QuerySingle("select * from Profiles WHERE userID=@0",WebSecurity.CurrentUserId);
    
 }
 
 
 <div>
-    <h2>Update Profile</h2>
+    <h2>Profili Güncelle</h2>
     <hr>
 <div class="form-horizontal" >
             <div class="form-group">
-               <label for="fileProfilFotografSec" class="col-sm-3 control-label">Profile Photo:</label>
+               <label for="fileProfilFotografSec" class="col-sm-3 control-label">Profil Fotoğrafı:</label>
               <div class="col-sm-3">
                    
                   <a href="#" id="lnkGrupFotografSec" >
-                  <img src="@Href("~/images/profilresimleri/")@queryUser.FotoURL" style="width: 64px;height: 64px;" id="imgProfilFoto"></img>
-                        <small> Change</small></a>  <button class="btn-link" id="btnProfilFotoKaldir"><small>Remove</small></button>
+                  <img src="@Href("~/images/profilresimleri/")@queryUser.fotoUrl" style="width: 64px;height: 64px;" id="imgProfilFoto"></img>
+                        <small> Değiştir</small></a>  <button class="btn-link" id="btnProfilFotoKaldir"><small>Kaldır</small></button>
                  
                         <input type="file" id="fileProfilFotografSec" class="hide"/>
                 </div>
                   </div>      
 
 				<div class="form-group">
-					 <label for="txtAd" class="col-sm-3 control-label">Name:</label><div class="col-sm-3"><input class="form-control" id="txtAd" name="txtAd" type="text" value="@queryUser.Ad" /></div>
+					 <label for="txtAd" class="col-sm-3 control-label">Ad:</label><div class="col-sm-3"><input class="form-control" id="txtAd" name="txtAd" type="text" value="@queryUser.ad" /></div>
 				</div>
                 
                 <div class="form-group">
-					 <label for="txtSoyad" class="col-sm-3 control-label">Surname:</label><div class="col-sm-3"><input class="form-control" id="txtSoyad" name="txtSoyad" type="text" value="@queryUser.Soyad" /></div>
+					 <label for="txtSoyad" class="col-sm-3 control-label">Soyad:</label><div class="col-sm-3"><input class="form-control" id="txtSoyad" name="txtSoyad" type="text" value="@queryUser.soyad" /></div>
 				</div>
 
                 <div class="form-group">
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-9"><button type="submit" class="btn btn-primary" id="buttonProfilGuncelle">Update Profile</button></div>
+                    <div class="col-sm-9"><button type="submit" class="btn btn-primary" id="buttonProfilGuncelle">Güncelle</button></div>
                     </div> 
 				</div>
 				
