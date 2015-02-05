@@ -1,17 +1,17 @@
 $('.btnUpgradeAccount').click(function () {
     var UserID = $(this).attr("data-UserID");
-    if (confirm('are you sure ?')) {
+    if (confirm('Emin misin ?')) {
         $.ajax({
             type: "POST",
             url: "/api/Hesap/UpgradeAccount.cshtml",
             data: "UserID=" + UserID,
 
             success: function (msg) {
-                MesajKutusu("OK", "User's account was upgraded to premium");
+                MesajKutusu("OK", "Hesabın premimum'a yükseltildi");
 
             },
             error: function (msg) {
-                HataMesaji("Unexpected error");
+                HataMesaji("Beklenmeyen bir hata meydana geldi");
             }
         });
     }

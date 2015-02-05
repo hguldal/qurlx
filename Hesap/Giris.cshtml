@@ -1,7 +1,7 @@
 ﻿@{
     Page.Title = "Giriş";
     Layout = Href("~/Paylasilan/_LayoutMisafir.cshtml"); 
-    var email="";
+    var ePosta="";
     var parola="";
     var hataMesaji="";
     
@@ -9,26 +9,26 @@
     if (IsPost)
     {
         //Gelen Formdan email ve parola bilgilerini al.
-        email=Request.Form["txtEmail"];
+        ePosta=Request.Form["txtEposta"];
         parola=Request.Form["txtParola"];
 
         //Email adresi veya parola girildi mi ?
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(parola))
+        if (string.IsNullOrEmpty(ePosta) || string.IsNullOrEmpty(parola))
         {
-            hataMesaji="Enter e-mail or password";
+            hataMesaji="Parolanı veya e-posta adresini girmedin";
            
         }
 
-       if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(parola))
+       if (!string.IsNullOrEmpty(ePosta) && !string.IsNullOrEmpty(parola))
        {
            //Oturum açmayı dene eğer başarılıysa(Login() true döndürür) anasayfaya git aksi halde hata mesajı
-            if (WebSecurity.Login(email,parola))
+            if (WebSecurity.Login(ePosta,parola))
             {
                 Response.Redirect("~/"); //Giriş Başarılı Anasayfaya git...
             }
             else
             {
-                hataMesaji="Login failed";
+                hataMesaji="Giriş Başarısız";
             }
         }
     }
@@ -48,10 +48,10 @@
    }
     <form class="form center-form" role="form" method="post" action="#">
 				<div class="form-group">
-					 <label for="txtEmail">E-Posta</label><input class="form-control" placeholder="Enter your e-mail here..." value="@email" id="txtEmail" name="txtEmail" type="email" required />
+					 <label for="txtEposta">E-Posta</label><input class="form-control" placeholder="E-Posta adresini buraya gir..." value="@ePosta" id="txtEposta" name="txtEposta" type="email" required />
 				</div>
 				<div class="form-group">
-					 <label for="txtParola">Parola</label><input class="form-control" placeholder="Enter your password here..." id="txtParola" name="txtParola" type="password" required />
+					 <label for="txtParola">Parola</label><input class="form-control" placeholder="Parolanı buraya gir..." id="txtParola" name="txtParola" type="password" required />
 				</div>
 				
 				<button type="submit" class="btn btn-primary">Giriş</button> 

@@ -24,18 +24,18 @@ $("#frmParolaDegistir").validate({
     messages: {
 
         txtParola: {
-            required: "<p class='text-danger'> Enter your password</p>",
-            minlength: "<p class='text-danger'> Password must be at least six characters</p>"
+            required: "<p class='text-danger'> Geçerli parolanı gir</p>",
+            minlength: "<p class='text-danger'> Parolan en az 6 karakterden oluşmalı</p>"
         },
 
         txtYeniParola: {
-            required: "<p class='text-danger'> Confirm password</p>",
-            minlength: "<p class='text-danger'> Password must be at least six characters</p>"
+            required: "<p class='text-danger'> Yeni parolanı tekrar gir</p>",
+            minlength: "<p class='text-danger'> Yeni parolan en az 6 karakterden oluşmalı</p>"
         },
         txtReYeniParola: {
-            required: "<p class='text-danger'> Confirm password</p>",
-            equalTo: "<p class='text-danger'> Passwords you have entered are mismatch</p>",
-            minlength: "<p class='text-danger'>Password must be at least six characters</p>"
+            required: "<p class='text-danger'> Yeni parolanı tekrar gir</p>",
+            equalTo: "<p class='text-danger'> Girdiğin parolalar birbiriyle uyuşmadı</p>",
+            minlength: "<p class='text-danger'>Parolan en az 6 karakterden oluşmalı</p>"
         }
 
 

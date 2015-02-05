@@ -13,7 +13,7 @@
 
      if (size > 3000000) {
          $("#fileProfilFotografSec").val('');
-         HataMesaji("Profile photo size too big.");
+         HataMesaji("Profil fotoğraf dosyası çok büyük");
      }
 
      else if (file.type != 'image/png' && file.type != 'image/jpg' && !file.type != 'image/gif' && file.type != 'image/jpeg') {
@@ -28,7 +28,7 @@
                  $('#imgProfilFoto').attr('src', e.target.result);
              }
              else {
-                 HataMesaji('Please select profile photo !');
+                 HataMesaji('Fotoğraf seç !');
              }
 
          }
@@ -59,7 +59,7 @@
      }
 
      if (ad == '' || soyad == '') {
-         HataMesaji("Please enter your name and surname");
+         HataMesaji("Adını veya soyadını girmedin");
      }
      else {
 
@@ -71,10 +71,10 @@
              processData: false,
              type: 'POST',
              success: function (data) {
-                 MesajKutusu('OK', 'Your profile was updated successfuly');
+                 MesajKutusu('OK', 'Profilin başarıyla güncellendi');
              },
              error: function (de) {
-                 HataMesaji("Unexpected Error !");
+                 HataMesaji("Beklenmeyen bir hata meydana geldi !");
 
              }
          });

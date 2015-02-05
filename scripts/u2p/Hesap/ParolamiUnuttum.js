@@ -9,7 +9,7 @@ $("#frmSifirlamaKoduGonder").validate({
 
     messages: {
 
-        txtEmail: "<p class='text-danger'> Enter your e-mail</p>"
+        txtEmail: "<p class='text-danger'> E-posta adresini gir</p>"
 
     },
 
@@ -18,17 +18,17 @@ $("#frmSifirlamaKoduGonder").validate({
 
         $(form).ajaxSubmit({
 
-            error: function (msg) { HataMesaji('Unexpected Error !'); },
+            error: function (msg) { HataMesaji('Beklenmeyen bir hata oluştu !'); },
 
             success: function (msg) {
                 $("#btnSifirlamaKoduGonder").attr("disabled", false);
                 if (msg == "OK") {
 
-                    MesajKutusu("OK !", "Password reset code was sent to your e-mail");
+                    MesajKutusu("OK !", "Parola sıfırlama kodu e-posta adresine gönderildi");
                 }
                 if (msg == "epostakayitlidegil") {
 
-                    HataMesaji("E-mail you have entered is not registered");
+                    HataMesaji("Girdiğin e-posta adresi sistemde kayıtlı değil");
                 }
             }
 
