@@ -6,37 +6,34 @@
 }
 
 <div>
-    <h2>Create Account</h2>
+    <h2>Yeni Hesap</h2>
     <hr>
 <form class="form-horizontal" id="frmYeniUye" action="@Href("~/api/Hesap/Yeni.cshtml")" method="post">
     
-                 <div class="form-group">
-					 <label for="txtGrupURL" class="col-sm-3 control-label">User Name:</label><div class="col-sm-9"><input class="form-control" id="txtGrupURL" name="txtGrupURL" type="text" /></div>
+    <div class="form-group">
+					 <label for="txtEposta" class="col-sm-3 control-label">E-Posta:</label><div class="col-sm-9"><input class="form-control"  id="txtEposta" name="txtEposta" type="email" /></div>
+				</div>
+
+                <div class="form-group">
+					 <label for="txtAd" class="col-sm-3 control-label">Ad:</label><div class="col-sm-9"><input class="form-control" id="txtAd" name="txtAd" type="text" /></div>
                     
 				</div>
 
                 <div class="form-group">
-					 <label for="txtAd" class="col-sm-3 control-label">Name:</label><div class="col-sm-9"><input class="form-control" id="txtAd" name="txtAd" type="text" /></div>
-                    
-				</div>
-
-                <div class="form-group">
-					 <label for="txtSoyad" class="col-sm-3 control-label">Surname:</label><div class="col-sm-9"><input class="form-control" id="txtSoyad" name="txtSoyad" type="text" /></div>
+					 <label for="txtSoyad" class="col-sm-3 control-label">Soyad:</label><div class="col-sm-9"><input class="form-control" id="txtSoyad" name="txtSoyad" type="text" /></div>
 				</div>
              
+				
 				<div class="form-group">
-					 <label for="txtEmail" class="col-sm-3 control-label">E-mail:</label><div class="col-sm-9"><input class="form-control"  id="txtEmail" name="txtEmail" type="email" /></div>
-				</div>
-				<div class="form-group">
-					 <label for="txtParola" class="col-sm-3 control-label">Password:</label><div class="col-sm-9"><input class="form-control" id="txtParola" name="txtParola" type="password" /></div>
+					 <label for="txtParola" class="col-sm-3 control-label">Parola:</label><div class="col-sm-9"><input class="form-control" id="txtParola" name="txtParola" type="password" /></div>
 				</div>
 
                 <div class="form-group">
-					 <label for="txtReParola" class="col-sm-3 control-label">Password:(Again)</label><div class="col-sm-9"><input class="form-control" id="txtReParola" name="txtReParola" type="password" /></div>
+					 <label for="txtReParola" class="col-sm-3 control-label">Parola:(Tekrar)</label><div class="col-sm-9"><input class="form-control" id="txtReParola" name="txtReParola" type="password" /></div>
 				</div>
                 <div class="form-group">
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-9"><button type="submit" class="btn btn-primary" id="buttonKayitOl" >Create</button> <a href="javascript: history.go(-1)" class="btn btn-primary"> Back</a></div>
+                    <div class="col-sm-9"><button type="submit" class="btn btn-primary" id="buttonKayitOl" >Olustur</button> <a href="javascript: history.go(-1)" class="btn btn-primary"> Geri</a></div>
                     </div> 
 				</form>
 				
@@ -50,5 +47,5 @@
 {
     <script src="@Href("~/scripts/jquery.form.js")"></script>
     <script src="@Href("~/scripts/jquery.validate.js")"></script>
-    <script src="@Href("~/scripts/grouplat/Hesap/Yeni.js")"></script>
+    <script src="@Href("~/scripts/u2p/Hesap/Yeni.js")"></script>
 }

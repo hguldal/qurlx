@@ -7,13 +7,13 @@
         var db=Database.Open("u2p");
         ad=Request.Form["txtAd"];
         soyad=Request.Form["txtSoyad"];
-        ePosta=Request.Form["txtEmail"];
+        ePosta=Request.Form["txtEposta"];
         parola=Request.Form["txtParola"];
-        grupURL=Request.Form["txtGrupURL"];
+        
 
       
         // email adresi daha önce kullanılmış mı?
-        if (db.QueryValue("SELECT COUNT(*) FROM Profiles WHERE Email=@0",email)!=0)
+        if (db.QueryValue("SELECT COUNT(*) FROM Profiles WHERE ePosta=@0",ePosta)!=0)
         {
            Response.Write("epostakayitli");
            Response.End();
@@ -22,29 +22,14 @@
 
         //Profile ekle
 
-        db.Execute("INSERT INTO Profiles (Email,Ad,Soyad,Onayli) VALUES (@0,@1,@2,@3)",email,ad,soyad,0);
+        db.Execute("INSERT INTO Profiles (ePosta,Ad,Soyad,Onayli) VALUES (@0,@1,@2,@3)",ePosta,ad,soyad,0);
         //üyelik oluştur
-        var token= WebSecurity.CreateAccount(email,parola,false);
+        var token= WebSecurity.CreateAccount(ePosta,parola,false);
       
-        Roles.AddUserToRole(email,"Standart");
-        
+        Roles.AddUserToRole(ePosta,"Standart");
          
-        //Grup oluştur
-        db.Execute("INSERT INTO Grup(GrupAdi,OlusturanKisi,OlusturmaTarihi,Gizlilik,UyeOnayTuru,Aciklama,KisiselGrup,GrupURL) VALUES (@0,@1,@2,@3,@4,@5,1,@6)",ad + " " + soyad + "'s Home Group ",WebSecurity.GetUserId(email),DateTime.Now,2,2,"",grupURL);
-
-        //grubun ID sini al.
-        var KurulanGrupID=db.GetLastInsertId();
-
-      
-        //gruba üye yap
-        db.Execute("INSERT INTO Grup_Uye (GrupID,UserID,UyelikTarihi) VALUES (@0,@1,@2)",KurulanGrupID,WebSecurity.GetUserId(email),DateTime.Now);
-        
-        
-        //gruba yönetici ata
-
-        db.Execute("INSERT INTO Grup_Yonetici (GrupID,UserID,YoneticiOlmaTarihi) VALUES (@0,@1,@2)",KurulanGrupID,WebSecurity.GetUserId(email),DateTime.Now);
         db.Close();
-       WebSecurity.Login(email,parola);
+        WebSecurity.Login(ePosta,parola);
         
         Response.Write("OK");
                        

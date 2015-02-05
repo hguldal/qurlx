@@ -13,7 +13,7 @@ if (db.QueryValue("SELECT COUNT(*) FROM Profiles WHERE Email=@0",email)==0)
 var token=WebSecurity.GeneratePasswordResetToken(email);
 var adres = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
 var sifirlamaLinki = adres + VirtualPathUtility.ToAbsolute("~/Hesap/ParolaSifirla?sifirlamaKodu=" + HttpUtility.UrlEncode(token));
-WebMail.Send(email,"Grouplat Password Recovery","Wellcome to Grouplat Password Recovery <br><a href='" + sifirlamaLinki + "'>Click here to recover your Grouplat password</a>");
+WebMail.Send(email,"u2p Password Recovery","Wellcome to u2p Password Recovery <br><a href='" + sifirlamaLinki + "'>Click here to recover your u2p password</a>");
 
 db.Close();
 Response.Write("OK");

@@ -31,7 +31,7 @@ public static class HTMLParser
     {
         string x = m.ToString();
         string username = x.Replace("@", "");
-        return x.Link("http://grouplat.com/" + username);
+        return x.Link("http://u2p.com/" + username);
     }
     private static string URL(Match m)
     {

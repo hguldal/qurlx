@@ -406,7 +406,7 @@
 				if( twitterMatch ) {
 					linkType = 'twitter';
 					prefixStr = twitterHandlePrefixWhitespaceChar;
-					anchorHref = 'http://grouplat.com/' + twitterHandle;
+					anchorHref = 'http://u2p.com/' + twitterHandle;
 					anchorText = '@' + twitterHandle;
 					
 				} else if( emailAddress ) {

@@ -15,7 +15,7 @@
                         color: '#fff' 
                         },
 
-                        message: '<p> Please Wait...</p>'
+                        message: '<p> Lütfen Biraz Bekle...</p>'
                         
                         }); 
 
@@ -36,7 +36,7 @@
 
           function HataMesaji(metin) {
              
-            $.growl.error({title:'Error !', message: metin });
+            $.growl.error({title:'Hata !', message: metin });
 
           }
          
