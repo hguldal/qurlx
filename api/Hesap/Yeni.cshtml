@@ -30,6 +30,8 @@
          
         db.Close();
         WebSecurity.Login(ePosta,parola);
+
+        db.Execute("INSERT INTO Klasor (userID,klasorAdi,ustKlasorID,olusturmaTarihi) VALUES (@0,@1,@2,@3,@4)",WebSecurity.CurrentUserId,"kok",-1,DateTime.Now);
         
         Response.Write("OK");
                        
