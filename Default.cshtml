@@ -8,9 +8,9 @@ Layout = "~/Paylasilan/_Layout.cshtml";
 
 var db=Database.Open("u2p");
 var queryKokKlasorID=db.QueryValue("SELECT klasorID FROM Klasor WHERE userID=@0 AND ustKlasorID=-1",WebSecurity.CurrentUserId);
-var queryKokKlasor=db.QuerySingle("SELECT * FROM Klasor WHERE userID=@0 AND ustKlasorID=@1",WebSecurity.CurrentUserId,queryKokKlasorID);
-//var queryKokDosyalar=db.Query("SELECT * FROM Dosya WHERE userID=@0",WebSecurity.CurrentUserId);
-var queryKokURL=db.Query("SELECT * FROM URL WHERE userID=@0",WebSecurity.CurrentUserId);
+var queryKlasorler=db.Query("SELECT * FROM Klasor WHERE userID=@0 AND ustKlasorID=@1",WebSecurity.CurrentUserId,queryKokKlasorID);
+//var queryDosyalar=db.Query("SELECT * FROM Dosya WHERE userID=@0",WebSecurity.CurrentUserId);
+var queryURLler=db.Query("SELECT * FROM URL WHERE userID=@0",WebSecurity.CurrentUserId);
 }
 
 <div>
@@ -64,12 +64,42 @@ var queryKokURL=db.Query("SELECT * FROM URL WHERE userID=@0",WebSecurity.Current
     <br><br>
 <table class="table table-hover">
     <tr>
-    <td>
-        <span class="glyphicon glyphicon-folder-close"></span><span> Klasör Adı</span>
-    </td>
-    
-    <td></td>
+        <td></td><td><strong>Öğe Adı</strong></td>
+        <td><strong>Oluşturma Tarihi</strong></td>
+        <td><strong>Kısa URL</strong></td>
     </tr>
+    @foreach (var klasor in queryKlasorler)
+    {
+        <tr><td style="width: 30px;"><input type="checkbox"></td>
+       
+        <td>
+            <span class="glyphicon glyphicon-folder-close"></span>
+            <span><a href="@Request.Url.AbsoluteUri@klasor.kisaKod"> @klasor.klasorAdi</a></span>
+        </td>
+             <td>@Tarih.TarihIslemleri_TarihGorunumu(klasor.olusturmaTarihi)</td>
+            <td>
+                <a href="@Request.Url.AbsoluteUri@klasor.kisaKod"> @Request.Url.AbsoluteUri@klasor.kisaKod</a>
+            </td>
+        
+        </tr>
+    }
+
+@foreach (var url in queryURLler)
+    {
+        <tr><td style="width: 30px;"><input type="checkbox"></td>
+       
+        <td>
+            <span class="glyphicon glyphicon-link"></span>
+            <span><a href="@Request.Url.AbsoluteUri@url.kisaKod"> @url.aciklama</a></span>
+        </td>
+             <td>@Tarih.TarihIslemleri_TarihGorunumu(url.olusturmaTarihi)</td>
+            <td>
+                <a href="@Request.Url.AbsoluteUri@url.kisaKod"> @Request.Url.AbsoluteUri@url.kisaKod</a>
+            </td>
+        
+        </tr>
+    }
+    
 </table>
     <br>
      <ol class="breadcrumb">
@@ -82,3 +112,5 @@ var queryKokURL=db.Query("SELECT * FROM URL WHERE userID=@0",WebSecurity.Current
 @{
     db.Close();
 }
+
+</div>

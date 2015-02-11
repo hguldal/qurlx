@@ -1,0 +1,34 @@
+﻿@{
+if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+    
+     var klasorID=Request["klasorID"];
+      
+    
+
+     var db=Database.Open("u2p");
+     IEnumerable<dynamic> querySonuc;
+     
+     if (string.IsNullOrEmpty(klasorID))
+     {
+         
+     }
+
+     using (db)
+     {
+        var sonuclar=db.Query(sorguIfadesi);
+        Json.Write(sonuclar, Response.Output);
+        db.Close();   
+        Response.ContentType = "application/json";
+        Response.End();
+    }
+
+     db.Close();    
+}
+

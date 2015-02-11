@@ -19,40 +19,40 @@ public static class Tarih
         }
         if (delta < 60)
         {
-            return ts.Seconds == 1 ? "1 Sec" : ts.Seconds + " Secs";
+            return ts.Seconds == 1 ? "Az Önce" : ts.Seconds + " Az Önce";
         }
 
         if (delta < 120)
         {
-            return "1 Min";
+            return "1 Dakika";
         }
         if (delta < 2700) // 45 * 60
         {
-            return ts.Minutes + " Mins";
+            return ts.Minutes + " Dakika Önce";
         }
         if (delta < 5400) // 90 * 60
         {
-            return "1 Hour";
+            return "1 Saat Önce";
         }
         if (delta < 86400) // 24 * 60 * 60
         {
-            return ts.Hours + " Hours";
+            return ts.Hours + " Saat Önce";
         }
         if (delta < 172800) // 48 * 60 * 60
         {
-            return "Yesterday";
+            return "Dün";
         }
         if (delta < 2592000) // 30 * 24 * 60 * 60
         {
-            return ts.Days + " Days";
+            return ts.Days + " Gün Önce";
         }
         if (delta < 31104000) // 12 * 30 * 24 * 60 * 60
         {
             int months = Convert.ToInt32(Math.Floor((double)ts.Days / 30));
-            return months <= 1 ? "1 Month" : months + " Months";
+            return months <= 1 ? "1 Ay Önce" : months + " Ay Önce";
         }
         int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
-        return years <= 1 ? "1 Year" : years + " Years";
+        return years <= 1 ? "1 Yıl Önce" : years + " Yıl Önce";
 
     }
 
