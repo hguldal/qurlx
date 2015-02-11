@@ -5,16 +5,80 @@ if (!WebSecurity.IsAuthenticated)
 Response.Redirect("~/Hesap/Giris");
 }
 Layout = "~/Paylasilan/_Layout.cshtml"; 
+
+var db=Database.Open("u2p");
+var queryKokKlasorID=db.QueryValue("SELECT klasorID FROM Klasor WHERE userID=@0 AND ustKlasorID=-1",WebSecurity.CurrentUserId);
+var queryKokKlasor=db.QuerySingle("SELECT * FROM Klasor WHERE userID=@0 AND ustKlasorID=@1",WebSecurity.CurrentUserId,queryKokKlasorID);
+//var queryKokDosyalar=db.Query("SELECT * FROM Dosya WHERE userID=@0",WebSecurity.CurrentUserId);
+var queryKokURL=db.Query("SELECT * FROM URL WHERE userID=@0",WebSecurity.CurrentUserId);
 }
 
 <div>
+    <ol class="breadcrumb">
+  <li><a href="#">Hakan Güldal</a></li>
+  <li><a href="#">Anasayfa</a></li>
+  
+</ol>
+    <br>
+    <div class="row clearfix">
+	
+		    <div class="col-md-12 column">
+                <div class="btn-toolbar" role="toolbar">
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default btnTumunuSec" title="Select All"><span class="glyphicon glyphicon-check"></span></button>
+                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" class="btnTumunuSec" data-toggle="tooltip" data-placement="bottom" title="Select All"><span class="glyphicon glyphicon-check"></span> Tümünü Seç</a></li>
+                            <li><a href="#" class="btnTumSecimiIptalEt"><span class="glyphicon glyphicon-unchecked"></span> Seçimi İptal Et</a></li>
+                           
+                          </ul>
+                    </div>
 
-<div class="row">
-  <div class="col-xs-6 col-md-3">
-    <a href="#" class="thumbnail">
-      <img src="..." alt="...">Klasör Adı
-    </a>
+
+                    <div class="btn-group">
+                          <button type="button" class="btn btn-default btnTumunuSec" title="Select All"><span class="glyphicon glyphicon-plus-sign"></span> Yeni</button>
+                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" class="btnTumunuSec" data-toggle="tooltip" data-placement="bottom" title="Select All"><span class="glyphicon glyphicon-folder-close"></span> Klasör</a></li>
+                            <li><a href="#" class="btnTumSecimiIptalEt"><span class="glyphicon glyphicon-link"></span> URL</a></li>
+                              <li><a href="#" class="btnTumSecimiIptalEt"><span class="glyphicon glyphicon-file"></span> Dosya</a></li>
+                           
+                          </ul>
+                    </div>
+
+  
+  <div class="btn-group">
+   <button type="button" class="btn btn-default btnSil" title="Delete"><span class="glyphicon glyphicon-trash"></span> Sil</button>
   </div>
-  ...
+
+                 
+ 
 </div>
+
+    <br><br>
+<table class="table table-hover">
+    <tr>
+    <td>
+        <span class="glyphicon glyphicon-folder-close"></span><span> Klasör Adı</span>
+    </td>
+    
+    <td></td>
+    </tr>
+</table>
+    <br>
+     <ol class="breadcrumb">
+  <li><a href="#">Hakan Güldal</a></li>
+  <li><a href="#">Anasayfa</a></li>
+  
+</ol>
 </div>
+
+@{
+    db.Close();
+}
