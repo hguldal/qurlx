@@ -7,22 +7,24 @@ if (!WebSecurity.IsAuthenticated)
                    
         }  
 
-    
-     var klasorID=Request["klasorID"];
-      
-    
-
      var db=Database.Open("u2p");
-     IEnumerable<dynamic> querySonuc;
+ 
+     var kisaKod=Request["kisaKod"];
      
-     if (string.IsNullOrEmpty(klasorID))
-     {
-         
-     }
+     var klasorID=0;
+    
 
+    if (string.IsNullOrEmpty(kisaKod))
+    {
+        kisaKod=db.QueryValue("SELECT kisaKod FROM klasor WHERE userID=@0 AND ustKlasorID=-1",WebSecurity.CurrentUserId);
+        
+    }
+     
+    
      using (db)
      {
-        var sonuclar=db.Query(sorguIfadesi);
+        klasorID=db.QueryValue("SELECT klasorID FROM klasor WHERE kisaKod=@0 AND userID=@1",kisaKod,WebSecurity.CurrentUserId);
+        var sonuclar=db.Query("SELECT klasorID as ogeID,1 as ogeTuru,klasorAdi as ogeAdi,olusturmaTarihi,kisaKod FROM Klasor WHERE ustKlasorID=@0 AND userID=@1 UNION SELECT urlID as ogeID,2 as ogeTuru,url as ogeAdi,olusturmaTarihi,kisaKod FROM url WHERE KlasorID=@0 AND userID=@1 ",klasorID,WebSecurity.CurrentUserId);
         Json.Write(sonuclar, Response.Output);
         db.Close();   
         Response.ContentType = "application/json";

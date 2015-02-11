@@ -62,44 +62,8 @@ var queryURLler=db.Query("SELECT * FROM URL WHERE userID=@0",WebSecurity.Current
 </div>
 
     <br><br>
-<table class="table table-hover">
-    <tr>
-        <td></td><td><strong>Öğe Adı</strong></td>
-        <td><strong>Oluşturma Tarihi</strong></td>
-        <td><strong>Kısa URL</strong></td>
-    </tr>
-    @foreach (var klasor in queryKlasorler)
-    {
-        <tr><td style="width: 30px;"><input type="checkbox"></td>
-       
-        <td>
-            <span class="glyphicon glyphicon-folder-close"></span>
-            <span><a href="@Request.Url.AbsoluteUri@klasor.kisaKod"> @klasor.klasorAdi</a></span>
-        </td>
-             <td>@Tarih.TarihIslemleri_TarihGorunumu(klasor.olusturmaTarihi)</td>
-            <td>
-                <a href="@Request.Url.AbsoluteUri@klasor.kisaKod"> @Request.Url.AbsoluteUri@klasor.kisaKod</a>
-            </td>
-        
-        </tr>
-    }
-
-@foreach (var url in queryURLler)
-    {
-        <tr><td style="width: 30px;"><input type="checkbox"></td>
-       
-        <td>
-            <span class="glyphicon glyphicon-link"></span>
-            <span><a href="@Request.Url.AbsoluteUri@url.kisaKod"> @url.aciklama</a></span>
-        </td>
-             <td>@Tarih.TarihIslemleri_TarihGorunumu(url.olusturmaTarihi)</td>
-            <td>
-                <a href="@Request.Url.AbsoluteUri@url.kisaKod"> @Request.Url.AbsoluteUri@url.kisaKod</a>
-            </td>
-        
-        </tr>
-    }
-    
+<table class="table table-hover" id="tableKlasor">
+   
 </table>
     <br>
      <ol class="breadcrumb">
@@ -114,3 +78,11 @@ var queryURLler=db.Query("SELECT * FROM URL WHERE userID=@0",WebSecurity.Current
 }
 
 </div>
+
+@section scripts
+{
+    
+    <script src="@Href("~/scripts/u2p/Default.js")"></script>
+     
+
+}
