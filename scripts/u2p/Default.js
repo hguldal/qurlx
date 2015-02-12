@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "/api/Kaynak/KlasorIcerik";
+    var url = "/ajax/Kaynak/KlasorIcerik";
     $.getJSON(url,
     function (json) {
         var tr;

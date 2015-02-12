@@ -71,7 +71,7 @@ $('.GrupAra').selectize({
     load: function (query, callback) {
         if (!query.length) return callback();
         $.ajax({
-            url: '/api/Grup/JsonGrupListesi',
+            url: '/ajax/Grup/JsonGrupListesi',
             type: 'GET',
             dataType: 'json',
             data: {

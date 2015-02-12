@@ -3,7 +3,7 @@ $('.btnVerifyUser').click(function () {
     if (confirm('are you sure ?')) {
         $.ajax({
             type: "POST",
-            url: "/api/Hesap/makeverified.cshtml",
+            url: "/ajax/Hesap/makeverified.cshtml",
             data: "UserID=" + UserID,
 
             success: function (msg) {

@@ -3,7 +3,7 @@ $('.btnUpgradeAccount').click(function () {
     if (confirm('Emin misin ?')) {
         $.ajax({
             type: "POST",
-            url: "/api/Hesap/UpgradeAccount.cshtml",
+            url: "/ajax/Hesap/UpgradeAccount.cshtml",
             data: "UserID=" + UserID,
 
             success: function (msg) {

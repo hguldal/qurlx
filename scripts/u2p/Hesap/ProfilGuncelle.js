@@ -64,7 +64,7 @@
      else {
 
          $.ajax({
-             url: '/api/Hesap/ProfilGuncelle.cshtml',
+             url: '/ajax/Hesap/ProfilGuncelle.cshtml',
              data: d,
              cache: false,
              contentType: false,
