@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+  
     var klasorKisaKod = $("#tableKlasor").attr("data-klasorKisaKod");
     klasorIcerikYukle(klasorKisaKod);
     function klasorIcerikYukle(klasorKisaKod) {
@@ -14,10 +14,9 @@ $(document).ready(function () {
         var tr;
         for (var i = 0; i < json.length; i++) {
             tr = $('<tr data-kisaKod="' + json[i].kisaKod + '"/>');
-            tr.append('<td><input type="checkbox"/></td>');
-
+          
             if (json[i].ogeTuru == 1) {
-                tr.append('<td><span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span><a href="' + location.href + json[i].kisaKod + '"> ' + json[i].ogeAdi + '</a></td>');
+                tr.append('<td><h5><span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span><a href="' + location.href + json[i].kisaKod + '"> ' + json[i].ogeAdi + '</a></h5></td>');
             }
             else if (json[i].ogeTuru == 2) {
                 tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + location.href + json[i].kisaKod + '"> ' + json[i].ogeAdi + '</a></td>');
@@ -53,14 +52,14 @@ $(document).ready(function () {
             success: function (msg) {
                 $('#yeniKlasor').modal('hide');
                 klasorIcerikYukle(klasorKisaKod);
-
-
             },
             error: function (msg) {
-                HataMesaji("Beklenmeyen Bir Hata Myedana Geldi");
+                HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
             }
         });
 
     });
+
+   
 });
 

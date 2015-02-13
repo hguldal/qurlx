@@ -17,7 +17,7 @@ if (!WebSecurity.IsAuthenticated)
      using (db)
      {
         klasorID=db.QueryValue("SELECT klasorID FROM klasor WHERE kisaKod=@0 AND userID=@1",klasorKisaKod,WebSecurity.CurrentUserId);
-        var sonuclar=db.Query("SELECT klasorID as ogeID,1 as ogeTuru,klasorAdi as ogeAdi,olusturmaTarihi,kisaKod FROM Klasor WHERE ustKlasorID=@0 AND userID=@1 UNION SELECT urlID as ogeID,2 as ogeTuru,url as ogeAdi,olusturmaTarihi,kisaKod FROM url WHERE KlasorID=@0 AND userID=@1 ORDER BY ogeTuru ",klasorID,WebSecurity.CurrentUserId);
+        var sonuclar=db.Query("SELECT klasorID as ogeID,1 as ogeTuru,klasorAdi as ogeAdi,olusturmaTarihi,kisaKod FROM Klasor WHERE ustKlasorID=@0 AND userID=@1 UNION SELECT urlID as ogeID,2 as ogeTuru,url as ogeAdi,olusturmaTarihi,kisaKod FROM url WHERE KlasorID=@0 AND userID=@1 ORDER BY ogeTuru,ogeID DESC ",klasorID,WebSecurity.CurrentUserId);
         Json.Write(sonuclar, Response.Output);
         db.Close();   
         Response.ContentType = "application/json";

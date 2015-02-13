@@ -15,71 +15,29 @@ if (string.IsNullOrEmpty(klasorKisaKod))
 }
 
 }
- 
-<div>
-    
-    <ol class="breadcrumb">
-  <li><a href="#">Hakan Güldal</a></li>
-  <li><a href="#">Anasayfa</a></li>
-  
-</ol>
-    <br>
+
     <div class="row clearfix">
 	
 		    <div class="col-md-12 column">
-                <div class="btn-toolbar" role="toolbar">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-default btnTumunuSec" title="Select All"><span class="glyphicon glyphicon-check"></span></button>
-                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only"></span>
-                          </button>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" class="btnTumunuSec" data-toggle="tooltip" data-placement="bottom" title="Select All"><span class="glyphicon glyphicon-check"></span> Tümünü Seç</a></li>
-                            <li><a href="#" class="btnTumSecimiIptalEt"><span class="glyphicon glyphicon-unchecked"></span> Seçimi İptal Et</a></li>
-                           
-                          </ul>
-                    </div>
+                <h4><a href="#">Anasayfa</a> / </h4>
+                <hr>
+                 <div class="subnav">
+           <ul class="nav nav-pills">
+              <li><a href="#" data-toggle="modal" data-target="#yeniKlasor"><span class="glyphicon glyphicon-folder-close"></span> Yeni Klasör</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#yeniURL"><span class="glyphicon glyphicon-link"></span> Yeni URL</a></li>
+               <li><a href="#" data-toggle="modal" data-target="#yeniDosya"><span class="glyphicon glyphicon-file"></span> Yeni Dosya</a></li>
 
+               </ul>
+            </div>
+                <hr>
+                
 
-                    <div class="btn-group">
-                          <button type="button" class="btn btn-default btnTumunuSec" title="Select All"><span class="glyphicon glyphicon-plus-sign"></span> Yeni</button>
-                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only"></span>
-                          </button>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" class="btnTumunuSec" data-toggle="modal" data-target="#yeniKlasor" data-toggle="tooltip" data-placement="bottom" title="Select All"><span class="glyphicon glyphicon-folder-close"></span> Klasör</a></li>
-                            <li><a href="#" class="btnTumSecimiIptalEt"><span class="glyphicon glyphicon-link"></span> URL</a></li>
-                              <li><a href="#" class="btnTumSecimiIptalEt"><span class="glyphicon glyphicon-file"></span> Dosya</a></li>
-                           
-                          </ul>
-                    </div>
-
-  
-  <div class="btn-group">
-   <button type="button" class="btn btn-default btnSil" title="Delete"><span class="glyphicon glyphicon-trash"></span> Sil</button>
-  </div>
-
-                 
- 
-</div>
-
-    <br><br>
-<table class="table table-hover" id="tableKlasor" data-klasorKisaKod="@klasorKisaKod">
-   <tr>
-       <td></td>
-   <td><strong>Öğe Adı</strong></td>
-       <td><strong>Oluşturma Tarihi</strong></td>
-       <td><strong>Kısa Url</strong></td>
-   </tr>
-</table>
     <br>
-     <ol class="breadcrumb">
-  <li><a href="#">Hakan Güldal</a></li>
-  <li><a href="#">Anasayfa</a></li>
-  
-</ol>
+<h4>İçerik</h4>
+    <table class="table table-hover" id="tableKlasor" data-klasorKisaKod="@klasorKisaKod">
+   
+</table>
+   
 </div>
 
 </div>
@@ -128,6 +86,7 @@ if (string.IsNullOrEmpty(klasorKisaKod))
 {
     
     <script src="@Href("~/scripts/u2p/Default.js")"></script>
+        
      
 
 }
