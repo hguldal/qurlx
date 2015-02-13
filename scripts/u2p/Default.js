@@ -1,5 +1,8 @@
 $(document).ready(function () {
-    var url = "/ajax/Kaynak/KlasorIcerik";
+
+    var klasorKisaKod = $("#tableKlasor").attr("data-klasorKisaKod");
+    var url = "/ajax/Kaynak/KlasorIcerik" + "?klasorKisaKod=" + klasorKisaKod;
+
     $.getJSON(url,
     function (json) {
         var tr;
@@ -26,5 +29,11 @@ $(document).ready(function () {
     });
 
     $('#cmbErisimTuru').selectize();
+
+    $("#btnYeniKlasorOlustur").click(function () {
+        var klasorAdi = $('#txtKlasorAdi').val();
+        var erisimTuru = $('').val();
+
+    });
 });
 
