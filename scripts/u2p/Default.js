@@ -1,9 +1,15 @@
 $(document).ready(function () {
 
     var klasorKisaKod = $("#tableKlasor").attr("data-klasorKisaKod");
-    var url = "/ajax/Kaynak/KlasorIcerik" + "?klasorKisaKod=" + klasorKisaKod;
+    klasorIcerikYukle(klasorKisaKod);
+    function klasorIcerikYukle(klasorKisaKod) {
 
-    $.getJSON(url,
+        $("#tableKlasor").find('tr').remove();
+        var url = "/ajax/Kaynak/KlasorIcerik" + "?klasorKisaKod=" + klasorKisaKod;
+
+
+
+        $.getJSON(url,
     function (json) {
         var tr;
         for (var i = 0; i < json.length; i++) {
@@ -23,16 +29,37 @@ $(document).ready(function () {
 
             var tarih = new Date(parseInt(json[i].olusturmaTarihi.substr(6)));
             tr.append("<td>" + jQuery.timeago(tarih) + "</td>");
-            tr.append('<td><a href="' + location.href + json[i].kisaKod + '">' + location.href + json[i].kisaKod + '</a></td>');
+            tr.append('<td><a href="#">' + location.href + json[i].kisaKod + '</a></td>');
             $('#tableKlasor').append(tr);
         }
     });
+    }
 
     $('#cmbErisimTuru').selectize();
 
     $("#btnYeniKlasorOlustur").click(function () {
+        var klasorKisaKod = $('#tableKlasor').attr('data-klasorKisaKod');
         var klasorAdi = $('#txtKlasorAdi').val();
-        var erisimTuru = $('').val();
+        var erisimTuru = $('#cmbErisimTuru').val();
+
+        if (klasorAdi == '') {
+            HataMesaji('Klasör adını boş bırakamazsın');
+            $('#txtKlasorAdi').focus();
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '/ajax/Kaynak/YeniKlasorOlustur' + '?klasorKisaKod=' + klasorKisaKod + '&klasorAdi=' + klasorAdi + '&erisimTuru=' + erisimTuru,
+            success: function (msg) {
+                $('#yeniKlasor').modal('hide');
+                klasorIcerikYukle(klasorKisaKod);
+
+
+            },
+            error: function (msg) {
+                HataMesaji("Beklenmeyen Bir Hata Myedana Geldi");
+            }
+        });
 
     });
 });

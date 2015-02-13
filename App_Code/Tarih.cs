@@ -10,6 +10,7 @@ public static class Tarih
 {
     public static string TarihIslemleri_TarihGorunumu(DateTime dt)
     {
+        
         var ts = new TimeSpan(DateTime.UtcNow.Ticks - dt.Ticks);
         double delta = Math.Abs(ts.TotalSeconds);
 
