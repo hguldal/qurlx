@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  
+
     var klasorKisaKod = $("#tableKlasor").attr("data-klasorKisaKod");
     klasorIcerikYukle(klasorKisaKod);
     function klasorIcerikYukle(klasorKisaKod) {
@@ -14,7 +14,7 @@ $(document).ready(function () {
         var tr;
         for (var i = 0; i < json.length; i++) {
             tr = $('<tr data-kisaKod="' + json[i].kisaKod + '"/>');
-          
+
             if (json[i].ogeTuru == 1) {
                 tr.append('<td><h5><span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span><a href="' + location.href + json[i].kisaKod + '"> ' + json[i].ogeAdi + '</a></h5></td>');
             }
@@ -36,30 +36,33 @@ $(document).ready(function () {
 
     $('#cmbErisimTuru').selectize();
 
-    $("#btnYeniKlasorOlustur").click(function () {
-        var klasorKisaKod = $('#tableKlasor').attr('data-klasorKisaKod');
-        var klasorAdi = $('#txtKlasorAdi').val();
-        var erisimTuru = $('#cmbErisimTuru').val();
+    $("#btnUrlEkle").click(function () {
 
-        if (klasorAdi == '') {
-            HataMesaji('Klasör adını boş bırakamazsın');
-            $('#txtKlasorAdi').focus();
+        var url = $('#url').val();
+
+        if (url == '') {
+            HataMesaji('Url alanını boş bırakamazsın');
+            $('#url').focus();
         }
+        else {
+            $.ajax({
+                type: "POST",
+                url: '/ajax/UrlEkle' + '?url=' + url,
+                dataType: 'json',
+                success: function (msg) {
+                    var tr = $('<tr/>');
+                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + location.href + msg.url + '"> ' + msg.url + '</a></td><td></td><td></td>');
+                    $('#lstUrl').append(tr);
 
-        $.ajax({
-            type: "POST",
-            url: '/ajax/Kaynak/YeniKlasorOlustur' + '?klasorKisaKod=' + klasorKisaKod + '&klasorAdi=' + klasorAdi + '&erisimTuru=' + erisimTuru,
-            success: function (msg) {
-                $('#yeniKlasor').modal('hide');
-                klasorIcerikYukle(klasorKisaKod);
-            },
-            error: function (msg) {
-                HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
-            }
-        });
+                },
+                error: function (msg) {
+                    HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
+                }
+            });
+        }
 
     });
 
-   
+
 });
 

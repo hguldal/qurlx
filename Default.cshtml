@@ -33,12 +33,12 @@ var db=Database.Open("u2p");
                  
               <div class="form-group">
               
-                <input type="url" class="form-control" id="txtURL"  required placeholder="URL'ni Buraya Yapıştır...">
+                <input type="url" class="form-control" id="url" name="url"  required placeholder="URL'ni Buraya Yapıştır...">
               </div>
           
-              <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Ekle</button>
+              <button type="submit" class="btn btn-success" id="btnUrlEkle"><span class="glyphicon glyphicon-plus"></span> Ekle</button>
             </div>
-    <table class="table table-hover">
+    <table class="table table-hover" id="lstUrl">
     <tr><td>URL</td><td>Kisa URL</td><td>Eklenme Tarihi</td><td>İşlemler</td></tr>
     </table>
         </div>

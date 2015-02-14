@@ -2,17 +2,14 @@
   
      var db=Database.Open("u2p");
      var url=Request["url"];   
-     var kategoriID=Request["kategori"];
      
-   
      using (db)
      {
-         
-
+        
          //url daha önce kayıt edilmiş ise kod üretme ve url bilgilerini json olarak döndür
-         if (db.QueryValue("SELECT COUNT(*) FROM URL WHERE url=@0 AND sahip<>-1",url)>0)
+         if (db.QueryValue("SELECT COUNT(*) FROM Url INNER JOIN UrlYonetici ON url.urlID=UrlYonetici.urlID  WHERE url=@0 AND UrlYonetici.userID=@1",url,WebSecurity.CurrentUserId)>0)
          {
-            var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE url=@0",url);
+            var queryUrl=db.QuerySingle("SELECT * FROM Url WHERE url=@0",url);
             
             if (WebSecurity.IsAuthenticated)
             {
@@ -26,8 +23,10 @@
              
          }
 
+
+
          //url daha önce kayıt edilmiş ama sahibi yok ise kod üret ve url bilgilerini json olarak döndür
-         if (db.QueryValue("SELECT COUNT(*) FROM URL WHERE url=@0 AND sahip=-1",url)>0)
+         if (db.QueryValue("SELECT COUNT(*) FROM Url WHERE url=@0 AND sahip=-1",url)>0)
          {
              var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE url=@0",url);
             
@@ -43,7 +42,7 @@
          }
 
          //url ilk kez kayıt ediliyorsa
-         if (db.QueryValue("SELECT COUNT(*) FROM URL WHERE url=@0",url)<1)
+         if (db.QueryValue("SELECT COUNT(*) FROM Url WHERE url=@0",url)<1)
          {
              var urlKisaKod=KodUret.YeniKod();
 
@@ -79,8 +78,7 @@
          }
           
      }  
-
-     db.Close();
+     
 }
 
 
