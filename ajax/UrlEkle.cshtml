@@ -1,0 +1,86 @@
+﻿@{
+  
+     var db=Database.Open("u2p");
+     var url=Request["url"];   
+     var kategoriID=Request["kategori"];
+     
+   
+     using (db)
+     {
+         
+
+         //url daha önce kayıt edilmiş ise kod üretme ve url bilgilerini json olarak döndür
+         if (db.QueryValue("SELECT COUNT(*) FROM URL WHERE url=@0 AND sahip<>-1",url)>0)
+         {
+            var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE url=@0",url);
+            
+            if (WebSecurity.IsAuthenticated)
+            {
+                db.Execute("INSERT INTO URLKullanici(urlID,userID) VALUES(@0,@1)",queryUrl.urlID,WebSecurity.CurrentUserId);
+            }
+            
+            Json.Write(queryUrl, Response.Output);
+            db.Close();   
+            Response.ContentType = "application/json";
+            Response.End();
+             
+         }
+
+         //url daha önce kayıt edilmiş ama sahibi yok ise kod üret ve url bilgilerini json olarak döndür
+         if (db.QueryValue("SELECT COUNT(*) FROM URL WHERE url=@0 AND sahip=-1",url)>0)
+         {
+             var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE url=@0",url);
+            
+            if (WebSecurity.IsAuthenticated)
+            {
+                db.Execute("UPDATE URL SET sahip=@0 WHERE url=@1",WebSecurity.CurrentUserId,queryUrl.urlID);
+            }
+            
+            Json.Write(queryUrl, Response.Output);
+            db.Close();   
+            Response.ContentType = "application/json";
+            Response.End();
+         }
+
+         //url ilk kez kayıt ediliyorsa
+         if (db.QueryValue("SELECT COUNT(*) FROM URL WHERE url=@0",url)<1)
+         {
+             var urlKisaKod=KodUret.YeniKod();
+
+                while (db.QueryValue("SELECT COUNT(*) FROM KodCache WHERE kisaKod=@0",urlKisaKod)>0)
+                {
+                    urlKisaKod=KodUret.YeniKod();
+                }
+
+                if (db.Execute("INSERT INTO KodCache(kisaKod) VALUES(@0)",urlKisaKod)<1)
+                    {
+                        db.Close();
+                        Response.StatusCode=500;
+                        Response.End();
+                    }
+                    //url 'yi ekle
+                    db.Execute("INSERT INTO Url(olusturmaTarihi,url,kisaKod) VALUES(@0,@1,@2)",DateTime.Now,url,urlKisaKod);
+                    
+                    var queryEklenenUrl=db.QuerySingle("SELECT * FROM Url WHERE url=@0",url);
+                    
+                    if (WebSecurity.IsAuthenticated)
+                    {
+                        //kullanıcı olarak ata...
+                        db.Execute("INSERT INTO UrlKullanici(urlID,userID) VALUES(@0,@1)",queryEklenenUrl.urlID,WebSecurity.CurrentUserId);
+                        //yönetici olarak ata...
+                        db.Execute("INSERT INTO UrlYonetici(urlID,userID) VALUES(@0,@1)",queryEklenenUrl.urlID,WebSecurity.CurrentUserId);
+                    }
+                    
+                    Json.Write(queryEklenenUrl, Response.Output);
+                    db.Close();   
+                    Response.ContentType = "application/json";
+                    Response.End();
+
+         }
+          
+     }  
+
+     db.Close();
+}
+
+
