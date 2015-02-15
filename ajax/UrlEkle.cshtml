@@ -1,62 +1,99 @@
 ﻿@{
   
      var db=Database.Open("u2p");
-     var url=Request["url"];   
-     
+     var url=Request["nUrl"];   
+
+     if (string.IsNullOrEmpty(url))
+     {
+       db.Close();
+       Response.StatusCode=500;
+       Response.End();
+     }
+
+     if (!(url.StartsWith("http://") || url.StartsWith("https://")))
+     {
+         url="http://" + url;
+     }
+
+     Uri urlDuzgun;
+     bool urlFormatiDuzgunmu = Uri.TryCreate(url, UriKind.Absolute, out urlDuzgun) && (urlDuzgun.Scheme == Uri.UriSchemeHttp || urlDuzgun.Scheme == Uri.UriSchemeHttps );
+    
+     if (!urlFormatiDuzgunmu)
+     {
+         db.Close();
+         Response.StatusCode=500;
+         Response.End();
+     }
+     url=urlDuzgun.AbsoluteUri;
+
      using (db)
      {
+
+        var queryUrl=db.QuerySingle("SELECT * FROM Url WHERE url=@0",url);
         
-         //url daha önce kayıt edilmiş ise kod üretme ve url bilgilerini json olarak döndür
-         if (db.QueryValue("SELECT COUNT(*) FROM Url INNER JOIN UrlYonetici ON url.urlID=UrlYonetici.urlID  WHERE url=@0 AND UrlYonetici.userID=@1",url,WebSecurity.CurrentUserId)>0)
-         {
-            var queryUrl=db.QuerySingle("SELECT * FROM Url WHERE url=@0",url);
+        //url daha önce kayıt edilmiş mi ?
+         if (queryUrl!=null)
+         {           
+             //url'yi kayıtlı bir üye mi kaydetmiş ?
+             if (db.QueryValue("SELECT COUNT(*) FROM UrlYonetici WHERE urlID=@0",queryUrl.urlID)>0)
+             {
+                 //üye kullanıcı ise bu URL yi onun listesine ekle
+                 if (WebSecurity.IsAuthenticated)
+                    {
+                        if (db.QueryValue("SELECT COUNT(*) FROM UrlKullanici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)<1)
+                        {
+                         db.Execute("INSERT INTO URLKullanici(urlID,userID) VALUES(@0,@1)",queryUrl.urlID,WebSecurity.CurrentUserId);
+                        }
+                    }
             
-            if (WebSecurity.IsAuthenticated)
-            {
-                db.Execute("INSERT INTO URLKullanici(urlID,userID) VALUES(@0,@1)",queryUrl.urlID,WebSecurity.CurrentUserId);
-            }
-            
-            Json.Write(queryUrl, Response.Output);
-            db.Close();   
-            Response.ContentType = "application/json";
-            Response.End();
+             }
              
-         }
+             else
+             {
+                //url kayıtlı ama sahibi yok ise
+                 if (WebSecurity.IsAuthenticated)
+                    {
+                        if (db.QueryValue("SELECT COUNT(*) FROM UrlYonetici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)<1)
+                        {
+                            db.Execute("INSERT INTO UrlYonetici(urlID,userID) VALUES(@0,@1)",queryUrl.urlID,WebSecurity.CurrentUserId);
+                        }
 
-
-
-         //url daha önce kayıt edilmiş ama sahibi yok ise kod üret ve url bilgilerini json olarak döndür
-         if (db.QueryValue("SELECT COUNT(*) FROM Url WHERE url=@0 AND sahip=-1",url)>0)
-         {
-             var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE url=@0",url);
+                        if (db.QueryValue("SELECT COUNT(*) FROM UrlKullanici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)<1)
+                        {
+                            db.Execute("INSERT INTO UrlKullanici(urlID,userID) VALUES(@0,@1)",queryUrl.urlID,WebSecurity.CurrentUserId);
+                        }
+                    }
             
-            if (WebSecurity.IsAuthenticated)
-            {
-                db.Execute("UPDATE URL SET sahip=@0 WHERE url=@1",WebSecurity.CurrentUserId,queryUrl.urlID);
-            }
-            
-            Json.Write(queryUrl, Response.Output);
-            db.Close();   
-            Response.ContentType = "application/json";
-            Response.End();
+             }
+
+             //url bilgilerini json olarak döndür
+              Json.Write(queryUrl, Response.Output);
+              db.Close();   
+              Response.ContentType = "application/json";
+              Response.End();
          }
-
-         //url ilk kez kayıt ediliyorsa
-         if (db.QueryValue("SELECT COUNT(*) FROM Url WHERE url=@0",url)<1)
+         
+         //url henüz kayıt edilmemiş
+         else
+         
          {
-             var urlKisaKod=KodUret.YeniKod();
+                // url için yeni bir erişim kodu üret
+               var urlKisaKod=KodUret.YeniKod();
 
+               //kullanılmamış bir kod bulana kadar dön
                 while (db.QueryValue("SELECT COUNT(*) FROM KodCache WHERE kisaKod=@0",urlKisaKod)>0)
                 {
                     urlKisaKod=KodUret.YeniKod();
                 }
 
+                //oluşturulan kodu kod listesine kaydet
                 if (db.Execute("INSERT INTO KodCache(kisaKod) VALUES(@0)",urlKisaKod)<1)
                     {
                         db.Close();
                         Response.StatusCode=500;
                         Response.End();
                     }
+                    
                     //url 'yi ekle
                     db.Execute("INSERT INTO Url(olusturmaTarihi,url,kisaKod) VALUES(@0,@1,@2)",DateTime.Now,url,urlKisaKod);
                     
@@ -74,11 +111,11 @@
                     db.Close();   
                     Response.ContentType = "application/json";
                     Response.End();
+             
+            }
 
-         }
-          
-     }  
-     
+
+       }
 }
 
 
