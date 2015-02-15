@@ -9,34 +9,41 @@ Layout = "~/Paylasilan/_Layout.cshtml";
 var db=Database.Open("u2p");
 
 var queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0",WebSecurity.CurrentUserId);
-
+var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId);
 }
 
       
 <div class="row">
+    <h2><span class="glyphicon glyphicon-link"></span> URL Listem</h2>
+    <hr>
     <div class="col-md-3 column">
-        <h3>Kategoriler</h3>
-        <div class="list-group">
+       
+        
+        <button class="btn btn-link" id="btnKategoriEkle">Yeni Kategori</button> <br><br>
+        <div class="list-group" id="listeKategori">
             <a href="@Href("~/")" class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span> Tümü
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URL INNER JOIN URLKullanici ON URL.urlID=URLKullanici.urlID WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
              </a>
+
+            @foreach (var item in queryKategoriler)
+            {
+                 <a href="@Href("~/Kategori?KategoriID=")@item.kategoriID" class="list-group-item"><span class="glyphicon glyphicon-tag"></span> @item.kategoriAdi
+                    <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URLKategori WHERE kategoriID=@0",item.kategoriID)</span>
+                </a>
+            }
             
-            <a href="#" class="list-group-item"><span class="glyphicon glyphicon-plus"></span> Yeni Kategori
-                    <span class="badge"></span>
-             </a>
+            
             
 </div>
+        
+                    
+             
         </div>
     <div class="col-md-9 column">
-        <h3>URL'ler</h3>
-        <div class="well">
-                 
-              <div class="form-group">
+        
+        <div>
               
-                <input type="url" class="form-control" id="url" name="url"  required placeholder="URL'ni Buraya Yapıştır...">
-              </div>
-          
-              <button type="submit" class="btn btn-success" id="btnUrlEkle"><span class="glyphicon glyphicon-plus"></span> Ekle</button>
+              <button  class="btn btn-link" id="btnUrlEkle"> Yeni URL</button>
             </div>
     <table class="table table-hover" id="lstUrl">
         <thead>
