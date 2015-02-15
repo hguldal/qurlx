@@ -1,41 +1,6 @@
 $(document).ready(function () {
 
-    var klasorKisaKod = $("#tableKlasor").attr("data-klasorKisaKod");
-    klasorIcerikYukle(klasorKisaKod);
-    function klasorIcerikYukle(klasorKisaKod) {
-
-        $("#tableKlasor").find('tr').remove();
-        var url = "/ajax/Kaynak/KlasorIcerik" + "?klasorKisaKod=" + klasorKisaKod;
-
-
-
-        $.getJSON(url,
-    function (json) {
-        var tr;
-        for (var i = 0; i < json.length; i++) {
-            tr = $('<tr data-kisaKod="' + json[i].kisaKod + '"/>');
-
-            if (json[i].ogeTuru == 1) {
-                tr.append('<td><h5><span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span><a href="' + location.href + json[i].kisaKod + '"> ' + json[i].ogeAdi + '</a></h5></td>');
-            }
-            else if (json[i].ogeTuru == 2) {
-                tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + location.href + json[i].kisaKod + '"> ' + json[i].ogeAdi + '</a></td>');
-            }
-
-            else if (json[i].ogeTuru == 3) {
-                tr.append('<td><span class="glyphicon glyphicon-file" aria-hidden="true"></span><a href="' + location.href + json[i].kisaKod + '"> ' + json[i].ogeAdi + '</a></td>');
-            }
-
-            var tarih = new Date(parseInt(json[i].olusturmaTarihi.substr(6)));
-            tr.append("<td>" + jQuery.timeago(tarih) + "</td>");
-            tr.append('<td><a href="#">' + location.href + json[i].kisaKod + '</a></td>');
-            $('#tableKlasor').append(tr);
-        }
-    });
-    }
-
-    $('#cmbErisimTuru').selectize();
-
+   
     $("#btnUrlEkle").click(function () {
 
         var url = $('#url').val();
@@ -47,12 +12,15 @@ $(document).ready(function () {
         else {
             $.ajax({
                 type: "POST",
-                url: '/ajax/UrlEkle' + '?url=' + url,
+                url: '/ajax/UrlEkle' + '?nUrl=' + url,
                 dataType: 'json',
                 success: function (msg) {
                     var tr = $('<tr/>');
-                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + location.href + msg.url + '"> ' + msg.url + '</a></td><td></td><td></td>');
-                    $('#lstUrl').append(tr);
+                    
+                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + msg.url + '"> ' + msg.url + '</a></td><td><a href="' +  location.href + msg.kisaKod   + '">' + location.href + msg.kisaKod +'</td><td></td>');
+                    $('#lstUrl > tbody').prepend(tr);
+                    
+                    $('#url').val('');
 
                 },
                 error: function (msg) {

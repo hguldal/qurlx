@@ -8,7 +8,7 @@ Layout = "~/Paylasilan/_Layout.cshtml";
 
 var db=Database.Open("u2p");
 
-
+var queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0",WebSecurity.CurrentUserId);
 
 }
 
@@ -17,7 +17,7 @@ var db=Database.Open("u2p");
     <div class="col-md-3 column">
         <h3>Kategoriler</h3>
         <div class="list-group">
-            <a href="#" class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span> Tümü
+            <a href="@Href("~/")" class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span> Tümü
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URL INNER JOIN URLKullanici ON URL.urlID=URLKullanici.urlID WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
              </a>
             
@@ -28,7 +28,7 @@ var db=Database.Open("u2p");
 </div>
         </div>
     <div class="col-md-9 column">
-
+        <h3>URL'ler</h3>
         <div class="well">
                  
               <div class="form-group">
@@ -39,7 +39,15 @@ var db=Database.Open("u2p");
               <button type="submit" class="btn btn-success" id="btnUrlEkle"><span class="glyphicon glyphicon-plus"></span> Ekle</button>
             </div>
     <table class="table table-hover" id="lstUrl">
-    <tr><td>URL</td><td>Kisa URL</td><td>Eklenme Tarihi</td><td>İşlemler</td></tr>
+        <thead>
+    <tr><td><h4><strong>URL</strong></h4></td><td><h4><strong>Kisa URL</strong></h4></td><td></td></tr>
+            </thead>
+        <tbody>
+        @foreach (var item in queryURLs)
+        {
+            <tr><td><h5><span class="glyphicon glyphicon-link"></span> <a href="@item.url">@item.url </a></h5></td><td><h5><a href="@Request.Url.AbsoluteUri@item.kisaKod">@Request.Url.AbsoluteUri@item.kisaKod </a></h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td></tr>
+        }
+            </tbody>
     </table>
         </div>
 </div>
