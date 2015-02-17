@@ -1,0 +1,28 @@
+﻿@{
+     if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+        
+     var db=Database.Open("u2p");  
+     var kisaKod=Request["KisaKod"];
+    IEnumerable<dynamic> queryURLs;
+    if (string.IsNullOrEmpty(kisaKod) || kisaKod=="hepsi")
+    {
+        queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0",WebSecurity.CurrentUserId);
+    }
+    else
+    {
+        queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKategori ON Url.urlID=UrlKategori.urlID WHERE kisaKod=@0",kisaKod);
+    }
+
+    Json.Write(queryURLs, Response.Output);
+    db.Close();   
+    Response.ContentType = "application/json";
+    Response.End();
+}
+
+

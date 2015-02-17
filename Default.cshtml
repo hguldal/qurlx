@@ -7,8 +7,16 @@ Response.Redirect("~/Hesap/Giris");
 Layout = "~/Paylasilan/_Layout.cshtml"; 
 
 var db=Database.Open("u2p");
-
-var queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0",WebSecurity.CurrentUserId);
+var kod=Request.QueryString["kod"];
+IEnumerable<dynamic> queryURLs;
+if (string.IsNullOrEmpty(kod))
+{
+queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0",WebSecurity.CurrentUserId);
+}
+else
+{
+    queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKategori ON Url.urlID=UrlKategori.urlID WHERE kisaKod=@0",kod);
+}
 var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId);
 }
 
@@ -18,18 +26,21 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
     <hr>
     <div class="col-md-3 column">
        
-        
-        <button class="btn btn-link" id="btnKategoriEkle">Yeni Kategori</button> <br><br>
+        <button class="btn btn-link" id="btnKategoriEkle"><span class="glyphicon glyphicon-tag"></span> Yeni Kategori</button> <button  class="btn btn-link" id="btnUrlEkle"><span class="glyphicon glyphicon-link"></span> Yeni URL</button><br><br>
         <div class="list-group" id="listeKategori">
-            <a href="@Href("~/")" class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span> Tümü
+            
+            <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="hepsi"><span class="glyphicon glyphicon-list-alt"></span> Tümü
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URL INNER JOIN URLKullanici ON URL.urlID=URLKullanici.urlID WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
              </a>
+               
 
             @foreach (var item in queryKategoriler)
             {
-                 <a href="@Href("~/Kategori?KategoriID=")@item.kategoriID" class="list-group-item"><span class="glyphicon glyphicon-tag"></span> @item.kategoriAdi
+               
+                 <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="@item.kisaKod"><span class="glyphicon glyphicon-tag"></span> @item.kategoriAdi
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URLKategori WHERE kategoriID=@0",item.kategoriID)</span>
                 </a>
+                    
             }
             
             
@@ -41,10 +52,10 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
         </div>
     <div class="col-md-9 column">
         
-        <div>
+      
               
-              <button  class="btn btn-link" id="btnUrlEkle"> Yeni URL</button>
-            </div>
+              
+           
     <table class="table table-hover" id="lstUrl">
         <thead>
     <tr><td><h4><strong>URL</strong></h4></td><td><h4><strong>Kisa URL</strong></h4></td><td></td></tr>
