@@ -1,9 +1,7 @@
 ﻿@using System.Web.Routing
 
 @{
-   WebSecurity.InitializeDatabaseConnection("u2p", "Profiles", "userID", "ePosta",true);
-   
-   // RouteTable.Routes.MapWebPageRoute("{*groupname}", "~/grup/default.cshtml");
-  
+   WebSecurity.InitializeDatabaseConnection("u2p", "Profiles", "userID", "ePosta",true);   
+   RouteTable.Routes.MapWebPageRoute("{*kod}", "~/GoURL.cshtml");  
 }
 
