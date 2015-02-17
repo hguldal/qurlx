@@ -1,23 +1,27 @@
 $(document).ready(function () {
+
     UrlYukle('hepsi');
 
     $("#btnUrlEkle").click(function () {
 
         var url = prompt("URL'ni buraya yapıştır");
-
+        var kategori = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
         if (url == '' || url == null) {
             return false;
         }
         else {
             $.ajax({
                 type: "POST",
-                url: '/ajax/UrlEkle' + '?nUrl=' + url,
+                url: '/ajax/UrlEkle' + '?nUrl=' + url + '&kategori=' + kategori,
                 dataType: 'json',
                 success: function (msg) {
                     var tr = $('<tr/>');
-                    tr.append('<td><h5><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + msg.url + '"> ' + msg.url + '</a></h5></td><td><h5><a href="' + location.href + msg.kisaKod + '">' + location.href + msg.kisaKod + '</h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
+                    tr.append('<td><h5><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + msg.url + '"> ' + msg.url + '</a></h5></td><td><h5><a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
                     $('#lstUrl > tbody').prepend(tr);
 
+                    var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
+                    urlAdedi = urlAdedi + 1;
+                    $('.list-group-item.active.kategoriOgesi > span.badge').html(urlAdedi);
                 },
                 error: function (msg) {
                     HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
@@ -42,8 +46,7 @@ $(document).ready(function () {
 
                 var liste = $('#listeKategori');
 
-                liste.append('<a href="' + location.href + 'Kategori?KategoriID=' + kategoriID + '" class="list-group-item"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
-
+                liste.append('<a href="#" class="list-group-item kategoriOgesi"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
 
             },
             error: function (msg) {
@@ -58,8 +61,6 @@ $(document).ready(function () {
         $('.kategoriOgesi').removeClass('active');
         $(this).addClass('active');
         UrlYukle(kod);
-
-
     });
 
     function UrlYukle(kod) {
@@ -73,7 +74,7 @@ $(document).ready(function () {
 
                     var tr = $('<tr/>');
 
-                    tr.append('<td><h5><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + urls[i].url + '"> ' + urls[i].url + '</a></h5></td><td><h5><a href="' + location.href + urls[i].kisaKod + '">' + location.href + urls[i].kisaKod + '</h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
+                    tr.append('<td><h5><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + urls[i].url + '"> ' + urls[i].url + '</a></h5></td><td><h5><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '">' + location.href.replace('#', '') + urls[i].kisaKod + '</h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
 
                     $('#lstUrl > tbody').prepend(tr);
 
@@ -87,5 +88,6 @@ $(document).ready(function () {
             }
         });
     }
+
 });
 
