@@ -7,16 +7,7 @@ Response.Redirect("~/Hesap/Giris");
 Layout = "~/Paylasilan/_Layout.cshtml"; 
 
 var db=Database.Open("u2p");
-var kod=Request.QueryString["kod"];
-IEnumerable<dynamic> queryURLs;
-if (string.IsNullOrEmpty(kod))
-{
-queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0 ORDER BY Url.urlID DESC",WebSecurity.CurrentUserId);
-}
-else
-{
-    queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKategori ON Url.urlID=UrlKategori.urlID WHERE kisaKod=@0 ORDER BY Url.urlID DESC",kod);
-}
+
 var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId);
 }
 
@@ -61,10 +52,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
     <tr><td><h4><strong>URL</strong></h4></td><td><h4><strong>Kisa URL</strong></h4></td><td></td></tr>
             </thead>
         <tbody>
-        @foreach (var item in queryURLs)
-        {
-            <tr><td><h5><span class="glyphicon glyphicon-link"></span> <a href="@item.url">@item.url </a></h5></td><td><h5><a href="@Request.Url.AbsoluteUri@item.kisaKod">@Request.Url.AbsoluteUri@item.kisaKod </a></h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td></tr>
-        }
+       
             </tbody>
     </table>
         </div>

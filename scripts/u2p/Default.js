@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    UrlYukle('hepsi');
 
     $("#btnUrlEkle").click(function () {
 
@@ -7,7 +7,6 @@ $(document).ready(function () {
 
         if (url == '' || url == null) {
             return false;
-
         }
         else {
             $.ajax({
@@ -16,7 +15,6 @@ $(document).ready(function () {
                 dataType: 'json',
                 success: function (msg) {
                     var tr = $('<tr/>');
-
                     tr.append('<td><h5><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + msg.url + '"> ' + msg.url + '</a></h5></td><td><h5><a href="' + location.href + msg.kisaKod + '">' + location.href + msg.kisaKod + '</h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
                     $('#lstUrl > tbody').prepend(tr);
 
@@ -59,7 +57,12 @@ $(document).ready(function () {
         var kod = $(this).attr('data-kisakod');
         $('.kategoriOgesi').removeClass('active');
         $(this).addClass('active');
+        UrlYukle(kod);
 
+
+    });
+
+    function UrlYukle(kod) {
         $.ajax({
             type: "POST",
             url: '/ajax/UrlListesi' + '?KisaKod=' + kod,
@@ -83,7 +86,6 @@ $(document).ready(function () {
                 HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
             }
         });
-
-    });
+    }
 });
 
