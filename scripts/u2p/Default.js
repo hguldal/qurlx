@@ -57,14 +57,27 @@ $(document).ready(function () {
 
     $('.kategoriOgesi').click(function () {
         var kod = $(this).attr('data-kisakod');
+        $('.kategoriOgesi').removeClass('active');
+        $(this).addClass('active');
 
         $.ajax({
             type: "POST",
             url: '/ajax/UrlListesi' + '?KisaKod=' + kod,
 
-            success: function (liste) {
+            success: function (urls) {
+                $('#lstUrl > tbody').find('tr').remove();
+                for (var i = 0; i < urls.length; i++) {
 
-    
+                    var tr = $('<tr/>');
+
+                    tr.append('<td><h5><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + urls[i].url + '"> ' + urls[i].url + '</a></h5></td><td><h5><a href="' + location.href + urls[i].kisaKod + '">' + location.href + urls[i].kisaKod + '</h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
+
+                    $('#lstUrl > tbody').prepend(tr);
+
+
+                }
+
+
             },
             error: function (msg) {
                 HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");

@@ -11,11 +11,11 @@ var kod=Request.QueryString["kod"];
 IEnumerable<dynamic> queryURLs;
 if (string.IsNullOrEmpty(kod))
 {
-queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0",WebSecurity.CurrentUserId);
+queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0 ORDER BY Url.urlID DESC",WebSecurity.CurrentUserId);
 }
 else
 {
-    queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKategori ON Url.urlID=UrlKategori.urlID WHERE kisaKod=@0",kod);
+    queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKategori ON Url.urlID=UrlKategori.urlID WHERE kisaKod=@0 ORDER BY Url.urlID DESC",kod);
 }
 var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId);
 }

@@ -12,7 +12,7 @@
     IEnumerable<dynamic> queryURLs;
     if (string.IsNullOrEmpty(kisaKod) || kisaKod=="hepsi")
     {
-        queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0",WebSecurity.CurrentUserId);
+        queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0 ORDER BY Url.urlID ASC",WebSecurity.CurrentUserId);
     }
     else
     {
