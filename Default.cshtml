@@ -11,13 +11,18 @@ var db=Database.Open("u2p");
 var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId);
 }
 
+<div class="row well">
+     <ul class="nav nav-pills">
+      <li role="presentation"><a href="#" id="btnKategoriEkle"><span class="glyphicon glyphicon-tag"></span> Kategori Ekle</a></li>
+      <li role="presentation"><a href="#" id="btnUrlEkle"><span class="glyphicon glyphicon-link"></span> URL Ekle</a></li>
+  
+</ul>
+    </div>  
+
 <div class="row">
-    <h2><span class="glyphicon glyphicon-link"></span> URL Listem</h2>
-    <hr>
     <div class="col-md-3 column">
-       
-        <button class="btn btn-link" id="btnKategoriEkle"><span class="glyphicon glyphicon-tag"></span> Yeni Kategori</button> <button  class="btn btn-link" id="btnUrlEkle"><span class="glyphicon glyphicon-link"></span> Yeni URL</button><br><br>
-        <div class="list-group" id="listeKategori">
+       <h3>Kategoriler</h3>
+         <div class="list-group" id="listeKategori">
             
             <a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="hepsi"><span class="glyphicon glyphicon-list-alt"></span> Tümü
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URL INNER JOIN URLKullanici ON URL.urlID=URLKullanici.urlID WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
@@ -42,14 +47,10 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
              
         </div>
     <div class="col-md-9 column">
-        
-      
-              
-              
-           
+          <h3>URL'ler</h3>
     <table class="table table-hover" id="lstUrl">
         <thead>
-    <tr><td><h4><strong>URL</strong></h4></td><td><h4><strong>Kisa URL</strong></h4></td><td></td></tr>
+   
             </thead>
         <tbody>
        

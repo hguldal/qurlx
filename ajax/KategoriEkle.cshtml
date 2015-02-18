@@ -9,10 +9,10 @@
         
      var db=Database.Open("u2p");  
      var kategoriAdi=Request["KategoriAdi"];
-      object eklenenKategoriID;
+    var kisaKod="";
      using (db)
      {
-         var kisaKod=KodUret.YeniKod();
+       kisaKod=KodUret.YeniKod();
   
          while (db.QueryValue("SELECT COUNT(*) FROM KodCache WHERE kisaKod=@0",kisaKod)>0)
              {
@@ -20,12 +20,14 @@
              }
 
          db.Execute("INSERT INTO Kategori(KategoriAdi,userID,kisaKod) VALUES (@0,@1,@2)",kategoriAdi,WebSecurity.CurrentUserId,kisaKod);
-         eklenenKategoriID=db.GetLastInsertId();
+         
      }
-    
-     db.Close();
-     Response.Write(eklenenKategoriID);
+    var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisaKod=@0",kisaKod);
+     Json.Write(queryKategori, Response.Output);
+     db.Close();   
+     Response.ContentType = "application/json";
      Response.End();
+    
 }
 
 

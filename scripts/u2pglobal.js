@@ -8,6 +8,7 @@
                     css: { 
                         border: 'none', 
                         padding: '15px', 
+                        
                         backgroundColor: '#000', 
                         '-webkit-border-radius': '10px', 
                         '-moz-border-radius': '10px', 
@@ -15,7 +16,7 @@
                         color: '#fff' 
                         },
 
-                        message: '<p> Lütfen Biraz Bekle...</p>'
+                        message: '<p>Biraz Bekle...</p>'
                         
                         }); 
 

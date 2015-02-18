@@ -40,13 +40,23 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
+            dataType: 'json',
             url: '/ajax/KategoriEkle' + '?KategoriAdi=' + kategoriAdi,
 
-            success: function (kategoriID) {
+            success: function (kategori) {
 
                 var liste = $('#listeKategori');
-
-                liste.append('<a href="#" class="list-group-item kategoriOgesi"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
+              
+                $('.kategoriOgesi').removeClass('active');
+                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
+                $('#lstUrl > tbody').find('tr').remove();
+                $('.list-group-item.kategoriOgesi.active').focus();
+                $('.kategoriOgesi').on('click', function () {
+                    var kod = $(this).attr('data-kisakod');
+                    $('.kategoriOgesi').removeClass('active');
+                    $(this).addClass('active');
+                    UrlYukle(kod);
+                });
 
             },
             error: function (msg) {
