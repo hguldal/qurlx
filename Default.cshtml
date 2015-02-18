@@ -11,17 +11,10 @@ var db=Database.Open("u2p");
 var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId);
 }
 
-<div class="row well">
-     <ul class="nav nav-pills">
-      <li role="presentation"><a href="#" id="btnKategoriEkle"><span class="glyphicon glyphicon-tag"></span> Kategori Ekle</a></li>
-      <li role="presentation"><a href="#" id="btnUrlEkle"><span class="glyphicon glyphicon-link"></span> URL Ekle</a></li>
-  
-</ul>
-    </div>  
 
 <div class="row">
     <div class="col-md-3 column">
-       <h3>Kategoriler</h3>
+       <h3>Listeler</h3>
          <div class="list-group" id="listeKategori">
             
             <a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="hepsi"><span class="glyphicon glyphicon-list-alt"></span> Tümü
@@ -59,6 +52,14 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
         </div>
 </div>
 
+<div class="row well">
+     <ul class="nav nav-pills">
+      <li role="presentation"><a href="#" id="btnKategoriEkle"><span class="glyphicon glyphicon-tag"></span> Liste Ekle</a></li>
+      <li role="presentation"><a href="#" id="btnUrlEkle"><span class="glyphicon glyphicon-link"></span> URL Ekle</a></li>
+         <li role="presentation"><a href="#"><span class="glyphicon glyphicon-trash"></span> Liste Sil</a></li>
+  
+</ul>
+    </div>  
 
 
 @section scripts

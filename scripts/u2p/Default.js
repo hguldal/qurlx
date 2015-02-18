@@ -32,7 +32,7 @@ $(document).ready(function () {
     });
 
     $('#btnKategoriEkle').click(function () {
-        var kategoriAdi = prompt("Kategoriye bir ad ver");
+        var kategoriAdi = prompt("Listene bir ad ver");
 
         if (kategoriAdi == null || kategoriAdi == '') {
             return false;
