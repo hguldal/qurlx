@@ -1,6 +1,6 @@
 ﻿@{
     var db=Database.Open("u2p");
-   
+   var queryKisi=db.QuerySingle("SELECT * FROM Profiles WHERE userID=@0",WebSecurity.CurrentUserId);
   
 }
 <!DOCTYPE html>
@@ -56,7 +56,10 @@
               </a>
 
               <ul class="dropdown-menu">
-                <li><a href="@Href("~/Hesap/ProfilGuncelle")">Profil Güncelle</a></li>
+                   <li><a href="@Href("~/Hesap/ProfilGuncelle")"><span class="glyphicon glyphicon-plus"></span> Yeni URL Oluştur</a></li>
+                <li><a href="@Href("~/Hesap/ProfilGuncelle")"><span class="glyphicon glyphicon-cog"></span> URL Ayarlarını Değiştir</a></li>
+                  <li><a href="@Href("~/Hesap/ProfilGuncelle")"><span class="glyphicon glyphicon-trash"></span> Sil</a></li>
+                
                 
               </ul>
             </li>
@@ -70,7 +73,7 @@
               <li class="dropdown">
 
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="glyphicon glyphicon-tag"></span> Liste
+                  <span class="glyphicon glyphicon-list"></span> Liste
                    
                    
                <b class="caret"></b>
@@ -78,14 +81,13 @@
               </a>
 
               <ul class="dropdown-menu">
-                <li><a href="@Href("~/Hesap/ProfilGuncelle")">Profil Güncelle</a></li>
+                <li><a href="#" id="btnKategoriEkle"><span class="glyphicon glyphicon-plus"></span> Yeni Liste Oluştur</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Liste Ayarlarını Değiştir</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#modalURLEkle"><span class="glyphicon glyphicon-trash"></span> Sil</a></li>
                 
               </ul>
             </li>
 
-
-
-            
           </ul>
         
           <ul class="nav navbar-nav navbar-right">
@@ -93,7 +95,7 @@
               <li class="dropdown">
 
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="glyphicon glyphicon-cog"></span>
+                  <span class="glyphicon glyphicon-user"></span> @queryKisi.Ad @queryKisi.Soyad
                    
                    
                <b class="caret"></b>

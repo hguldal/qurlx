@@ -2,32 +2,37 @@ $(document).ready(function () {
 
     UrlYukle('hepsi');
 
-    $("#btnUrlEkle").click(function () {
+    $("#btnURLEkle").click(function () {
 
-        var url = prompt("URL'ni buraya yapıştır");
-        var kategori = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
+        var url = $('#txtURLEkle').val();
+
         if (url == '' || url == null) {
+            HataMesaji('URL Girmedin');
             return false;
         }
-        else {
-            $.ajax({
-                type: "POST",
-                url: '/ajax/UrlEkle' + '?nUrl=' + url + '&kategori=' + kategori,
-                dataType: 'json',
-                success: function (msg) {
-                    var tr = $('<tr/>');
-                    tr.append('<td><h5><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + msg.url + '"> ' + msg.url + '</a></h5></td><td><h5><a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
-                    $('#lstUrl > tbody').prepend(tr);
+        var kategori = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
 
-                    var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
-                    urlAdedi = urlAdedi + 1;
-                    $('.list-group-item.active.kategoriOgesi > span.badge').html(urlAdedi);
-                },
-                error: function (msg) {
-                    HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
-                }
-            });
-        }
+        $.ajax({
+            type: "POST",
+            url: '/ajax/UrlEkle' + '?nUrl=' + url + '&kategori=' + kategori,
+            dataType: 'json',
+            success: function (msg) {
+                $('#modalURLEkle').modal('hide');
+                $('#txtURLEkle').val('');
+                var tr = $('<tr/>');
+                tr.append('<td><h5><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + msg.url + '"> ' + msg.url + '</a></h5></td><td><h5><a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
+                $('#lstUrl > tbody').prepend(tr);
+
+                var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
+                urlAdedi = urlAdedi + 1;
+                $('.list-group-item.active.kategoriOgesi > span.badge').html(urlAdedi);
+
+            },
+            error: function (msg) {
+                HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
+            }
+        });
+
 
     });
 
@@ -46,7 +51,7 @@ $(document).ready(function () {
             success: function (kategori) {
 
                 var liste = $('#listeKategori');
-              
+
                 $('.kategoriOgesi').removeClass('active');
                 liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
                 $('#lstUrl > tbody').find('tr').remove();
@@ -84,7 +89,7 @@ $(document).ready(function () {
 
                     var tr = $('<tr/>');
 
-                    tr.append('<td><h5><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + urls[i].url + '"> ' + urls[i].url + '</a></h5></td><td><h5><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '">' + location.href.replace('#', '') + urls[i].kisaKod + '</h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
+                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + urls[i].url + '"> ' + urls[i].url + '</a></td><td><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '">' + location.href.replace('#', '') + urls[i].kisaKod + '</td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
 
                     $('#lstUrl > tbody').prepend(tr);
 
@@ -98,6 +103,10 @@ $(document).ready(function () {
             }
         });
     }
+
+    $('#modalURLEkle').on('shown.bs.modal', function (e) {
+        $('#txtURLEkle').focus();
+    });
 
 });
 
