@@ -52,7 +52,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
         </div>
 </div>
 
-<div class="modal fade" id="modalURLEkle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="modalURLEkle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -71,6 +71,25 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
   </div>
 </div>
 
+
+<div class="modal" id="modalKategoriEkle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Liste Ekle</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" id="txtKategoriEkle" placeholder="Listene bir ad ver...">
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-primary" id="btnKategoriEkle">Tamam</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">İptal</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
 
 @section scripts
 {

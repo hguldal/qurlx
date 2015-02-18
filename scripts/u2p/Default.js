@@ -20,7 +20,7 @@ $(document).ready(function () {
                 $('#modalURLEkle').modal('hide');
                 $('#txtURLEkle').val('');
                 var tr = $('<tr/>');
-                tr.append('<td><h5><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + msg.url + '"> ' + msg.url + '</a></h5></td><td><h5><a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</h5></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
+                tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + msg.url + '"> ' + msg.url + '</a></td><td><a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
                 $('#lstUrl > tbody').prepend(tr);
 
                 var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
@@ -37,7 +37,7 @@ $(document).ready(function () {
     });
 
     $('#btnKategoriEkle').click(function () {
-        var kategoriAdi = prompt("Listene bir ad ver");
+        var kategoriAdi = $('#txtKategoriEkle').val();
 
         if (kategoriAdi == null || kategoriAdi == '') {
             return false;
@@ -51,7 +51,8 @@ $(document).ready(function () {
             success: function (kategori) {
 
                 var liste = $('#listeKategori');
-
+                $('#modalKategoriEkle').modal('hide')
+                $('#txtKategoriEkle').val('');
                 $('.kategoriOgesi').removeClass('active');
                 liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
                 $('#lstUrl > tbody').find('tr').remove();
@@ -108,5 +109,8 @@ $(document).ready(function () {
         $('#txtURLEkle').focus();
     });
 
+     $('#modalKategoriEkle').on('shown.bs.modal', function (e) {
+        $('#txtKategoriEkle').focus();
+    });
 });
 
