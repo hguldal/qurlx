@@ -17,7 +17,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
        <h3>Listeler</h3>
          <div class="list-group" id="listeKategori">
             
-            <a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="hepsi"><span class="glyphicon glyphicon-list-alt"></span> Tümü
+            <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="hepsi"><span class="glyphicon glyphicon-list-alt"></span> Tümü
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URL INNER JOIN URLKullanici ON URL.urlID=URLKullanici.urlID WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
                     
              </a>

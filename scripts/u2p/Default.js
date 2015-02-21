@@ -27,6 +27,10 @@ $(document).ready(function () {
                 urlAdedi = urlAdedi + 1;
                 $('.list-group-item.active.kategoriOgesi > span.badge').html(urlAdedi);
 
+                var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
+                toplamUrlAdedi = toplamUrlAdedi + 1;
+                $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
+
             },
             error: function (msg) {
                 HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
@@ -80,6 +84,9 @@ $(document).ready(function () {
     });
 
     function UrlYukle(kod) {
+
+        $('.kategoriOgesi').removeClass('active');
+        $('#listeKategori').find('[data-kisakod="' + kod + '"]').addClass('active');
         $.ajax({
             type: "POST",
             url: '/ajax/UrlListesi' + '?KisaKod=' + kod,
@@ -117,7 +124,7 @@ $(document).ready(function () {
 
         var kisaKod = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
 
-        if (confirm('Liste silinecek Emin misin ?')) {
+        if (confirm('Liste silinecek Emin misin ?') && kisaKod != 'hepsi') {
             $.ajax({
                 type: "POST",
                 dataType: 'json',
@@ -125,7 +132,7 @@ $(document).ready(function () {
 
                 success: function (msg) {
                     $('#listeKategori').find('.list-group-item.active.kategoriOgesi').remove();
-                    $('#lstUrl > tbody').find('tr').remove();
+                    UrlYukle('hepsi');
                     MesajKutusu('İşlem Tamam', 'Liste Başarıyla Silindi');
                 },
                 error: function (msg) {
@@ -134,7 +141,7 @@ $(document).ready(function () {
             });
         }
 
-    }
+    });
 
 });
 
