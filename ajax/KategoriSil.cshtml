@@ -14,9 +14,8 @@
 
      if (string.IsNullOrEmpty(kisaKod))
      {
-         Json.Write("Error", Response.Output);
          db.Close();   
-         Response.ContentType = "application/json";
+         Response.StatusCode=500;
          Response.End();
      }
      

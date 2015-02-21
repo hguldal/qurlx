@@ -109,8 +109,32 @@ $(document).ready(function () {
         $('#txtURLEkle').focus();
     });
 
-     $('#modalKategoriEkle').on('shown.bs.modal', function (e) {
+    $('#modalKategoriEkle').on('shown.bs.modal', function (e) {
         $('#txtKategoriEkle').focus();
     });
+
+    $('#menuKategoriSil').click(function () {
+
+        var kisaKod = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
+
+        if (confirm('Liste silinecek Emin misin ?')) {
+            $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: '/ajax/KategoriSil' + '?KisaKod=' + kisaKod,
+
+                success: function (msg) {
+                    $('#listeKategori').find('.list-group-item.active.kategoriOgesi').remove();
+                    $('#lstUrl > tbody').find('tr').remove();
+                    MesajKutusu('İşlem Tamam', 'Liste Başarıyla Silindi');
+                },
+                error: function (msg) {
+                    HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
+                }
+            });
+        }
+
+    }
+
 });
 
