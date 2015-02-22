@@ -1,0 +1,42 @@
+﻿@{
+  
+  if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+     var db=Database.Open("u2p");
+ 
+     var kisaKod=Request["KisaKod"];
+
+     if (string.IsNullOrEmpty(kisaKod))
+     {
+         db.Close();   
+         Response.StatusCode=500;
+         Response.End();
+     }
+     
+     using (db)
+     {
+       var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE UserID=@0 AND KisaKod=@1",WebSecurity.CurrentUserId,kisaKod);
+      
+       if (queryKategori==null)
+       {
+         db.Close();   
+         Response.StatusCode=500;
+         Response.End();
+       }
+       
+       db.Execute("DELETE FROM Kategori WHERE UserID=@0 AND kategoriID=@1",WebSecurity.CurrentUserId,queryKategori.kategoriID);
+       db.Execute("DELETE FROM UrlKategori WHERE kategoriID=@0",queryKategori.kategoriID);
+       Json.Write("OK", Response.Output);
+       db.Close();   
+       Response.ContentType = "application/json";
+       Response.End();
+    }
+
+    
+}

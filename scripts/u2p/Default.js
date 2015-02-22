@@ -5,6 +5,7 @@ $(document).ready(function () {
     $("#btnURLEkle").click(function () {
 
         var url = $('#txtURLEkle').val();
+        var urlAciklama = $('#txtURLAciklama').val();
 
         if (url == '' || url == null) {
             HataMesaji('URL Girmedin');
@@ -14,13 +15,13 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/ajax/UrlEkle' + '?nUrl=' + url + '&kategori=' + kategori,
+            url: '/ajax/UrlEkle' + '?nUrl=' + url + '&kategori=' + kategori + '&aciklama=' + urlAciklama,
             dataType: 'json',
             success: function (msg) {
                 $('#modalURLEkle').modal('hide');
                 $('#txtURLEkle').val('');
                 var tr = $('<tr/>');
-                tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</td><td><a href="' + msg.url + '"> ' + msg.url + '</a></td><td><a href="#" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>');
+                tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urlAciklama+ '<br> <a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</td><td><a href="' + msg.url + '"> ' + msg.url + '</a></td><td><a href="#" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>');
                 $('#lstUrl > tbody').prepend(tr);
 
                 var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
@@ -58,7 +59,7 @@ $(document).ready(function () {
                 $('#modalKategoriEkle').modal('hide')
                 $('#txtKategoriEkle').val('');
                 $('.kategoriOgesi').removeClass('active');
-                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '" data-kategoriAdi="'+ kategori.kategoriAdi +'"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
+                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '" data-kategoriAdi="' + kategori.kategoriAdi + '"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
                 $('#lstUrl > tbody').find('tr').remove();
                 $('.list-group-item.kategoriOgesi.active').focus();
                 $('.kategoriOgesi').on('click', function () {
@@ -98,7 +99,7 @@ $(document).ready(function () {
 
                     var tr = $('<tr/>');
 
-                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '"> ' + location.href.replace('#', '') + urls[i].kisaKod + '</a></td><td><a href="' + urls[i].url + '">' + urls[i].url + '</td><td><a href="#" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>');
+                    tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urls[i].aciklama + '<br><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '"> ' + location.href.replace('#', '') + urls[i].kisaKod + '</a></td><td><a href="' + urls[i].url + '">' + urls[i].url + '</td><td><a href="#" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>');
 
                     $('#lstUrl > tbody').prepend(tr);
 
@@ -114,7 +115,7 @@ $(document).ready(function () {
     }
 
     $('#modalURLEkle').on('shown.bs.modal', function (e) {
-        $('#txtURLEkle').focus();
+        $('#txtURLAciklama').focus();
     });
 
     $('#modalKategoriEkle').on('shown.bs.modal', function (e) {
@@ -125,25 +126,25 @@ $(document).ready(function () {
 
         var kisaKod = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
         if (kisaKod != 'hepsi') {
-            
-       
-        if (confirm('Liste silinecek Emin misin ?')) {
-            $.ajax({
-                type: "POST",
-                dataType: 'json',
-                url: '/ajax/KategoriSil' + '?KisaKod=' + kisaKod,
 
-                success: function (msg) {
-                    $('#listeKategori').find('.list-group-item.active.kategoriOgesi').remove();
-                    UrlYukle('hepsi');
-                    MesajKutusu('İşlem Tamam', 'Liste Başarıyla Silindi');
-                },
-                error: function (msg) {
-                    HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
-                }
-            });
-        } 
-        
+
+            if (confirm('Liste silinecek Emin misin ?')) {
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: '/ajax/KategoriSil' + '?KisaKod=' + kisaKod,
+
+                    success: function (msg) {
+                        $('#listeKategori').find('.list-group-item.active.kategoriOgesi').remove();
+                        UrlYukle('hepsi');
+                        MesajKutusu('İşlem Tamam', 'Liste Başarıyla Silindi');
+                    },
+                    error: function (msg) {
+                        HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
+                    }
+                });
+            }
+
         }
 
     });

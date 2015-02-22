@@ -3,6 +3,7 @@
      var db=Database.Open("u2p");
      var url=Request["nUrl"];   
      var kategori=Request["kategori"];
+     var aciklama=Request["aciklama"];
 
      if (string.IsNullOrEmpty(url))
      {
@@ -97,7 +98,7 @@
                     }
                     
                     //url 'yi ekle
-                    db.Execute("INSERT INTO Url(olusturmaTarihi,url,kisaKod) VALUES(@0,@1,@2)",DateTime.Now,url,urlKisaKod);
+                    db.Execute("INSERT INTO Url(olusturmaTarihi,url,kisaKod,aciklama) VALUES(@0,@1,@2,@3)",DateTime.Now,url,urlKisaKod,aciklama);
                     
                     var queryEklenenUrl=db.QuerySingle("SELECT * FROM Url WHERE url=@0",url);
                     
