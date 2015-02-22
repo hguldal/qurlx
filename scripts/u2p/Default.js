@@ -120,6 +120,10 @@ $(document).ready(function () {
                                     $(satir).remove();
                                 });
 
+                                var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
+                                toplamUrlAdedi = toplamUrlAdedi - 1;
+                                 $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
+
                             },
                             error: function (msg) {
                                 HataMesaji("Unexpected Error !");
