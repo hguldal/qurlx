@@ -14,10 +14,10 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
 
 <div class="row">
     <div class="col-md-3 column">
-       <h3>Listeler</h3><hr>
+       <h3>Lists</h3><hr>
          <div class="list-group" id="listeKategori">
             
-            <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="hepsi" data-kategoriAdi="Tüm URL'ler"><span class="glyphicon glyphicon-list-alt"></span> Tümü
+            <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="hepsi" data-kategoriAdi="All URLs"><span class="glyphicon glyphicon-list-alt"></span> All
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URL INNER JOIN URLKullanici ON URL.urlID=URLKullanici.urlID WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
                     
              </a>
@@ -40,10 +40,10 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
              
         </div>
     <div class="col-md-9 column">
-         <h3 id="kategoriAdi">Tüm URL'ler</h3><hr>   
+         <h3 id="kategoriAdi">All URLs</h3><hr>   
     <table class="table table-hover table-striped" id="lstUrl">
         <thead>
-            <tr><td style="width:15px"></td><td style="width:200px"><strong>URL</strong></td><td><strong>Uzun URL</strong></td><td></td></tr>
+            <tr><td style="width:15px"></td><td style="width:200px"><strong>URL</strong></td><td><strong>Original URL</strong></td><td></td></tr>
             </thead>
         <tbody>
        
