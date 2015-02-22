@@ -59,7 +59,7 @@ $(document).ready(function () {
                 $('#modalKategoriEkle').modal('hide')
                 $('#txtKategoriEkle').val('');
                 $('.kategoriOgesi').removeClass('active');
-                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '" data-kategoriAdi="' + kategori.kategoriAdi + '"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
+                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '" data-kategoriAdi="' + kategori.kategoriAdi + '">' + kategoriAdi + '<span class="badge">0</span><br>(' +  location.href + kategori.kisaKod + ')</a>');
                 $('#lstUrl > tbody').find('tr').remove();
                 $('.list-group-item.kategoriOgesi.active').focus();
                 $('.kategoriOgesi').on('click', function () {
