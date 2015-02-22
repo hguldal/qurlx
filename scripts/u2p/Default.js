@@ -20,7 +20,7 @@ $(document).ready(function () {
                 $('#modalURLEkle').modal('hide');
                 $('#txtURLEkle').val('');
                 var tr = $('<tr/>');
-                tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + msg.url + '"> ' + msg.url + '</a></td><td><a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
+                tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</td><td><a href="' + msg.url + '"> ' + msg.url + '</a></td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
                 $('#lstUrl > tbody').prepend(tr);
 
                 var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
@@ -58,7 +58,7 @@ $(document).ready(function () {
                 $('#modalKategoriEkle').modal('hide')
                 $('#txtKategoriEkle').val('');
                 $('.kategoriOgesi').removeClass('active');
-                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
+                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '" data-kategoriAdi="'+ kategori.kategoriAdi +'"><span class="glyphicon glyphicon-tag"></span> ' + kategoriAdi + '<span class="badge">0</span></a>');
                 $('#lstUrl > tbody').find('tr').remove();
                 $('.list-group-item.kategoriOgesi.active').focus();
                 $('.kategoriOgesi').on('click', function () {
@@ -81,6 +81,7 @@ $(document).ready(function () {
         $('.kategoriOgesi').removeClass('active');
         $(this).addClass('active');
         UrlYukle(kod);
+        $('#kategoriAdi').html($(this).attr('data-kategoriAdi'));
     });
 
     function UrlYukle(kod) {
@@ -97,7 +98,7 @@ $(document).ready(function () {
 
                     var tr = $('<tr/>');
 
-                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + urls[i].url + '"> ' + urls[i].url + '</a></td><td><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '">' + location.href.replace('#', '') + urls[i].kisaKod + '</td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
+                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '"> ' + location.href.replace('#', '') + urls[i].kisaKod + '</a></td><td><a href="' + urls[i].url + '">' + urls[i].url + '</td><td><a href="#" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-cog"></span></a></td>');
 
                     $('#lstUrl > tbody').prepend(tr);
 
@@ -123,8 +124,10 @@ $(document).ready(function () {
     $('#menuKategoriSil').click(function () {
 
         var kisaKod = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
-
-        if (confirm('Liste silinecek Emin misin ?') && kisaKod != 'hepsi') {
+        if (kisaKod != 'hepsi') {
+            
+       
+        if (confirm('Liste silinecek Emin misin ?')) {
             $.ajax({
                 type: "POST",
                 dataType: 'json',
@@ -139,6 +142,8 @@ $(document).ready(function () {
                     HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
                 }
             });
+        } 
+        
         }
 
     });
