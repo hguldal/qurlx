@@ -14,33 +14,33 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
 
 <div class="row">
     <div class="col-md-3 column">
-       <h3>Lists</h3><hr>
+      
          <div class="list-group" id="listeKategori">
             
-            <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="hepsi" data-kategoriAdi="All URLs"><span class="glyphicon glyphicon-list-alt"></span> All
+            <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="hepsi" data-kategoriAdi="All URLs"><strong>All URLs</strong>
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URL INNER JOIN URLKullanici ON URL.urlID=URLKullanici.urlID WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
                     
              </a>
-               
-
+  
             @foreach (var item in queryKategoriler)
-            {
-               
+            {             
                  <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="@item.kisaKod" data-kategoriAdi="@item.kategoriAdi"><strong>@item.kategoriAdi</strong>
                    <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URLKategori WHERE kategoriID=@0",item.kategoriID)</span><br>@Request.Url.AbsoluteUri.Replace("#","")@item.kisaKod
                 </a>
                     
             }
-            
-            
-            
+          
 </div>
-        
-                    
-             
+          
         </div>
     <div class="col-md-9 column">
-         <h3 id="kategoriAdi">All URLs</h3><hr>   
+         <h3 id="kategoriAdi">All URLs</h3><hr>
+        <div class="btn-toolbar" role="toolbar" aria-label="...">
+              <div class="btn-group" role="group" aria-label="..."><button class="btn btn-xs btn-default">Add URL</button></div>
+              <div class="btn-group" role="group" aria-label="...">Delete URL</div>
+              <div class="btn-group" role="group" aria-label="...">Delete List</div>
+        </div>
+
     <table class="table table-hover table-striped" id="lstUrl">
         <thead>
             <tr><td style="width:15px"></td><td style="width:200px"><strong>URL</strong></td><td><strong>Original URL</strong></td><td></td></tr>

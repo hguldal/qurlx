@@ -59,7 +59,7 @@ $(document).ready(function () {
                 $('#modalKategoriEkle').modal('hide')
                 $('#txtKategoriEkle').val('');
                 $('.kategoriOgesi').removeClass('active');
-                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '" data-kategoriAdi="' + kategori.kategoriAdi + '">' + kategoriAdi + '<span class="badge">0</span><br>(' +  location.href + kategori.kisaKod + ')</a>');
+                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '" data-kategoriAdi="' + kategori.kategoriAdi + '"><strong>' + kategoriAdi + '</strong><span class="badge">0</span><br>' + location.href.replace('#', '') + kategori.kisaKod + '</a>');
                 $('#lstUrl > tbody').find('tr').remove();
                 $('.list-group-item.kategoriOgesi.active').focus();
                 $('.kategoriOgesi').on('click', function () {
@@ -79,10 +79,16 @@ $(document).ready(function () {
 
     $('.kategoriOgesi').click(function () {
         var kod = $(this).attr('data-kisakod');
+        if (kod == 'hepsi') {
+            kod = '';
+        }
         $('.kategoriOgesi').removeClass('active');
         $(this).addClass('active');
         UrlYukle(kod);
-        $('#kategoriAdi').html($(this).attr('data-kategoriAdi'));
+        if (kod == 'hepsi') {
+            kod = '';
+        }
+        $('#kategoriAdi').html($(this).attr('data-kategoriAdi') + '<br><small>' + location.href.replace('#', '') + kod + '</small>');
     });
 
     function UrlYukle(kod) {
@@ -115,14 +121,14 @@ $(document).ready(function () {
                             url: '/ajax/UrlSil?' + 'KisaKod=' + kisakod,
                             dataType: 'json',
                             success: function (msg) {
-                               
-                                $(satir).animate({backgroundColor:'gray'}, 150).fadeOut(150,function() {
+
+                                $(satir).animate({ backgroundColor: 'gray' }, 150).fadeOut(150, function () {
                                     $(satir).remove();
                                 });
 
                                 var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
                                 toplamUrlAdedi = toplamUrlAdedi - 1;
-                                 $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
+                                $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
 
                             },
                             error: function (msg) {
@@ -132,8 +138,8 @@ $(document).ready(function () {
 
 
 
-                       
-                        
+
+
                     }
                 });
 
