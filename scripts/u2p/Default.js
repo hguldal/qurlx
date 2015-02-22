@@ -99,11 +99,40 @@ $(document).ready(function () {
 
                     var tr = $('<tr/>');
 
-                    tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urls[i].aciklama + '<br><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '"> ' + location.href.replace('#', '') + urls[i].kisaKod + '</a></td><td><a href="' + urls[i].url + '">' + urls[i].url + '</td><td><a href="#" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil"><span class="glyphicon glyphicon-trash"></span></a></td>');
+                    tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urls[i].aciklama + '<br><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '"> ' + location.href.replace('#', '') + urls[i].kisaKod + '</a></td><td><a href="' + urls[i].url + '">' + urls[i].url + '</td><td><a href="#" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" data-kisaKod=' + urls[i].kisaKod + '><span class="glyphicon glyphicon-trash"></span></a></td>');
 
                     $('#lstUrl > tbody').prepend(tr);
 
+
                 }
+                $(".lnkUrlSil").on("click", function () {
+                    var kisakod = $(this).attr('data-kisakod');
+                    var satir = $(this).closest('tr');
+                    if (confirm('Are you sure ?')) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: '/ajax/UrlSil?' + 'KisaKod=' + kisakod,
+                            dataType: 'json',
+                            success: function (msg) {
+                               
+                                $(satir).animate({backgroundColor:'gray'}, 150).fadeOut(150,function() {
+                                    $(satir).remove();
+                                });
+
+                            },
+                            error: function (msg) {
+                                HataMesaji("Unexpected Error !");
+                            }
+                        });
+
+
+
+                       
+                        
+                    }
+                });
+
 
             },
             error: function (msg) {
@@ -147,9 +176,9 @@ $(document).ready(function () {
 
     });
 
-    $('.lnkUrlSil').click(function () {
-        alert('evt');
-    });
+
+
+
 
 });
 

@@ -21,7 +21,7 @@
      
      using (db)
      {
-       var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE KisaKod=@1",kisaKod);
+       var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE KisaKod=@0",kisaKod);
       
        if (queryUrl==null)
        {
