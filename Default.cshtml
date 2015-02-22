@@ -27,6 +27,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
                  <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="@item.kisaKod" data-kategoriAdi="@item.kategoriAdi"><strong>@item.kategoriAdi</strong>
                    <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URLKategori WHERE kategoriID=@0",item.kategoriID)</span><br>@Request.Url.AbsoluteUri.Replace("#","")@item.kisaKod
                 </a>
+                
                     
             }
           
@@ -35,11 +36,9 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
         </div>
     <div class="col-md-9 column">
          <h3 id="kategoriAdi">All URLs</h3><hr>
-        <div class="btn-toolbar" role="toolbar" aria-label="...">
-              <div class="btn-group" role="group" aria-label="..."><button class="btn btn-xs btn-default">Add URL</button></div>
-              <div class="btn-group" role="group" aria-label="...">Delete URL</div>
-              <div class="btn-group" role="group" aria-label="...">Delete List</div>
-        </div>
+        
+              <button class="btn btn-xs btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus-sign btnURLEkle"></span> Add URL</button>
+              
 
     <table class="table table-hover table-striped" id="lstUrl">
         <thead>

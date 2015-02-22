@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    //sayfa yüklendiğinde tüm urlleri göster
     UrlYukle('hepsi');
 
     $("#btnURLEkle").click(function () {
@@ -18,8 +18,9 @@ $(document).ready(function () {
             url: '/ajax/UrlEkle' + '?nUrl=' + url + '&kategori=' + kategori + '&aciklama=' + urlAciklama,
             dataType: 'json',
             success: function (msg) {
-                $('#modalURLEkle').modal('hide');
+                $('#modalURLEkle').modal('hide');                
                 $('#txtURLEkle').val('');
+                $('#txtURLAciklama').val('');
                 var tr = $('<tr/>');
                 tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urlAciklama + '<br> <a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</td><td><a href="' + msg.url + '"> ' + msg.url + '</a></td><td><a href="#" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash lnkUrlSil"></span></a></td>');
                 $('#lstUrl > tbody').prepend(tr);
@@ -62,6 +63,7 @@ $(document).ready(function () {
                 liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '" data-kategoriAdi="' + kategori.kategoriAdi + '"><strong>' + kategoriAdi + '</strong><span class="badge">0</span><br>' + location.href.replace('#', '') + kategori.kisaKod + '</a>');
                 $('#lstUrl > tbody').find('tr').remove();
                 $('.list-group-item.kategoriOgesi.active').focus();
+
                 $('.kategoriOgesi').on('click', function () {
                     var kod = $(this).attr('data-kisakod');
                     $('.kategoriOgesi').removeClass('active');
@@ -79,28 +81,23 @@ $(document).ready(function () {
 
     $('.kategoriOgesi').click(function () {
         var kod = $(this).attr('data-kisakod');
-        if (kod == 'hepsi') {
-            kod = '';
-        }
         $('.kategoriOgesi').removeClass('active');
         $(this).addClass('active');
         UrlYukle(kod);
-        if (kod == 'hepsi') {
-            kod = '';
-        }
-        $('#kategoriAdi').html($(this).attr('data-kategoriAdi') + '<br><small>' + location.href.replace('#', '') + kod + '</small>');
+
     });
 
     function UrlYukle(kod) {
 
-        $('.kategoriOgesi').removeClass('active');
-        $('#listeKategori').find('[data-kisakod="' + kod + '"]').addClass('active');
         $.ajax({
             type: "POST",
             url: '/ajax/UrlListesi' + '?KisaKod=' + kod,
 
             success: function (urls) {
+                //tabloyu temizle
                 $('#lstUrl > tbody').find('tr').remove();
+
+                //urlleri tek tek tabloya ekle
                 for (var i = 0; i < urls.length; i++) {
 
                     var tr = $('<tr/>');
@@ -109,8 +106,18 @@ $(document).ready(function () {
 
                     $('#lstUrl > tbody').prepend(tr);
 
-
                 }
+                //yukarıda liste adını ve adresi göster
+                if (kod != 'hepsi') {
+                         $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="'+ kod +'"]').attr('data-kategoriAdi') + '<br><small>' + location.href.replace('#', '') + kod + '</small>');
+                         }
+                         else {
+                         $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="hepsi"]').attr('data-kategoriAdi'));
+                       }
+                //listeden seçili hale getir
+                   $('.kategoriOgesi').removeClass('active');
+                   $('#listeKategori').find('[data-kisakod="' + kod + '"]').addClass('active');
+
                 $(".lnkUrlSil").on("click", function () {
                     var kisakod = $(this).attr('data-kisakod');
                     var satir = $(this).closest('tr');
