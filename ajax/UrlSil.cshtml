@@ -21,17 +21,17 @@
      
      using (db)
      {
-       var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE UserID=@0 AND KisaKod=@1",WebSecurity.CurrentUserId,kisaKod);
+       var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE KisaKod=@1",kisaKod);
       
-       if (queryKategori==null)
+       if (queryUrl==null)
        {
          db.Close();   
          Response.StatusCode=500;
          Response.End();
        }
        
-       db.Execute("DELETE FROM Kategori WHERE UserID=@0 AND kategoriID=@1",WebSecurity.CurrentUserId,queryKategori.kategoriID);
-       db.Execute("DELETE FROM UrlKategori WHERE kategoriID=@0",queryKategori.kategoriID);
+       db.Execute("DELETE FROM UrlKullanici WHERE urlID=@0 AND UserID=@1",queryUrl.urlID,WebSecurity.CurrentUserId);
+       db.Execute("DELETE FROM UrlYonetici WHERE urlID=@0 AND UserID=@1",queryUrl.urlID,WebSecurity.CurrentUserId);
        Json.Write("OK", Response.Output);
        db.Close();   
        Response.ContentType = "application/json";
