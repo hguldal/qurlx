@@ -11,10 +11,10 @@ var db=Database.Open("u2p");
 var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId);
 }
 
-<h2 id="kategoriAdi">Tüm URL'ler</h2><hr>   
+
 <div class="row">
     <div class="col-md-3 column">
-       <h3>Listeler</h3>
+       <h3>Listeler</h3><hr>
          <div class="list-group" id="listeKategori">
             
             <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="hepsi" data-kategoriAdi="Tüm URL'ler"><span class="glyphicon glyphicon-list-alt"></span> Tümü
@@ -40,7 +40,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
              
         </div>
     <div class="col-md-9 column">
-         
+         <h3 id="kategoriAdi">Tüm URL'ler</h3><hr>   
     <table class="table table-hover table-striped" id="lstUrl">
         <thead>
             <tr><td style="width:15px"></td><td style="width:200px"><strong>URL</strong></td><td><strong>Uzun URL</strong></td><td></td></tr>
@@ -98,8 +98,6 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
     
     <script src="@Href("~/scripts/u2p/Default.js")"></script>
         
-     
-
 }
 
 
