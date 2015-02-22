@@ -34,7 +34,7 @@ $(document).ready(function () {
 
             },
             error: function (msg) {
-                HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
+                HataMesaji("Unexpected Error !");
             }
         });
 
@@ -71,7 +71,7 @@ $(document).ready(function () {
 
             },
             error: function (msg) {
-                HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
+                HataMesaji("Unexpected Error !");
             }
         });
 
@@ -103,13 +103,11 @@ $(document).ready(function () {
 
                     $('#lstUrl > tbody').prepend(tr);
 
-
                 }
-
 
             },
             error: function (msg) {
-                HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
+                HataMesaji("Unexpected Error !");
             }
         });
     }
@@ -128,7 +126,7 @@ $(document).ready(function () {
         if (kisaKod != 'hepsi') {
 
 
-            if (confirm('Liste silinecek Emin misin ?')) {
+            if (confirm('Are you sure ?')) {
                 $.ajax({
                     type: "POST",
                     dataType: 'json',
@@ -137,10 +135,10 @@ $(document).ready(function () {
                     success: function (msg) {
                         $('#listeKategori').find('.list-group-item.active.kategoriOgesi').remove();
                         UrlYukle('hepsi');
-                        MesajKutusu('İşlem Tamam', 'Liste Başarıyla Silindi');
+                        MesajKutusu('İşlem Tamam', 'List was deleted successfuly');
                     },
                     error: function (msg) {
-                        HataMesaji("Beklenmeyen Bir Hata Meydana Geldi");
+                        HataMesaji("Unexpected Error !");
                     }
                 });
             }
