@@ -115,10 +115,7 @@ $(document).ready(function () {
                          $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="hepsi"]').attr('data-kategoriAdi'));
                        }
                 //listeden seçili hale getir
-                   $('.kategoriOgesi').removeClass('active');
-                   $('#listeKategori').find('[data-kisakod="' + kod + '"]').addClass('active');
-
-                $(".lnkUrlSil").on("click", function () {
+            $(".lnkUrlSil").on("click", function () {
                     var kisakod = $(this).attr('data-kisakod');
                     var satir = $(this).closest('tr');
                     if (confirm('Are you sure ?')) {
@@ -142,9 +139,6 @@ $(document).ready(function () {
                                 HataMesaji("Unexpected Error !");
                             }
                         });
-
-
-
 
 
                     }
@@ -192,10 +186,6 @@ $(document).ready(function () {
         }
 
     });
-
-
-
-
 
 });
 

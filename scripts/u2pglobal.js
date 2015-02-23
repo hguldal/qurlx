@@ -23,7 +23,7 @@
 
                   },
                  ajaxStop: function() {
-                      setTimeout($.unblockUI, 200);
+                      setTimeout($.unblockUI, 100);
                      
                        }    
             });

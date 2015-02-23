@@ -17,7 +17,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
       
          <div class="list-group" id="listeKategori">
             
-            <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="hepsi" data-kategoriAdi="All URLs"><strong>All URLs</strong>
+            <a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="hepsi" data-kategoriAdi="All URLs"><strong>All URLs</strong>
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URL INNER JOIN URLKullanici ON URL.urlID=URLKullanici.urlID WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
                     
              </a>
@@ -37,7 +37,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
     <div class="col-md-9 column">
          <h3 id="kategoriAdi">All URLs</h3><hr>
         
-              <button class="btn btn-xs btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus-sign btnURLEkle"></span> Add URL</button>
+              <button class="btn btn-xs btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus-sign"></span> Add URL</button>
               
 
     <table class="table table-hover table-striped" id="lstUrl">
