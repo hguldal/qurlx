@@ -18,7 +18,7 @@ $(document).ready(function () {
             url: '/ajax/UrlEkle' + '?nUrl=' + url + '&kategori=' + kategori + '&aciklama=' + urlAciklama,
             dataType: 'json',
             success: function (msg) {
-                $('#modalURLEkle').modal('hide');                
+                $('#modalURLEkle').modal('hide');
                 $('#txtURLEkle').val('');
                 $('#txtURLAciklama').val('');
                 var tr = $('<tr/>');
@@ -109,15 +109,16 @@ $(document).ready(function () {
                 }
                 //yukarıda liste adını ve adresi göster
                 if (kod != 'hepsi') {
-                         $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="'+ kod +'"]').attr('data-kategoriAdi') + '<br><small>' + location.href.replace('#', '') + kod + '</small>');
-                         }
-                         else {
-                         $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="hepsi"]').attr('data-kategoriAdi'));
-                       }
+                    $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="' + kod + '"]').attr('data-kategoriAdi') + '<br><small>' + location.href.replace('#', '') + kod + '</small>');
+                }
+                else {
+                    $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="hepsi"]').attr('data-kategoriAdi'));
+                }
                 //listeden seçili hale getir
-            $(".lnkUrlSil").on("click", function () {
+                $(".lnkUrlSil").on("click", function () {
                     var kisakod = $(this).attr('data-kisakod');
                     var satir = $(this).closest('tr');
+
                     if (confirm('Are you sure ?')) {
 
                         $.ajax({
@@ -133,7 +134,7 @@ $(document).ready(function () {
                                 var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
                                 toplamUrlAdedi = toplamUrlAdedi - 1;
                                 $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
-
+                                
                             },
                             error: function (msg) {
                                 HataMesaji("Unexpected Error !");
@@ -186,6 +187,7 @@ $(document).ready(function () {
         }
 
     });
+
 
 });
 
