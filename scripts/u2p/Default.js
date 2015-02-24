@@ -154,7 +154,6 @@ $(document).ready(function () {
         var kisaKod = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
         if (kisaKod != 'hepsi') {
 
-
             if (confirm('Are you sure ?')) {
                 $.ajax({
                     type: "POST",

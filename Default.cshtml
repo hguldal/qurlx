@@ -13,8 +13,9 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
 
 
 <div class="row">
+    
     <div class="col-md-3 column">
-      
+    <h2>My Lists</h2>
          <div class="list-group" id="listeKategori">
             
             <a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="hepsi" data-kategoriAdi="All URLs"><strong>All URLs</strong>
@@ -37,8 +38,8 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
         
           
         </div>
-    <div class="col-md-9 column">
-         <h3 id="kategoriAdi">All URLs</h3><hr>
+    <div class="col-md-6 column">
+         <h2 id="kategoriAdi">URLs</h2><hr>
         
               <button class="btn btn-xs btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus-sign"></span> Add New URL</button>
               <br>
@@ -52,6 +53,11 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
             </tbody>
     </table>
         </div>
+
+    <div class="col-md-3 column">
+        <h2>Most Popular</h2>
+        <hr>
+     </div>
 </div>
 
 <div class="modal" id="modalURLEkle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
