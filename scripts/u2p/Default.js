@@ -3,41 +3,41 @@ $(document).ready(function () {
     UrlYukle('hepsi');
 
     $('body').on('click', '.kategoriOgesi', function () {
-         var kod = $(this).attr('data-kisakod');
-                    $('.kategoriOgesi').removeClass('active');
-                    $(this).addClass('active');
-                    UrlYukle(kod);
+        var kod = $(this).attr('data-kisakod');
+        $('.kategoriOgesi').removeClass('active');
+        $(this).addClass('active');
+        UrlYukle(kod);
     });
 
     $('body').on('click', '.lnkUrlSil', function () {
-                var kisakod = $(this).attr('data-kisakod');
-                var satir = $(this).closest('tr');
+        var kisakod = $(this).attr('data-kisakod');
+        var satir = $(this).closest('tr');
 
-                    if (confirm('Are you sure ?')) {
+        if (confirm('Are you sure ?')) {
 
-                        $.ajax({
-                            type: "POST",
-                            url: '/ajax/UrlSil?' + 'KisaKod=' + kisakod,
-                            dataType: 'json',
-                            success: function (msg) {
+            $.ajax({
+                type: "POST",
+                url: '/ajax/UrlSil?' + 'KisaKod=' + kisakod,
+                dataType: 'json',
+                success: function (msg) {
 
-                                $(satir).animate({ backgroundColor: 'gray' }, 150).fadeOut(150, function () {
-                                    $(satir).remove();
-                                });
+                    $(satir).animate({ backgroundColor: 'gray' }, 150).fadeOut(150, function () {
+                        $(satir).remove();
+                    });
 
-                                var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
-                                toplamUrlAdedi = toplamUrlAdedi - 1;
-                                $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
+                    var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
+                    toplamUrlAdedi = toplamUrlAdedi - 1;
+                    $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
 
-                            },
-                            error: function (msg) {
-                                HataMesaji("Unexpected Error !");
-                            }
-                        });
+                },
+                error: function (msg) {
+                    HataMesaji("Unexpected Error !");
+                }
+            });
 
 
-                    }
-        
+        }
+
     });
 
     $("#btnURLEkle").click(function () {
@@ -60,7 +60,7 @@ $(document).ready(function () {
                 $('#txtURLEkle').val('');
                 $('#txtURLAciklama').val('');
                 var tr = $('<tr/>');
-                tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urlAciklama + '<br> <a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</td><td><a href="' + msg.url + '"> ' + msg.url + '</a></td><td><a href="#" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" data-kisakod="' + msg.kisaKod +'"><span class="glyphicon glyphicon-trash"></span></a></td>');
+                tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urlAciklama + '</td><td><a href="' + location.href.replace('#', '') + msg.kisaKod + '" title="' + msg.url + '" > ' + location.href.replace('#', '') + msg.kisaKod + '</a></td><td><a href="#" class="btn btn-xs btn-info" title="Open URL Page"><span class="glyphicon glyphicon-tasks"></span> Open URL Page</a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" title="Delete URL" data-kisakod="' + msg.kisaKod + '"><span class="glyphicon glyphicon-trash"></span> Delete URL </a></td>');
                 $('#lstUrl > tbody').prepend(tr);
 
                 var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
@@ -127,7 +127,7 @@ $(document).ready(function () {
 
                     var tr = $('<tr/>');
 
-                    tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urls[i].aciklama + '<br><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '"> ' + location.href.replace('#', '') + urls[i].kisaKod + '</a></td><td><a href="' + urls[i].url + '">' + urls[i].url + '</td><td><a href="#" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" data-kisaKod=' + urls[i].kisaKod + '><span class="glyphicon glyphicon-trash"></span></a></td>');
+                    tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urls[i].aciklama + '</td><td><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '" title="' + urls[i].url + '">' + location.href.replace('#', '') + urls[i].kisaKod + '</td><td><a href="#" class="btn btn-info btn-xs" title="Open URL Page"><span class="glyphicon glyphicon-tasks"></span> Open URL Page</a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" title="Delete URL" data-kisaKod=' + urls[i].kisaKod + '><span class="glyphicon glyphicon-trash"></span> Delete URL</a></td>');
 
                     $('#lstUrl > tbody').prepend(tr);
 
@@ -138,8 +138,9 @@ $(document).ready(function () {
                 }
                 else {
                     $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="hepsi"]').attr('data-kategoriAdi'));
+                    $('#listeKategori>[data-kisaKod="hepsi"]').addClass('active');
                 }
-               
+
 
             },
             error: function (msg) {
