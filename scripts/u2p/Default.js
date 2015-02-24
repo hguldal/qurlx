@@ -1,6 +1,44 @@
 $(document).ready(function () {
-    //sayfa yüklendiğinde tüm urlleri göster
+
     UrlYukle('hepsi');
+
+    $('body').on('click', '.kategoriOgesi', function () {
+         var kod = $(this).attr('data-kisakod');
+                    $('.kategoriOgesi').removeClass('active');
+                    $(this).addClass('active');
+                    UrlYukle(kod);
+    });
+
+    $('body').on('click', '.lnkUrlSil', function () {
+                var kisakod = $(this).attr('data-kisakod');
+                var satir = $(this).closest('tr');
+
+                    if (confirm('Are you sure ?')) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: '/ajax/UrlSil?' + 'KisaKod=' + kisakod,
+                            dataType: 'json',
+                            success: function (msg) {
+
+                                $(satir).animate({ backgroundColor: 'gray' }, 150).fadeOut(150, function () {
+                                    $(satir).remove();
+                                });
+
+                                var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
+                                toplamUrlAdedi = toplamUrlAdedi - 1;
+                                $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
+
+                            },
+                            error: function (msg) {
+                                HataMesaji("Unexpected Error !");
+                            }
+                        });
+
+
+                    }
+        
+    });
 
     $("#btnURLEkle").click(function () {
 
@@ -22,7 +60,7 @@ $(document).ready(function () {
                 $('#txtURLEkle').val('');
                 $('#txtURLAciklama').val('');
                 var tr = $('<tr/>');
-                tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urlAciklama + '<br> <a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</td><td><a href="' + msg.url + '"> ' + msg.url + '</a></td><td><a href="#" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash lnkUrlSil"></span></a></td>');
+                tr.append('<td><h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span></h4></td><td>' + urlAciklama + '<br> <a href="' + location.href.replace('#', '') + msg.kisaKod + '">' + location.href.replace('#', '') + msg.kisaKod + '</td><td><a href="' + msg.url + '"> ' + msg.url + '</a></td><td><a href="#" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" data-kisakod="' + msg.kisaKod +'"><span class="glyphicon glyphicon-trash"></span></a></td>');
                 $('#lstUrl > tbody').prepend(tr);
 
                 var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
@@ -32,6 +70,7 @@ $(document).ready(function () {
                 var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
                 toplamUrlAdedi = toplamUrlAdedi + 1;
                 $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
+
 
             },
             error: function (msg) {
@@ -64,26 +103,12 @@ $(document).ready(function () {
                 $('#lstUrl > tbody').find('tr').remove();
                 $('.list-group-item.kategoriOgesi.active').focus();
 
-                $('.kategoriOgesi').on('click', function () {
-                    var kod = $(this).attr('data-kisakod');
-                    $('.kategoriOgesi').removeClass('active');
-                    $(this).addClass('active');
-                    UrlYukle(kod);
-                });
 
             },
             error: function (msg) {
                 HataMesaji("Unexpected Error !");
             }
         });
-
-    });
-
-    $('.kategoriOgesi').click(function () {
-        var kod = $(this).attr('data-kisakod');
-        $('.kategoriOgesi').removeClass('active');
-        $(this).addClass('active');
-        UrlYukle(kod);
 
     });
 
@@ -114,37 +139,7 @@ $(document).ready(function () {
                 else {
                     $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="hepsi"]').attr('data-kategoriAdi'));
                 }
-                //listeden seçili hale getir
-                $(".lnkUrlSil").on("click", function () {
-                    var kisakod = $(this).attr('data-kisakod');
-                    var satir = $(this).closest('tr');
-
-                    if (confirm('Are you sure ?')) {
-
-                        $.ajax({
-                            type: "POST",
-                            url: '/ajax/UrlSil?' + 'KisaKod=' + kisakod,
-                            dataType: 'json',
-                            success: function (msg) {
-
-                                $(satir).animate({ backgroundColor: 'gray' }, 150).fadeOut(150, function () {
-                                    $(satir).remove();
-                                });
-
-                                var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
-                                toplamUrlAdedi = toplamUrlAdedi - 1;
-                                $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
-                                
-                            },
-                            error: function (msg) {
-                                HataMesaji("Unexpected Error !");
-                            }
-                        });
-
-
-                    }
-                });
-
+               
 
             },
             error: function (msg) {
@@ -153,13 +148,7 @@ $(document).ready(function () {
         });
     }
 
-    $('#modalURLEkle').on('shown.bs.modal', function (e) {
-        $('#txtURLAciklama').focus();
-    });
-
-    $('#modalKategoriEkle').on('shown.bs.modal', function (e) {
-        $('#txtKategoriEkle').focus();
-    });
+   
 
     $('#menuKategoriSil').click(function () {
 
@@ -188,6 +177,12 @@ $(document).ready(function () {
 
     });
 
+     $('#modalURLEkle').on('shown.bs.modal', function (e) {
+        $('#txtURLAciklama').focus();
+    });
 
+    $('#modalKategoriEkle').on('shown.bs.modal', function (e) {
+        $('#txtKategoriEkle').focus();
+    });
 });
 

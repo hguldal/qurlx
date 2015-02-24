@@ -25,7 +25,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
             @foreach (var item in queryKategoriler)
             {             
                  <a href="#" class="list-group-item kategoriOgesi" data-kisaKod="@item.kisaKod" data-kategoriAdi="@item.kategoriAdi"><strong>@item.kategoriAdi</strong>
-                   <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URLKategori WHERE kategoriID=@0",item.kategoriID)</span><br>@Request.Url.AbsoluteUri.Replace("#","")@item.kisaKod
+                   <span class="badge" data-kisaKod="@item.kisaKod">@db.QueryValue("SELECT COUNT(*) FROM URLKategori WHERE kategoriID=@0",item.kategoriID)</span><br>@Request.Url.AbsoluteUri.Replace("#","")@item.kisaKod
                 </a>
                 
                     
