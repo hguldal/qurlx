@@ -33,7 +33,12 @@
        db.Execute("DELETE FROM UrlKullanici WHERE urlID=@0 AND UserID=@1",queryUrl.urlID,WebSecurity.CurrentUserId);
        db.Execute("DELETE FROM UrlYonetici WHERE urlID=@0 AND UserID=@1",queryUrl.urlID,WebSecurity.CurrentUserId);
        var queryKategori=db.QuerySingle("SELECT * FROM URLKategori WHERE urlID=@0",queryUrl.urlID);
-       db.Execute("DELETE FROM UrlKategori WHERE urlID=@0 AND kategoriID=@1",queryUrl.urlID,queryKategori.kategoriID);
+       
+       if (queryKategori!=null)
+       {
+        db.Execute("DELETE FROM UrlKategori WHERE urlID=@0 AND kategoriID=@1",queryUrl.urlID,queryKategori.kategoriID);
+       }
+
        Json.Write("OK", Response.Output);
        db.Close();   
        Response.ContentType = "application/json";

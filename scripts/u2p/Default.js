@@ -148,8 +148,6 @@ $(document).ready(function () {
         });
     }
 
-   
-
     $('#menuKategoriSil').click(function () {
 
         var kisaKod = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
@@ -177,7 +175,7 @@ $(document).ready(function () {
 
     });
 
-     $('#modalURLEkle').on('shown.bs.modal', function (e) {
+    $('#modalURLEkle').on('shown.bs.modal', function (e) {
         $('#txtURLAciklama').focus();
     });
 
