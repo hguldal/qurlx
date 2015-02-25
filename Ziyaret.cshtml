@@ -1,22 +1,3 @@
-﻿@{
-  
-     var db=Database.Open("u2p");
- 
-     var kisaKod=Request["KisaKod"];
-
-     if (string.IsNullOrEmpty(kisaKod))
-     {
-         db.Close();   
-         Response.StatusCode=500;
-         Response.End();
-     }
-     
-     var IP=Request.UserHostAddress;
-
-     using (db)
-     {
-     }
-
-     db.Close();
-}
-
+﻿
+@{
+    
