@@ -21,8 +21,10 @@
        
        if (queryKategori==null)
          {
-             Response.Redirect("~/ErisimHatasi/AdresGecersiz");//sistemde bu kodlar kayıtlı bir url yada liste yok
+             db.Close();
+             Response.Redirect("~/ErisimHatasi/AdresGecersiz");//sistemde bu kodla kayıtlı bir url yada liste yok
          }
+         //sistemde bu kodla kayıtlı bir kategori var
          else
          {
              //kategorinin sahibi oturum açmış kişi ise başka hiç bir koşula bakmaksızın direkt olarak adrese yönlendir.
@@ -32,13 +34,60 @@
                  Response.Redirect(queryKategori.url);
              }
 
+            
             //belirlenen erişim süreleri belirlenmiş mi ve bu süreler içerisinde mi?
             if (string.IsNullOrEmpty(queryKategori.erisimBaslamaTarihi)==false && string.IsNullOrEmpty(queryKategori.erisimBitisTarihi)==false )      
               {
                   if (queryKategori.erisimBaslamaTarihi<DateTime.Now || queryKategori.erisimBitisTarihi>DateTime.Now )
                     {
+                        db.Close();
                         Response.Redirect("~/ErisimHatasi/ErisimeKapali");
                     }
+              }
+
+              //eğer adres herkese açık ise yine direkt olarak yönlendir.
+              if (queryKategori.erisimTuru==1)
+              {
+                   db.Close();
+                   Response.Redirect(queryKategori.url);
+              }
+             
+             
+              //eğer adres üye olmayı gerektiriyorsa ve üye oturum açtı ise yine direkt olarak yönlendir.
+              else if (queryKategori.erisimTuru==2)
+              {
+                  if (WebSecurity.IsAuthenticated)
+                  {
+                      db.Close();
+                      Response.Redirect(queryKategori.url);
+                  }
+                  else
+                  {
+                      db.Close();
+                      Response.Redirect("~/ErisimHatasi/OturumAcmakGerekli");
+                  }
+              }
+              
+              //eğer adres izin verilen kişilere açık ise 
+              else if (queryKategori.erisimTuru==3)
+              {
+                  
+              }
+              
+              
+              //eğer adres sadece sahibine açık ise oturum açan kişinin sahip olup olmadığını kontrol et.
+              else if (queryKategori.erisimTuru==4)
+              {
+                  if (queryKategori.UserID==WebSecurity.CurrentUserId)
+                  {
+                      db.Close();
+                      Response.Redirect(queryKategori.url);
+                  }
+                  else
+                  {
+                      db.Close();
+                      Response.Redirect("~/ErisimHatasi/YetkinizYok");
+                  }
               }
          }
     
