@@ -1,4 +1,5 @@
 ﻿@{
+    //bu sayfada, adreslere erişebilmek için tek kullanımlık anahtarlar üretir
     if (string.IsNullOrEmpty(Context.GetRouteValue("kod")))
      {
         Response.Write("Error !");
