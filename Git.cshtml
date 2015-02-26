@@ -1,5 +1,9 @@
 ﻿@{
     var db=Database.Open("u2p");
 
+    var erisimAnahtari=Request.QueryString["erisimAnahtari"];
+    var kisaKod=Request.QueryString["kisaKod"];
+    
+    var erisimAc=(db.QueryValue("SELECT COUNT(*) FROM ErisimAnahtari WHERE erisimAnahtari=@0 AND kisaKod=@1",erisimAnahtari,kisaKod)>0);
     db.Close();
 }
