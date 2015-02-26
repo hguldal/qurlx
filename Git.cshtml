@@ -4,7 +4,12 @@
     var erisimAnahtari=Request.QueryString["erisimAnahtari"];
     var kisaKod=Request.QueryString["kisaKod"];
     
-    var erisimAc=(db.QueryValue("SELECT COUNT(*) FROM ErisimAnahtari WHERE erisimAnahtari=@0 AND kisaKod=@1",erisimAnahtari,kisaKod)>0);
+    var erisimAcik=(db.QueryValue("SELECT COUNT(*) FROM ErisimAnahtari WHERE erisimAnahtari=@0 AND kisaKod=@1",erisimAnahtari,kisaKod)>0);
+    
+    //tek kullanımlık anahtarı sil
+    db.Execute("DELETE FROM ErisimAnahtari WHERE erisimAnahtari=@0 AND kisaKod=@1",erisimAnahtari,kisaKod);
+    
+    
     db.Close();
 }
-<div>@erisimAc</div>
+<div>@erisimAcik</div>

@@ -9,13 +9,13 @@
 
     var kod= Context.GetRouteValue("kod");   
     var db=Database.Open("u2p");
-    var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0 OR uzunKod=@0",kod);
+    var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kod);
     var erisimAnahtari="";
   
     //url yok mu ? yoksa kategori olabilir mi ?
     if (queryUrl==null)
     {      
-       var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisaKod=@0 OR uzunKod=@0",kod);
+       var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisaKod=@0",kod);
        
        if (queryKategori==null)
          {
