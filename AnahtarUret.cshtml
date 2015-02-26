@@ -183,7 +183,7 @@
     
     if (!string.IsNullOrEmpty(erisimAnahtari))
     {
-         db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod) VALUES(@0,@1)",erisimAnahtari,kod);
+         db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod,olusturmaTarihi,IP) VALUES(@0,@1,@2,@3)",erisimAnahtari,kod,DateTime.Now,Request.UserHostAddress);
          db.Close();
          Response.Redirect("~/Git?erisimAnahtari=" + erisimAnahtari + "&kisaKod=" + kod);   
     }
