@@ -6,19 +6,15 @@
         Response.End();
         
      }
- 
-    var kod= Context.GetRouteValue("kod");
-   
+
+    var kod= Context.GetRouteValue("kod");   
     var db=Database.Open("u2p");
     var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0 OR uzunKod=@0",kod);
-    var erisimAnahtari=Guid.NewGuid().ToString();
-
-    db.Close();
-    
+    var erisimAnahtari="";
+  
     //url yok mu ? yoksa kategori olabilir mi ?
     if (queryUrl==null)
-    {
-       
+    {      
        var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisaKod=@0 OR uzunKod=@0",kod);
        
        if (queryKategori==null)
@@ -33,11 +29,9 @@
              //kategorinin sahibi oturum açmış kişi ise başka hiç bir koşula bakmaksızın direkt olarak adrese yönlendir.
              if (queryKategori.UserID==WebSecurity.CurrentUserId)
              {
-                 
-                 //anahtarı kaydet ve adrese yönlendir
-                 db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod) VALUES(@0,@1)",erisimAnahtari,queryKategori.kisaKod);
-                 db.Close();
-                 Response.Redirect("~/Git?erisimAnahtari=" + erisimAnahtari + "&kisaKod=" + queryKategori.kisaKod);
+                 //anahtar oluştur
+                 erisimAnahtari=Guid.NewGuid().ToString();
+
              }
 
             
@@ -54,10 +48,8 @@
               //eğer adres herkese açık ise yine direkt olarak yönlendir.
               if (queryKategori.erisimTuru==1)
               {
-                  //adrese yönlendir
-                 db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod) VALUES(@0,@1)",erisimAnahtari,queryKategori.kisaKod);
-                 db.Close();
-                 Response.Redirect("~/Git?erisimAnahtari=" + erisimAnahtari + "&kisaKod=" + queryKategori.kisaKod);
+                  //anahtar oluştur
+                 erisimAnahtari=Guid.NewGuid().ToString();
               }
              
              
@@ -66,9 +58,8 @@
               {
                   if (WebSecurity.IsAuthenticated)
                   {
-                     db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod) VALUES(@0,@1)",erisimAnahtari,queryKategori.kisaKod);
-                     db.Close();
-                     Response.Redirect("~/Git?erisimAnahtari=" + erisimAnahtari + "&kisaKod=" + queryKategori.kisaKod);
+                      //anahtar oluştur
+                     erisimAnahtari=Guid.NewGuid().ToString();
                   }
                   else
                   {
@@ -83,10 +74,8 @@
                       
                       if (db.QueryValue("SELECT COUNT(*) FROM KategoriErisimYetkisi WHERE kategoriID=@0 AND userID=@1",queryKategori.kategoriID,WebSecurity.CurrentUserId)>0)
                       {
-                          //adrese yönlendir
-                          db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod) VALUES(@0,@1)",erisimAnahtari,queryKategori.kisaKod);
-                          db.Close();
-                          Response.Redirect("~/Git?erisimAnahtari=" + erisimAnahtari + "&kisaKod=" + queryKategori.kisaKod);
+                        //anahtar oluştur
+                        erisimAnahtari=Guid.NewGuid().ToString();
                       }
                  
                       else
@@ -117,9 +106,8 @@
             //url sahibi oturum açmış kişi ise başka hiç bir koşula bakmaksızın direkt olarak adrese yönlendir.
              if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)>0)
              {
-                 db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod) VALUES(@0,@1)",erisimAnahtari,queryUrl.kisaKod);
-                 db.Close();
-                 Response.Redirect("~/Git?erisimAnahtari=" + erisimAnahtari + "&kisaKod=" + queryUrl.kisaKod);
+                 //anahtar oluştur
+                 erisimAnahtari=Guid.NewGuid().ToString();
              }
 
             
@@ -136,10 +124,9 @@
               //eğer adres herkese açık ise yine direkt olarak yönlendir.
               if (queryUrl.erisimTuru==1)
               {
-                  //adrese yönlendir
-                 db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod) VALUES(@0,@1)",erisimAnahtari,queryUrl.kisaKod);
-                 db.Close();
-                 Response.Redirect("~/Git?erisimAnahtari=" + erisimAnahtari + "&kisaKod=" + queryUrl.kisaKod);
+                //anahtar oluştur
+                 erisimAnahtari=Guid.NewGuid().ToString();
+ 
               }
              
              
@@ -148,10 +135,9 @@
               {
                   if (WebSecurity.IsAuthenticated)
                   {
-                      //adrese yönlendir
-                       db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod) VALUES(@0,@1)",erisimAnahtari,queryUrl.kisaKod);
-                         db.Close();
-                         Response.Redirect("~/Git?erisimAnahtari=" + erisimAnahtari + "&kisaKod=" + queryUrl.kisaKod);
+                      //anahtar oluştur
+                       erisimAnahtari=Guid.NewGuid().ToString();
+ 
                   }
                   else
                   {
@@ -166,9 +152,9 @@
                      
                       if (db.QueryValue("SELECT COUNT(*) FROM KategoriErisimYetkisi WHERE kategoriID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)>0)
                       {
-                           db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod) VALUES(@0,@1)",erisimAnahtari,queryUrl.kisaKod);
-                             db.Close();
-                             Response.Redirect("~/Git?erisimAnahtari=" + erisimAnahtari + "&kisaKod=" + queryUrl.kisaKod);
+                          //anahtar oluştur
+                        erisimAnahtari=Guid.NewGuid().ToString();
+ 
                       }
                  
                       else
@@ -190,5 +176,12 @@
         
     }
     
-    
+    if (!string.IsNullOrEmpty(erisimAnahtari))
+    {
+         db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod) VALUES(@0,@1)",erisimAnahtari,kod);
+         db.Close();
+         Response.Redirect("~/Git?erisimAnahtari=" + erisimAnahtari + "&kisaKod=" + kod);   
+    }
+
+
 }
