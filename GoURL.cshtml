@@ -10,6 +10,7 @@
    
     var db=Database.Open("u2p");
     var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0 OR uzunKod=@0",kod);
+    var erisimAnahtari=Guid.NewGuid();
 
     db.Close();
     
@@ -31,6 +32,7 @@
              //kategorinin sahibi oturum açmış kişi ise başka hiç bir koşula bakmaksızın direkt olarak adrese yönlendir.
              if (queryKategori.UserID==WebSecurity.CurrentUserId)
              {
+                 
                  //adrese yönlendir
                  db.Close();
                  Response.Redirect(queryKategori.url);
@@ -75,11 +77,7 @@
               //eğer adres sadece izin verilen kişilere açık ise 
               else if (queryKategori.erisimTuru==3)
               {
-                      if (!WebSecurity.IsAuthenticated)
-                      {
-                          Response.Redirect("~/Hesap/Giris?donusKod=@0" + queryKategori.kisaKod);
-                      }
-                 
+                      
                       if (db.QueryValue("SELECT COUNT(*) FROM KategoriErisimYetkisi WHERE kategoriID=@0 AND userID=@1",queryKategori.kategoriID,WebSecurity.CurrentUserId)>0)
                       {
                           //adrese yönlendir
@@ -159,11 +157,7 @@
               //eğer adres sadece izin verilen kişilere açık ise 
               else if (queryUrl.erisimTuru==3)
               {
-                      if (!WebSecurity.IsAuthenticated)
-                      {
-                          Response.Redirect("~/Hesap/Giris?donusKod=@0" + queryUrl.kisaKod);
-                      }
-                 
+                     
                       if (db.QueryValue("SELECT COUNT(*) FROM KategoriErisimYetkisi WHERE kategoriID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)>0)
                       {
                           //adrese yönlendir
