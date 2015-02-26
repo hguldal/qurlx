@@ -35,9 +35,9 @@
              }
          
             //belirlenen erişim süreleri belirlenmiş mi ve bu süreler içerisinde mi?
-            if (string.IsNullOrEmpty(queryKategori.erisimBaslamaTarihi)==false && string.IsNullOrEmpty(queryKategori.erisimBitisTarihi)==false )      
+            if (queryKategori.erisimBaslamaTarihi!=null && queryKategori.erisimBitisTarihi!=null )      
               {
-                  if (queryKategori.erisimBaslamaTarihi<DateTime.Now || queryKategori.erisimBitisTarihi>DateTime.Now )
+                  if (queryKategori.erisimBaslamaTarihi>DateTime.Now || queryKategori.erisimBitisTarihi<DateTime.Now )
                     {
                         db.Close();
                         Response.Redirect("~/ErisimHatasi/ErisimeKapali");
@@ -92,9 +92,13 @@
               //eğer adres sadece sahibine açık ise oturum açan kişinin sahip olup olmadığını kontrol et.
               else if (queryKategori.erisimTuru==4)
               {
+                  if (queryKategori.userID!=WebSecurity.CurrentUserId)
+                  {
+                        db.Close();
+                       Response.Redirect("~/ErisimHatasi/YetkinizYok");
+                      
+                  }
                      
-                   db.Close();
-                   Response.Redirect("~/ErisimHatasi/YetkinizYok");
                    
               }
          }
@@ -114,9 +118,9 @@
 
             
             //belirlenen erişim süreleri belirlenmiş mi ve bu süreler içerisinde mi?
-            if (string.IsNullOrEmpty(queryUrl.erisimBaslamaTarihi)==false && string.IsNullOrEmpty(queryUrl.erisimBitisTarihi)==false )      
+            if (queryUrl.erisimBaslamaTarihi!=null && queryUrl.erisimBitisTarihi!=null)      
               {
-                  if (queryUrl.erisimBaslamaTarihi<DateTime.Now || queryUrl.erisimBitisTarihi>DateTime.Now )
+                  if (queryUrl.erisimBaslamaTarihi>DateTime.Now || queryUrl.erisimBitisTarihi<DateTime.Now )
                     {
                         db.Close();
                         Response.Redirect("~/ErisimHatasi/ErisimeKapali");
@@ -174,8 +178,12 @@
               //eğer adres sadece sahibine açık ise oturum açan kişinin sahip olup olmadığını kontrol et.
               else if (queryUrl.erisimTuru==4)
               {
-                   db.Close();
-                   Response.Redirect("~/ErisimHatasi/YetkinizYok");
+                   if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)<1)
+                     {
+                         db.Close();
+                        Response.Redirect("~/ErisimHatasi/YetkinizYok");
+                     }
+                    
               }
 
         
