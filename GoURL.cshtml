@@ -24,12 +24,14 @@
              db.Close();
              Response.Redirect("~/ErisimHatasi/AdresGecersiz");//sistemde bu kodla kayıtlı bir url yada liste yok
          }
+        
          //sistemde bu kodla kayıtlı bir kategori var
          else
          {
              //kategorinin sahibi oturum açmış kişi ise başka hiç bir koşula bakmaksızın direkt olarak adrese yönlendir.
              if (queryKategori.UserID==WebSecurity.CurrentUserId)
              {
+                 //adrese yönlendir
                  db.Close();
                  Response.Redirect(queryKategori.url);
              }
@@ -48,6 +50,7 @@
               //eğer adres herkese açık ise yine direkt olarak yönlendir.
               if (queryKategori.erisimTuru==1)
               {
+                  //adrese yönlendir
                    db.Close();
                    Response.Redirect(queryKategori.url);
               }
@@ -58,6 +61,7 @@
               {
                   if (WebSecurity.IsAuthenticated)
                   {
+                      //adrese yönlendir
                       db.Close();
                       Response.Redirect(queryKategori.url);
                   }
@@ -68,9 +72,26 @@
                   }
               }
               
-              //eğer adres izin verilen kişilere açık ise 
+              //eğer adres sadece izin verilen kişilere açık ise 
               else if (queryKategori.erisimTuru==3)
               {
+                      if (!WebSecurity.IsAuthenticated)
+                      {
+                          Response.Redirect("~/Hesap/Giris?donusKod=@0" + queryKategori.kisaKod);
+                      }
+                 
+                      if (db.QueryValue("SELECT COUNT(*) FROM KategoriErisimYetkisi WHERE kategoriID=@0 AND userID=@1",queryKategori.kategoriID,WebSecurity.CurrentUserId)>0)
+                      {
+                          //adrese yönlendir
+                          db.Close();
+                          Response.Redirect(queryKategori.url);
+                      }
+                 
+                      else
+                      {
+                         db.Close();
+                         Response.Redirect("~/ErisimKodGirisi?kod=" + queryKategori.kisaKod);
+                      }
                   
               }
               
@@ -78,27 +99,96 @@
               //eğer adres sadece sahibine açık ise oturum açan kişinin sahip olup olmadığını kontrol et.
               else if (queryKategori.erisimTuru==4)
               {
-                  if (queryKategori.UserID==WebSecurity.CurrentUserId)
-                  {
-                      db.Close();
-                      Response.Redirect(queryKategori.url);
-                  }
-                  else
-                  {
-                      db.Close();
-                      Response.Redirect("~/ErisimHatasi/YetkinizYok");
-                  }
+                      if (queryKategori.UserID!=WebSecurity.CurrentUserId)
+                      {
+                          db.Close();
+                          Response.Redirect("~/ErisimHatasi/YetkinizYok");
+                      }
+                      
               }
          }
     
     }
     
+    //url mevcut
     else
     {
 
-        
+            //url sahibi oturum açmış kişi ise başka hiç bir koşula bakmaksızın direkt olarak adrese yönlendir.
+             if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)>0)
+             {
+                 //adrese yönlendir
+                 db.Close();
+                 Response.Redirect(queryUrl.url);
+             }
 
-        Response.Redirect(queryUrl.url);    
+            
+            //belirlenen erişim süreleri belirlenmiş mi ve bu süreler içerisinde mi?
+            if (string.IsNullOrEmpty(queryUrl.erisimBaslamaTarihi)==false && string.IsNullOrEmpty(queryUrl.erisimBitisTarihi)==false )      
+              {
+                  if (queryUrl.erisimBaslamaTarihi<DateTime.Now || queryUrl.erisimBitisTarihi>DateTime.Now )
+                    {
+                        db.Close();
+                        Response.Redirect("~/ErisimHatasi/ErisimeKapali");
+                    }
+              }
+
+              //eğer adres herkese açık ise yine direkt olarak yönlendir.
+              if (queryUrl.erisimTuru==1)
+              {
+                  //adrese yönlendir
+                   db.Close();
+                   Response.Redirect(queryUrl.url);
+              }
+             
+             
+              //eğer adres üye olmayı gerektiriyorsa ve üye oturum açtı ise yine direkt olarak yönlendir.
+              else if (queryUrl.erisimTuru==2)
+              {
+                  if (WebSecurity.IsAuthenticated)
+                  {
+                      //adrese yönlendir
+                      db.Close();
+                      Response.Redirect(queryUrl.url);
+                  }
+                  else
+                  {
+                      db.Close();
+                      Response.Redirect("~/ErisimHatasi/OturumAcmakGerekli");
+                  }
+              }
+              
+              //eğer adres sadece izin verilen kişilere açık ise 
+              else if (queryUrl.erisimTuru==3)
+              {
+                      if (!WebSecurity.IsAuthenticated)
+                      {
+                          Response.Redirect("~/Hesap/Giris?donusKod=@0" + queryUrl.kisaKod);
+                      }
+                 
+                      if (db.QueryValue("SELECT COUNT(*) FROM KategoriErisimYetkisi WHERE kategoriID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)>0)
+                      {
+                          //adrese yönlendir
+                          db.Close();
+                          Response.Redirect(queryUrl.url);
+                      }
+                 
+                      else
+                      {
+                         db.Close();
+                         Response.Redirect("~/ErisimKodGirisi?kod=" + queryUrl.kisaKod);
+                      }
+                  
+              }
+              
+              
+              //eğer adres sadece sahibine açık ise oturum açan kişinin sahip olup olmadığını kontrol et.
+              else if (queryUrl.erisimTuru==4)
+              {
+                      
+              }
+
+        
     }
     
     
