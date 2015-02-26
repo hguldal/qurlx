@@ -33,8 +33,7 @@
                  erisimAnahtari=Guid.NewGuid().ToString();
 
              }
-
-            
+         
             //belirlenen erişim süreleri belirlenmiş mi ve bu süreler içerisinde mi?
             if (string.IsNullOrEmpty(queryKategori.erisimBaslamaTarihi)==false && string.IsNullOrEmpty(queryKategori.erisimBitisTarihi)==false )      
               {
@@ -43,6 +42,9 @@
                         db.Close();
                         Response.Redirect("~/ErisimHatasi/ErisimeKapali");
                     }
+
+                    //anahtar oluştur
+                    erisimAnahtari=Guid.NewGuid().ToString();
               }
 
               //eğer adres herkese açık ise yine direkt olarak yönlendir.
@@ -119,6 +121,9 @@
                         db.Close();
                         Response.Redirect("~/ErisimHatasi/ErisimeKapali");
                     }
+
+                    //anahtar oluştur
+                    erisimAnahtari=Guid.NewGuid().ToString();
               }
 
               //eğer adres herkese açık ise yine direkt olarak yönlendir.
