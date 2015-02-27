@@ -8,19 +8,19 @@
 
     var durum=UrlData[0];
     var mesaj="";
-    if (durum=="YetkinizYok")
+    if (durum=="Access-Denied")
     {
         mesaj="Access Denied";
     }
-    else if (durum=="ErisimeKapali")
+    else if (durum=="Access-is-Closed")
     {
         mesaj="Access is closed";
     }
-    else if (durum=="AdresGecersiz")
+    else if (durum=="Invalid-Url")
     {
         mesaj="Invalid URL";
     }
-    else if (durum=="OturumAcmakGerekli")
+    else if (durum=="Login")
     {
         mesaj="You must login to system";
     }
