@@ -8,15 +8,14 @@
                     css: { 
                         border: 'none', 
                         padding: '15px', 
-                        
-                        backgroundColor: '#000', 
-                        '-webkit-border-radius': '10px', 
-                        '-moz-border-radius': '10px', 
-                        opacity: .5, 
-                        color: '#fff' 
+                       
+                        backgroundColor: '#fff', 
+                       
+                        opacity:'.80', 
+                        color: '#000' 
                         },
 
-                        message: '<p>Please Wait...</p>'
+                        message: '<p><img src="/images/busy.gif" /><small> Please wait...</small></p>'
                         
                         }); 
 
