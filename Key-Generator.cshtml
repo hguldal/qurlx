@@ -40,7 +40,7 @@
                   if (queryKategori.erisimBaslamaTarihi>DateTime.Now || queryKategori.erisimBitisTarihi<DateTime.Now )
                     {
                         db.Close();
-                        Response.Redirect("~/Error/ErisimeKapali");
+                        Response.Redirect("~/Error/Access-is-Closed");
                     }
 
                     //anahtar oluştur
@@ -66,7 +66,7 @@
                   else
                   {
                       db.Close();
-                      Response.Redirect("~/ErisimHatasi/OturumAcmakGerekli");
+                      Response.Redirect("~/Error/Login");
                   }
               }
               
@@ -95,7 +95,7 @@
                   if (queryKategori.userID!=WebSecurity.CurrentUserId)
                   {
                         db.Close();
-                       Response.Redirect("~/ErisimHatasi/YetkinizYok");
+                       Response.Redirect("~/Error/Access-Denied");
                       
                   }
                      
@@ -123,7 +123,7 @@
                   if (queryUrl.erisimBaslamaTarihi>DateTime.Now || queryUrl.erisimBitisTarihi<DateTime.Now )
                     {
                         db.Close();
-                        Response.Redirect("~/ErisimHatasi/ErisimeKapali");
+                        Response.Redirect("~/Error/Access-is-Closed");
                     }
 
                     //anahtar oluştur
@@ -151,7 +151,7 @@
                   else
                   {
                       db.Close();
-                      Response.Redirect("~/ErisimHatasi/OturumAcmakGerekli");
+                      Response.Redirect("~/Error/Login");
                   }
               }
               
@@ -181,7 +181,7 @@
                    if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)<1)
                      {
                          db.Close();
-                        Response.Redirect("~/ErisimHatasi/YetkinizYok");
+                        Response.Redirect("~/Error/Access-Denied");
                      }
                     
               }
