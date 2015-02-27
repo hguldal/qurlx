@@ -20,7 +20,7 @@
        if (queryKategori==null)
          {
              db.Close();
-             Response.Redirect("~/ErisimHatasi/AdresGecersiz");//sistemde bu kodla kayıtlı bir url yada liste yok
+             Response.Redirect("~/Error/Invalid-Url");//sistemde bu kodla kayıtlı bir url yada liste yok
          }
         
          //sistemde bu kodla kayıtlı bir kategori var
@@ -40,7 +40,7 @@
                   if (queryKategori.erisimBaslamaTarihi>DateTime.Now || queryKategori.erisimBitisTarihi<DateTime.Now )
                     {
                         db.Close();
-                        Response.Redirect("~/ErisimHatasi/ErisimeKapali");
+                        Response.Redirect("~/Error/ErisimeKapali");
                     }
 
                     //anahtar oluştur
