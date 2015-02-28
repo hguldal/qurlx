@@ -15,6 +15,7 @@ $('#cmbGorunur').selectize({
             }
 });
 
+ $('#datetimepicker1').datetimepicker();
 
 $('.urlSetting').editable(
 {

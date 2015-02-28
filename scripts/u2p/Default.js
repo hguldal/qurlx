@@ -9,10 +9,7 @@ $(document).ready(function () {
         UrlYukle(kod);
     });
 
-    $('#deneme').click(function(){
-        UrlYukle('hepsi');
-
-    });
+   
     $('body').on('click', '.lnkUrlSil', function () {
         var kisakod = $(this).attr('data-kisakod');
         var satir = $(this).closest('tr');

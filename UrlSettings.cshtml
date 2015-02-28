@@ -32,13 +32,13 @@
 @section styles
 {
 <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<link rel="stylesheet" href="@Href("~/scripts/datetimepicker/bootstrap-datetimepicker.css")" />
 
 }
 <div class="row">
-<div class="col-md-12 column">
-   <h2>URL Settings</h2>
- 
-</div>   
+    <div class="col-md-12 column">
+       <h2>URL Settings</h2>
+    </div>   
 </div>
 <br>
 <div class="row">
@@ -46,60 +46,84 @@
     <div class="col-md-4 column">
         
         <table class="table table-striped">
-        <tr>
-            <td><strong>URL:</strong></td>
-            
-        </tr>
-         <tr>
-             <td>@Request.Url.GetLeftPart(UriPartial.Authority)/<a href="#" class="urlSetting" data-field="kisaKod">@queryURL.kisaKod</a></td>
-        </tr>
-
-        <tr>
-            <td><strong>Description:</strong></td>
-        </tr>
             <tr>
-            <td><a href="#" class="urlSetting" data-field="aciklama"><small>@queryURL.aciklama</small></a></td>
+                <td><strong>URL:</strong></td>         
             </tr>
-        
+            <tr>
+                <td>@Request.Url.GetLeftPart(UriPartial.Authority)/<a href="#" class="urlSetting" data-field="kisaKod">@queryURL.kisaKod</a></td>
+            </tr>
+            <tr>
+                <td><strong>Description:</strong></td>
+            </tr>
+            
+            <tr>
+                <td><a href="#" class="urlSetting" data-field="aciklama"><small>@queryURL.aciklama</small></a></td>
+            </tr>
+            
             <tr>
                 <td><strong>Access Type:</strong></td>
-            </tr>
-           
-             <tr>
-            <td>
-
-            <select id="cmbErisimTuru">
-                <option value="1">Public</option>
-                <option value="2">Members</option>
-                <option value="3">Permitted (Via Access Codes)</option>
-                <option value="4">Owner</option>
-            </select>
-            </td>
-            </tr>
+            </tr>   
             
-             <tr>
+            <tr>
+                <td>
+                    <select id="cmbErisimTuru">
+                        <option value="1">Public</option>
+                        <option value="2">Members</option>
+                        <option value="3">Permitted (Via Access Codes)</option>
+                        <option value="4">Owner</option>
+                    </select>
+                </td>
+                </tr>    
+            <tr>
                 <td><strong>Visible:</strong></td>
-            </tr>
-           
-             <tr>
-            <td>
+            </tr>   
+            
+            <tr>
+                <td>
+                    <select id="cmbGorunur">
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>             
+                    </select>
+                </td>
+                </tr>
 
-            <select id="cmbGorunur">
-                <option value="1">Yes</option>
-                <option value="2">No</option>
-               
-            </select>
-            </td>
-            </tr>
+             <tr>
+                <td><strong>Access Start Date:</strong></td>
+            </tr>   
+            
+            <tr>
+                <td>
+                   
+                    <select id="cmbBaslangicTarihi">
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>             
+                    </select>
+
+                   
+                    <select id="cmbBaslangicTarihi">
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>             
+                    </select>
+
+                   
+                    <select id="cmbBaslangicTarihi">
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>             
+                    </select>
+                    -
+                    <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                </td>
+                </tr>
 
         </table>
     
-        </div>
-
-
-      
-
     </div>
+
+</div>
 
 @{
     db.Close();
@@ -109,8 +133,10 @@
 
 @section scripts
 {
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>        
-    <script src="@Href("~/scripts/u2p/UrlSettings.js")"></script> 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <script src="@Href("~/scripts/datetimepicker/moment.js")"></script> 
+    <script src="@Href("~/scripts/datetimepicker/bootstrap-datetimepicker.js")"></script> 
+    <script src="@Href("~/scripts/u2p/UrlSettings.js")"></script>
 
 }
 
