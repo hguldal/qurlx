@@ -35,13 +35,70 @@
 
 }
 <div class="row">
-    <h2>URL Settings</h2><hr>
-    <div class="col-md-3 column">
+<div class="col-md-12 column">
+   <h2>URL Settings</h2>
+ 
+</div>   
+</div>
+<br>
+<div class="row">
+    
+    <div class="col-md-4 column">
         
-    <h4>@Request.Url.GetLeftPart(UriPartial.Authority)/<span id="txtKisaKod">@queryURL.kisaKod</span><br>
-        <small>@queryURL.aciklama</small></h4>
-       
+        <table class="table table-striped">
+        <tr>
+            <td><strong>URL:</strong></td>
+            
+        </tr>
+         <tr>
+             <td>@Request.Url.GetLeftPart(UriPartial.Authority)/<a href="#" class="urlSetting" data-field="kisaKod">@queryURL.kisaKod</a></td>
+        </tr>
+
+        <tr>
+            <td><strong>Description:</strong></td>
+        </tr>
+            <tr>
+            <td><a href="#" class="urlSetting" data-field="aciklama"><small>@queryURL.aciklama</small></a></td>
+            </tr>
+        
+            <tr>
+                <td><strong>Access Type:</strong></td>
+            </tr>
+           
+             <tr>
+            <td>
+
+            <select id="cmbErisimTuru">
+                <option value="1">Public</option>
+                <option value="2">Members</option>
+                <option value="3">Permitted (Via Access Codes)</option>
+                <option value="4">Owner</option>
+            </select>
+            </td>
+            </tr>
+            
+             <tr>
+                <td><strong>Visible:</strong></td>
+            </tr>
+           
+             <tr>
+            <td>
+
+            <select id="cmbGorunur">
+                <option value="1">Yes</option>
+                <option value="2">No</option>
+               
+            </select>
+            </td>
+            </tr>
+
+        </table>
+    
         </div>
+
+
+      
+
     </div>
 
 @{

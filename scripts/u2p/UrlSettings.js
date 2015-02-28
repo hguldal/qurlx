@@ -1,4 +1,4 @@
-$('#cmbKategoriSec').selectize({
+$('#cmbErisimTuru').selectize({
     
     onItemAdd:
             function (data, $item) {
@@ -7,8 +7,16 @@ $('#cmbKategoriSec').selectize({
 });
 
 
+$('#cmbGorunur').selectize({
+    
+    onItemAdd:
+            function (data, $item) {
+                
+            }
+});
 
-$('#txtKisaKod').editable(
+
+$('.urlSetting').editable(
 {
 pk: function () {
 return $("#txtGrupWebAdresi").attr("data-GrupID")
