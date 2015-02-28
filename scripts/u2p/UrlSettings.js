@@ -15,12 +15,9 @@ $('#cmbGorunur').selectize({
             }
 });
 
-  $('#datetimepicker1').datetimepicker({
-                 
-                });
-                 $('#datetimepicker2').datetimepicker({
-                 
-                });
+$('#datetimepicker1').datetimepicker();
+ 
+$('#datetimepicker2').datetimepicker();
 
 $('.urlSetting').editable(
 {
