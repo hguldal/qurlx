@@ -88,36 +88,36 @@
                 </tr>
 
              <tr>
-                <td><strong>Access Start Date:</strong></td>
+                <td><strong>URL Access Start Date</strong></td>
             </tr>   
             
             <tr>
                 <td>
-                   
-                    <select id="cmbBaslangicTarihi">
-                        <option value="1">Yes</option>
-                        <option value="2">No</option>             
-                    </select>
 
-                   
-                    <select id="cmbBaslangicTarihi">
-                        <option value="1">Yes</option>
-                        <option value="2">No</option>             
-                    </select>
-
-                   
-                    <select id="cmbBaslangicTarihi">
-                        <option value="1">Yes</option>
-                        <option value="2">No</option>             
-                    </select>
-                    -
-                    <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" />
+                   <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" value="@String.Format("{0:g}", queryURL.erisimBaslamaTarihi)" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
+
+                   
                 </td>
                 </tr>
+
+            <tr>
+            <td><strong>URL Access Stop Date</strong></td>
+                <tr>
+                <td>
+                    
+                     <div class='input-group date' id='datetimepicker2'>
+                        <input type='text' class="form-control" value="@String.Format("{0:g}", queryURL.erisimBitisTarihi)" />
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                
+                </td>
+                    </tr>
+            </tr>
 
         </table>
     
