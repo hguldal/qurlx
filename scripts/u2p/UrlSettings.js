@@ -19,23 +19,54 @@ $('#datetimepicker1').datetimepicker();
  
 $('#datetimepicker2').datetimepicker();
 
-$('.urlSetting').editable(
+$('#txtKisaKod').editable(
 {
     pk: function () {
-    return $("#txtGrupWebAdresi").attr("data-GrupID")
+        return $("#lblKisaKod").attr("data-kisaKod")
     },
-    name: 'GrupURL',
-    url: '/api/Grup/GrupBilgileriGuncelle',
+
+    name:'kisaKod',
+
+    url: '/ajax/URLOzellikKaydet',
+
     display: function (value) {
-    $(this).text(value + '');
+        $(this).text(value + '');
     },
+
     success: function (msg) {
-    if (msg == 'grupadialinmis') {
-    HataMesaji("Group name you have entered already registered");
-    return false;
+        if (msg == 'kisakodvar') {
+            HataMesaji("URL name you have entered already registered");
+            return false;
+        }
+        else {
+            MesajKutusu("OK", "URL settings was saved successfuly");
+        }
     }
-    else {
-    MesajKutusu("OK", "Group settings was saved successfuly");
-    }
+});
+
+
+$('#txtAciklama').editable(
+{
+    pk: function () {
+        return $("#lblKisaKod").attr("data-kisaKod")
+    },
+
+    name: 'aciklama',
+
+    url: '/ajax/URLOzellikKaydet',
+
+    display: function (value) {
+        $(this).text(value + '');
+    },
+
+    success: function (msg) {
+        if (msg == 'kisakodvar') {
+            HataMesaji("URL name you have entered already registered");
+            return false;
+        }
+        else {
+            
+            MesajKutusu("OK", "URL settings was saved successfuly");
+        }
     }
 });
