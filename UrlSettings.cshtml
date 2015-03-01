@@ -68,10 +68,10 @@
             <tr>
                 <td>
                     <select id="cmbErisimTuru">
-                        <option value="1">Public</option>
-                        <option value="2">Members</option>
-                        <option value="3">Permitted (Via Access Codes)</option>
-                        <option value="4">Owner</option>
+                        <option value="1" @if(queryURL.erisimTuru==1) {<text>selected</text>}>Public</option>
+                        <option value="2" @if(queryURL.erisimTuru==2) {<text>selected</text>}>Members</option>
+                        <option value="3" @if(queryURL.erisimTuru==3) {<text>selected</text>}>Permitted (Via Access Codes)</option>
+                        <option value="4" @if(queryURL.erisimTuru==4) {<text>selected</text>}>Owner</option>
                     </select>
                 </td>
                 </tr>    
@@ -82,14 +82,14 @@
             <tr>
                 <td>
                     <select id="cmbGorunur">
-                        <option value="1">Yes</option>
-                        <option value="2">No</option>             
+                        <option value="1" @if(queryURL.aramalardaGoster==1) {<text>selected</text>}>Yes</option>
+                        <option value="2" @if(queryURL.aramalardaGoster==2) {<text>selected</text>}>No</option>             
                     </select>
                 </td>
                 </tr>
 
              <tr>
-                <td><strong>URL Access Start Date</strong></td>
+                <td><strong>URL Access Starting Date</strong></td>
             </tr>   
             
             <tr>
@@ -106,7 +106,7 @@
                 </tr>
 
             <tr>
-            <td><strong>URL Access Stop Date</strong></td>
+            <td><strong>URL Access Stopping Date</strong></td>
                 <tr>
                 <td>
                     

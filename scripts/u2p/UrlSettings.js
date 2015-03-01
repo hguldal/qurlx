@@ -1,19 +1,50 @@
+
+
 $('#cmbErisimTuru').selectize({
-    
+
     onItemAdd:
             function (data, $item) {
-                
+                var alan = 'erisimTuru';
+                var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
+                var deger = data;
+                console.log("pk=" + kisaKod + "&name=" + alan + '&value=' + deger);
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajax/URLOzellikKaydet',
+                    data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
+                    success: function (msg) {
+                        MesajKutusu("OK", "URL settings was saved successfuly");
+                    },
+                    error: function (msg) {
+                        HataMesaji("Unexpected error while saved URL settings");
+                    }
+                });
             }
 });
 
 
 $('#cmbGorunur').selectize({
-    
+
     onItemAdd:
             function (data, $item) {
-                
+                var alan = 'aramalardaGoster';
+                var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
+                var deger = data;
+                console.log("pk=" + kisaKod + "&name=" + alan + '&value=' + deger);
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajax/URLOzellikKaydet',
+                    data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
+                    success: function (msg) {
+                        MesajKutusu("OK", "URL settings was saved successfuly");
+                    },
+                    error: function (msg) {
+                        HataMesaji("Unexpected error while saved URL settings");
+                    }
+                });
             }
 });
+
 
 $('#datetimepicker1').datetimepicker();
  
