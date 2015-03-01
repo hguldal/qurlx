@@ -46,13 +46,17 @@ $('#cmbGorunur').selectize({
 });
 
 
-$('#datetimepicker1').datetimepicker();
+$('#datetimepicker1').datetimepicker(
+   
+   'setStartDate','2012-01-01'
+    
+    );
 
-$("#datetimepicker1").on("dp.change", function (e) {
+$("#datetimepicker1").on("changeDate", function (e) {
 
     var alan = 'erisimBaslamaTarihi';
     var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
-    var deger = e.date._d;
+    var deger = e.date;
 
     console.log(e.date);
 
@@ -61,7 +65,7 @@ $("#datetimepicker1").on("dp.change", function (e) {
         url: '/ajax/URLOzellikKaydet',
         data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
         success: function (msg) {
-            MesajKutusu("OK", "URL settings was saved successfuly");
+            MesajKutusu("OK", msg);
         },
         error: function (msg) {
             HataMesaji("Unexpected error while saved URL settings");

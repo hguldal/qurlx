@@ -33,7 +33,7 @@
 @section styles
 {
 <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-<link rel="stylesheet" href="@Href("~/scripts/datetimepicker/bootstrap-datetimepicker.css")" />
+<link rel="stylesheet" href="@Href("~/scripts/datetimepicker/bootstrap-datetimepicker.min.css")" />
 
 }
 <div class="row">
@@ -94,9 +94,10 @@
             
             <tr>
                 <td>
-
-                   <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" value="@String.Format("{0:g}", queryURL.erisimBaslamaTarihi)" />
+                    
+                   <div class='input-group date form_datetime' id='datetimepicker1' data-date="@queryURL.erisimBaslamaTarihi">
+                       
+                    <input type='text' class="form-control" value="" readonly />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                         
                     </span>
@@ -140,7 +141,7 @@
 {
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
     <script src="@Href("~/scripts/datetimepicker/moment.js")"></script> 
-    <script src="@Href("~/scripts/datetimepicker/bootstrap-datetimepicker.js")"></script> 
+    <script src="@Href("~/scripts/datetimepicker/bootstrap-datetimepicker.min.js")"></script> 
     <script src="@Href("~/scripts/u2p/UrlSettings.js")"></script>
 
 }

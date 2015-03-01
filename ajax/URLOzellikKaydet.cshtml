@@ -13,6 +13,10 @@
      var alan=Request["name"];
      var deger=Request["value"];
      
+     db.Close();
+     Response.Write(deger);
+     Response.End();
+
      var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
 
      if (queryURL==null)
