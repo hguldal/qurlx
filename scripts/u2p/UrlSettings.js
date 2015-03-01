@@ -25,7 +25,7 @@ $('#txtKisaKod').editable(
         return $("#lblKisaKod").attr("data-kisaKod")
     },
 
-    name:'kisaKod',
+    name: 'kisaKod',
 
     url: '/ajax/URLOzellikKaydet',
 
@@ -39,6 +39,10 @@ $('#txtKisaKod').editable(
             return false;
         }
         else {
+
+           
+                window.location.href = '/UrlSettings/' + msg;
+            
             MesajKutusu("OK", "URL settings was saved successfuly");
         }
     }

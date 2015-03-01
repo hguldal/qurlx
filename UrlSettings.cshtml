@@ -15,6 +15,7 @@
     }
 
     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+    var queryKullanici=db.QuerySingle("SELECT * FROM Profiles WHERE UserID=@0",WebSecurity.CurrentUserId);
   
     if (queryURL==null)
     {
@@ -50,7 +51,7 @@
                 <td><strong>URL:</strong></td>         
             </tr>
             <tr>
-                <td>@Request.Url.GetLeftPart(UriPartial.Authority)/<a href="#" id="txtKisaKod">@queryURL.kisaKod</a></td>
+                <td>@Request.Url.GetLeftPart(UriPartial.Authority)/@if(queryKullanici.uyelikTuru==2){<a href="#" id="txtKisaKod">@queryURL.kisaKod</a>}else {<text> @queryURL.kisaKod</text>}</td>
             </tr>
             <tr>
                 <td><strong>Description:</strong></td>
