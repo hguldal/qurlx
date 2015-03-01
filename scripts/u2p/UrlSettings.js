@@ -47,6 +47,30 @@ $('#cmbGorunur').selectize({
 
 
 $('#datetimepicker1').datetimepicker();
+
+$("#datetimepicker1").on("dp.change", function (e) {
+
+    var alan = 'erisimBaslamaTarihi';
+    var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
+    var deger = e.date._d;
+
+    console.log(e.date);
+
+    $.ajax({
+        type: 'POST',
+        url: '/ajax/URLOzellikKaydet',
+        data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
+        success: function (msg) {
+            MesajKutusu("OK", "URL settings was saved successfuly");
+        },
+        error: function (msg) {
+            HataMesaji("Unexpected error while saved URL settings");
+        }
+    });
+
+});
+
+
  
 $('#datetimepicker2').datetimepicker();
 
