@@ -94,19 +94,48 @@
             
             <tr>
                 <td>
-                    
-                   <div class='input-group date form_datetime' id='datetimepicker1' data-date="@queryURL.erisimBaslamaTarihi">
+                    <div class="row">
+                        <div class="col-xs-12">Month
+                        <select id="cmbBaslangicTarihiAy" class="cmbBaslamaTarihi" class="form-control">
                        
-                    <input type='text' class="form-control" value="" readonly />
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                        
-                    </span>
+                       <option value="1" @if(queryURL.erisimBaslamaTarihi.Month==1) {<text>selected</text>} >January</option>
+                       <option value="2" @if(queryURL.erisimBaslamaTarihi.Month==2) {<text>selected</text>}>February</option>
+                       <option value="3" @if(queryURL.erisimBaslamaTarihi.Month==3) {<text>selected</text>}>March</option>
+                       <option value="4" @if(queryURL.erisimBaslamaTarihi.Month==4) {<text>selected</text>}>April</option>
+                       <option value="5" @if(queryURL.erisimBaslamaTarihi.Month==5) {<text>selected</text>}>May</option>
+                       <option value="6" @if(queryURL.erisimBaslamaTarihi.Month==6) {<text>selected</text>}>June</option>
+                       <option value="7" @if(queryURL.erisimBaslamaTarihi.Month==7) {<text>selected</text>}>July</option>
+                       <option value="8" @if(queryURL.erisimBaslamaTarihi.Month==8) {<text>selected</text>}>August</option>
+                       <option value="9" @if(queryURL.erisimBaslamaTarihi.Month==9) {<text>selected</text>}>September</option>
+                       <option value="10" @if(queryURL.erisimBaslamaTarihi.Month==10) {<text>selected</text>}>October</option>
+                       <option value="11" @if(queryURL.erisimBaslamaTarihi.Month==11) {<text>selected</text>}>November</option>
+                       <option value="12" @if(queryURL.erisimBaslamaTarihi.Month==12) {<text>selected</text>}>December</option>
+                       
+                    </select>
+                            Day
+                            <select id="cmbBaslangicTarihiGun" class="cmbBaslamaTarihi" class="form-control">
+                        @for (var i=1;i<=31;i++)
+                        {
+                        <option value="@i">@i</option>
+                        }
+                    </select>
+                     Year
+                        <select id="cmbBaslangicTarihiYil" class="cmbBaslamaTarihi" class="form-control">
+                        @for (var i=2015;i<=2025;i++)
+                        {
+                        <option value="@i">@i</option>
+                        }
+                    </select>
+                            Hour
+                           <select id="cmbBaslangicTarihiSaat" class="cmbBaslamaTarihi" class="form-control">
                       
-                        
-                    </span>
-                </div>
-
-                   
+                                    <option value="0">00:00</option>
+                                    <option value="1">01:00</option>
+                                    <option value="2">02:00</option>
+                       
+                    </select>
+                        </div>
+                        </div>
                 </td>
                 </tr>
 
@@ -115,12 +144,7 @@
                 <tr>
                 <td>
                     
-                     <div class='input-group date' id='datetimepicker2'>
-                        <input type='text' class="form-control" value="@String.Format("{0:g}", queryURL.erisimBitisTarihi)" />
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                
+                     
                 </td>
                     </tr>
             </tr>

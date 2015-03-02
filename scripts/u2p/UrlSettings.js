@@ -46,37 +46,14 @@ $('#cmbGorunur').selectize({
 });
 
 
-$('#datetimepicker1').datetimepicker(
-   
-   'setStartDate','2012-01-01'
-    
-    );
+$('.cmbBaslamaTarihi').selectize({
 
-$("#datetimepicker1").on("changeDate", function (e) {
-
-    var alan = 'erisimBaslamaTarihi';
-    var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
-    var deger = e.date;
-
-    console.log(e.date);
-
-    $.ajax({
-        type: 'POST',
-        url: '/ajax/URLOzellikKaydet',
-        data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
-        success: function (msg) {
-            MesajKutusu("OK", msg);
-        },
-        error: function (msg) {
-            HataMesaji("Unexpected error while saved URL settings");
-        }
-    });
-
+    onItemAdd:
+            function (data, $item) {
+                
+            }
 });
 
-
- 
-$('#datetimepicker2').datetimepicker();
 
 $('#txtKisaKod').editable(
 {
