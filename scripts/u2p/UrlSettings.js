@@ -7,8 +7,7 @@ $('#cmbErisimTuru').selectize({
                 var alan = 'erisimTuru';
                 var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
                 var deger = data;
-                console.log("pk=" + kisaKod + "&name=" + alan + '&value=' + deger);
-                $.ajax({
+               $.ajax({
                     type: 'POST',
                     url: '/ajax/URLOzellikKaydet',
                     data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
@@ -46,14 +45,30 @@ $('#cmbGorunur').selectize({
 });
 
 
-$('.cmbBaslamaTarihi').selectize({
+$('.cmbBaslamaTarihi').change(function () {
+    var gun = $('#cmbBaslangicTarihiGun').val();
+    var ay = $('#cmbBaslangicTarihiAy').val();
+    var yil = $('#cmbBaslangicTarihiYil').val();
+    var saat = $('#cmbBaslangicTarihiSaat').val();
 
-    onItemAdd:
-            function (data, $item) {
-                
-            }
+    var alan = 'erisimBaslamaTarihi';
+    var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
+    var deger = gun + '-' + ay + '-' + yil + '-' + saat;
+
+    $.ajax({
+        type: 'POST',
+        url: '/ajax/URLOzellikKaydet',
+        data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
+        success: function (msg) {
+            MesajKutusu("OK", "URL settings was saved successfuly");
+        },
+        error: function (msg) {
+            HataMesaji("Unexpected error while saved URL settings");
+        }
+    });
+
+
 });
-
 
 $('#txtKisaKod').editable(
 {
@@ -79,7 +94,7 @@ $('#txtKisaKod').editable(
            
                 window.location.href = '/UrlSettings/' + msg;
             
-            MesajKutusu("OK", "URL settings was saved successfuly");
+            MesajKutusu("OK", "Settings was saved successfuly");
         }
     }
 });

@@ -95,8 +95,10 @@
             <tr>
                 <td>
                     <div class="row">
-                        <div class="col-xs-12">Month
-                        <select id="cmbBaslangicTarihiAy" class="cmbBaslamaTarihi" class="form-control">
+                        <div class="col-xs-12 column">
+                    <div class="form-inline">
+                         <div class="form-group ">
+                        <select id="cmbBaslangicTarihiAy" class="form-control cmbBaslamaTarihi">
                        
                        <option value="1" @if(queryURL.erisimBaslamaTarihi.Month==1) {<text>selected</text>} >January</option>
                        <option value="2" @if(queryURL.erisimBaslamaTarihi.Month==2) {<text>selected</text>}>February</option>
@@ -112,29 +114,59 @@
                        <option value="12" @if(queryURL.erisimBaslamaTarihi.Month==12) {<text>selected</text>}>December</option>
                        
                     </select>
-                            Day
-                            <select id="cmbBaslangicTarihiGun" class="cmbBaslamaTarihi" class="form-control">
+                      </div> 
+                    <div class="form-group">
+                       <select id="cmbBaslangicTarihiGun" class="form-control cmbBaslamaTarihi">
                         @for (var i=1;i<=31;i++)
                         {
-                        <option value="@i">@i</option>
+                        <option value="@i" @if(queryURL.erisimBaslamaTarihi.Day==i) {<text>selected</text>}>@i</option>
                         }
                     </select>
-                     Year
-                        <select id="cmbBaslangicTarihiYil" class="cmbBaslamaTarihi" class="form-control">
+                      </div>
+                     
+
+                        <div class="form-group">
+                        <select id="cmbBaslangicTarihiYil" class="form-control cmbBaslamaTarihi">
                         @for (var i=2015;i<=2025;i++)
                         {
-                        <option value="@i">@i</option>
+                        <option value="@i" @if(queryURL.erisimBaslamaTarihi.Year==i) {<text>selected</text>}>@i</option>
                         }
-                    </select>
-                            Hour
-                           <select id="cmbBaslangicTarihiSaat" class="cmbBaslamaTarihi" class="form-control">
-                      
-                                    <option value="0">00:00</option>
-                                    <option value="1">01:00</option>
-                                    <option value="2">02:00</option>
-                       
-                    </select>
+                         </select>
                         </div>
+
+                        <div class="form-group">
+                        <select id="cmbBaslangicTarihiSaat" class="form-control cmbBaslamaTarihi">
+                                <option value="0" @if(queryURL.erisimBaslamaTarihi.Hour==0) {<text>selected</text>}>00:00</option>
+                                <option value="1" @if(queryURL.erisimBaslamaTarihi.Hour==1) {<text>selected</text>}>01:00</option>
+                                <option value="2" @if(queryURL.erisimBaslamaTarihi.Hour==2) {<text>selected</text>}>02:00</option>
+                                <option value="3" @if(queryURL.erisimBaslamaTarihi.Hour==3) {<text>selected</text>}>03:00</option>
+                                <option value="4" @if(queryURL.erisimBaslamaTarihi.Hour==4) {<text>selected</text>}>04:00</option>
+                                <option value="5" @if(queryURL.erisimBaslamaTarihi.Hour==5) {<text>selected</text>}>05:00</option>
+                                <option value="6" @if(queryURL.erisimBaslamaTarihi.Hour==6) {<text>selected</text>}>06:00</option>
+                                <option value="7" @if(queryURL.erisimBaslamaTarihi.Hour==7) {<text>selected</text>}>07:00</option>
+                                <option value="8" @if(queryURL.erisimBaslamaTarihi.Hour==8) {<text>selected</text>}>08:00</option>
+                                <option value="9" @if(queryURL.erisimBaslamaTarihi.Hour==9) {<text>selected</text>}>09:00</option>
+                                <option value="10" @if(queryURL.erisimBaslamaTarihi.Hour==10) {<text>selected</text>}>10:00</option>
+                                <option value="11" @if(queryURL.erisimBaslamaTarihi.Hour==11) {<text>selected</text>}>11:00</option>
+                                <option value="12" @if(queryURL.erisimBaslamaTarihi.Hour==12) {<text>selected</text>}>12:00</option>
+                                <option value="13" @if(queryURL.erisimBaslamaTarihi.Hour==13) {<text>selected</text>}>13:00</option>
+                                <option value="14" @if(queryURL.erisimBaslamaTarihi.Hour==14) {<text>selected</text>}>14:00</option>
+                                <option value="15" @if(queryURL.erisimBaslamaTarihi.Hour==15) {<text>selected</text>}>15:00</option>
+                                <option value="16" @if(queryURL.erisimBaslamaTarihi.Hour==16) {<text>selected</text>}>16:00</option>
+                                <option value="17" @if(queryURL.erisimBaslamaTarihi.Hour==17) {<text>selected</text>}>17:00</option>
+                                <option value="18" @if(queryURL.erisimBaslamaTarihi.Hour==18) {<text>selected</text>}>18:00</option>
+                                <option value="19" @if(queryURL.erisimBaslamaTarihi.Hour==19) {<text>selected</text>}>19:00</option>
+                                <option value="20" @if(queryURL.erisimBaslamaTarihi.Hour==20) {<text>selected</text>}>20:00</option>
+                                <option value="21" @if(queryURL.erisimBaslamaTarihi.Hour==21) {<text>selected</text>}>21:00</option>
+                                <option value="22" @if(queryURL.erisimBaslamaTarihi.Hour==22) {<text>selected</text>}>22:00</option>
+                                <option value="23" @if(queryURL.erisimBaslamaTarihi.Hour==23) {<text>selected</text>}>23:00</option>
+                                
+                        
+                         </select>
+                        </div>
+
+                           </div>
+                            </div>
                         </div>
                 </td>
                 </tr>

@@ -13,10 +13,7 @@
      var alan=Request["name"];
      var deger=Request["value"];
      
-     db.Close();
-     Response.Write(deger);
-     Response.End();
-
+    
      var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
 
      if (queryURL==null)
@@ -53,6 +50,21 @@
         deger=URLDuzelt.RemoveAccent(deger);
         deger=URLDuzelt.Slugify(deger);
 
+     }
+     
+     
+     else if (alan=="erisimBaslamaTarihi" || alan=="erisimBitisTarihi")
+     {
+        
+         var tarihParca=deger.Split('-');
+         int gun= tarihParca[0].AsInt();
+         int ay= tarihParca[1].AsInt();
+         int yil= tarihParca[2].AsInt();
+         int saat= tarihParca[3].AsInt();
+         
+         DateTime tarihDegeri=new DateTime(yil,ay,gun,saat,0,0);
+
+         deger=tarihDegeri.ToString();
      }
 
      
