@@ -19,7 +19,7 @@
                 kisaKod=KodUret.YeniKod();
              }
 
-         db.Execute("INSERT INTO Kategori(KategoriAdi,userID,kisaKod) VALUES (@0,@1,@2)",kategoriAdi,WebSecurity.CurrentUserId,kisaKod);
+         db.Execute("INSERT INTO Kategori(KategoriAdi,userID,kisaKod,olusturmaTarihi) VALUES (@0,@1,@2,@3)",kategoriAdi,WebSecurity.CurrentUserId,kisaKod,DateTime.Now);
          
      }
     var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisaKod=@0",kisaKod);
