@@ -16,7 +16,7 @@
     
      var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
 
-     var queryKategori=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+     var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisaKod=@0",kisaKod);
 
      if (queryURL==null && queryKategori==null)
      {

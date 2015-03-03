@@ -1,0 +1,58 @@
+﻿@{
+    if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+     var db=Database.Open("u2p");
+ 
+     var kisaKod=Request["kisaKod"];
+    
+     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+
+     var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisaKod=@0",kisaKod);
+
+     if (queryURL==null && queryKategori==null)
+     {
+
+         db.Close();
+         Response.StatusCode=500;
+         Response.End();
+     }
+
+     
+     if (queryURL!=null)
+     {
+         //url nin yöneticisi mi
+         if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND UserID=@1",queryURL.urlID,WebSecurity.CurrentUserId)<1)
+         {
+             db.Close();
+             Response.StatusCode=401;
+             Response.End();
+         }
+      }
+    
+     if (queryKategori!=null)
+     {
+         //yonetici mi ?
+
+         if (queryKategori.userID!=WebSecurity.CurrentUserId)
+         {
+             db.Close();
+             Response.StatusCode=401;
+             Response.End();
+         }
+     }
+
+     
+      var erisimKodu=KodUret.YeniKod(5);
+
+      db.Execute("INSERT INTO ErisimKodlari(kisaKod,erisimKodu) VALUES(@0,@1)",kisaKod,erisimKodu);
+      db.Close();
+      Response.Write(erisimKodu);
+      Response.End();
+}
+
