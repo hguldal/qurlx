@@ -1,0 +1,84 @@
+﻿@{
+  if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+     var db=Database.Open("u2p");
+ 
+     var kisaKod=Request["pk"];
+     var alan=Request["name"];
+     var deger=Request["value"];
+     
+    
+     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+
+     var queryKategori=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+
+     if (queryURL==null && queryKategori==null)
+     {
+
+         db.Close();
+         Response.StatusCode=500;
+         Response.End();
+     }
+
+     //değiştirilmesi gereken nesne URL ise
+     if (queryURL!=null)
+     {
+         //url nin yöneticisi mi
+         if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND UserID=@1",queryURL.urlID,WebSecurity.CurrentUserId)<1)
+         {
+             db.Close();
+             Response.StatusCode=401;
+             Response.End();
+         }
+
+         if (alan=="kisaKod")
+         {
+            if (db.QueryValue("SELECT COUNT(*) FROM URL WHERE kisaKod=@0",deger)>0)
+             {
+                 Response.Write("kisakodvar");
+                 Response.End();
+             }
+        
+            if(db.QueryValue("SELECT COUNT(*) FROM Kategori WHERE kisaKod=@0",deger)>0)
+
+             {
+                 Response.Write("kisakodvar");
+                 Response.End();
+             }
+
+         
+            deger=URLDuzelt.RemoveAccent(deger);
+            deger=URLDuzelt.Slugify(deger);
+
+         }
+     
+     
+         else if (alan=="erisimBaslamaTarihi" || alan=="erisimBitisTarihi")
+         {
+        
+             var tarihParca=deger.Split('-');
+             int gun= tarihParca[0].AsInt();
+             int ay= tarihParca[1].AsInt();
+             int yil= tarihParca[2].AsInt();
+             int saat= tarihParca[3].AsInt();
+         
+             DateTime tarihDegeri=new DateTime(yil,ay,gun,saat,0,0);
+
+             deger=tarihDegeri.ToString();
+         }
+
+     
+         db.Execute("UPDATE Url SET " + alan  +"=@0 WHERE urlID=@1",deger,queryURL.urlID);
+     
+         Response.Write(deger);
+         Response.End();
+     
+         db.Close();
+     }
+}

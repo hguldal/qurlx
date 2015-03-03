@@ -9,13 +9,13 @@ $('#cmbErisimTuru').selectize({
                 var deger = data;
                $.ajax({
                     type: 'POST',
-                    url: '/ajax/URLOzellikKaydet',
+                    url: '/ajax/OzellikKaydet',
                     data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
                     success: function (msg) {
-                        MesajKutusu("OK", "URL settings was saved successfuly");
+                        MesajKutusu("OK", "Settings were saved successfuly");
                     },
                     error: function (msg) {
-                        HataMesaji("Unexpected error while saved URL settings");
+                        HataMesaji("Unexpected error!");
                     }
                 });
             }
@@ -32,13 +32,13 @@ $('#cmbGorunur').selectize({
                 console.log("pk=" + kisaKod + "&name=" + alan + '&value=' + deger);
                 $.ajax({
                     type: 'POST',
-                    url: '/ajax/URLOzellikKaydet',
+                    url: '/ajax/OzellikKaydet',
                     data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
                     success: function (msg) {
-                        MesajKutusu("OK", "URL settings was saved successfuly");
+                        MesajKutusu("OK", "Settings were saved successfuly");
                     },
                     error: function (msg) {
-                        HataMesaji("Unexpected error while saved URL settings");
+                        HataMesaji("Unexpected error!");
                     }
                 });
             }
@@ -57,13 +57,13 @@ $('.cmbBaslamaTarihi').change(function () {
 
     $.ajax({
         type: 'POST',
-        url: '/ajax/URLOzellikKaydet',
+        url: '/ajax/OzellikKaydet',
         data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
         success: function (msg) {
-            MesajKutusu("OK", "URL settings was saved successfuly");
+            MesajKutusu("OK", "Settings were saved successfuly");
         },
         error: function (msg) {
-            HataMesaji("Unexpected error while saved URL settings");
+            HataMesaji("Unexpected error!");
         }
     });
 
@@ -78,7 +78,7 @@ $('#txtKisaKod').editable(
 
     name: 'kisaKod',
 
-    url: '/ajax/URLOzellikKaydet',
+    url: '/ajax/OzellikKaydet',
 
     display: function (value) {
         $(this).text(value + '');
@@ -86,15 +86,15 @@ $('#txtKisaKod').editable(
 
     success: function (msg) {
         if (msg == 'kisakodvar') {
-            HataMesaji("URL name you have entered already registered");
+            HataMesaji("Address you have entered is already registered");
             return false;
         }
         else {
 
            
-                window.location.href = '/UrlSettings/' + msg;
+                window.location.href = '/ChangeSettings/' + msg;
             
-            MesajKutusu("OK", "Settings was saved successfuly");
+            MesajKutusu("OK", "Settings were saved successfuly");
         }
     }
 });
@@ -108,7 +108,7 @@ $('#txtAciklama').editable(
 
     name: 'aciklama',
 
-    url: '/ajax/URLOzellikKaydet',
+    url: '/ajax/OzellikKaydet',
 
     display: function (value) {
         $(this).text(value + '');
@@ -116,12 +116,12 @@ $('#txtAciklama').editable(
 
     success: function (msg) {
         if (msg == 'kisakodvar') {
-            HataMesaji("URL name you have entered already registered");
+            HataMesaji("Address you have entered is already registered");
             return false;
         }
         else {
             
-            MesajKutusu("OK", "URL settings was saved successfuly");
+            MesajKutusu("OK", "Settings were saved successfuly");
         }
     }
 });
