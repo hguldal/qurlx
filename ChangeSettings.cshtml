@@ -17,6 +17,7 @@
     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
     var queryKullanici=db.QuerySingle("SELECT * FROM Profiles WHERE UserID=@0",WebSecurity.CurrentUserId);
     var queryErisimKodlari=db.Query("SELECT * FROM ErisimKodlari WHERE KisaKod=@0",kisaKod);
+    var queryErisimIzinleri=db.Query("SELECT * FROM ErisimIzni INNER JOIN Profiles ON ErisimIzni.userID=Profiles.userID WHERE KisaKod=@0 ",kisaKod);
   
     if (queryURL==null)
     {
@@ -289,7 +290,19 @@
                 <td><strong>Allowed Users:</strong></td>         
             </tr>
             <tr>
-                <td></td>
+                <td>
+                 <select id="cmbErisimIzinleri" class="form-control" size="8">
+                        
+                    @foreach (var item in queryErisimIzinleri)
+                        {
+                            <option value="@item.Email">@item.Email</option>
+                         }
+
+                    </select><br>
+                    <input type="text" class="form-control" placeholder="Please enter email address..."><br>
+                <button class="btn btn-info btn-sm"> Add User</button> <button class="btn btn-danger btn-sm"> Remove User</button>
+                
+                </td>
             </tr>
             </table>
          </div>
