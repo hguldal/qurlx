@@ -8,16 +8,16 @@
         }  
         
     var db=Database.Open("u2p");  
-    var kisaKod=Request["KisaKod"];
+    var kategoriID=Request["kategoriID"];
     IEnumerable<dynamic> queryURLs;
     
-    if (kisaKod=="hepsi")
+    if (kategoriID=="-1")
     {
         queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0 ORDER BY Url.urlID ASC",WebSecurity.CurrentUserId);
     }
     else
     {
-        queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKategori ON Url.urlID=UrlKategori.urlID INNER JOIN Kategori ON UrlKategori.kategoriID=Kategori.kategoriID WHERE Kategori.kisaKod=@0",kisaKod);
+        queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKategori ON Url.urlID=UrlKategori.urlID INNER JOIN Kategori ON UrlKategori.kategoriID=Kategori.kategoriID WHERE Kategori.kategoriID=@0",kategoriID);
     }
 
     Json.Write(queryURLs, Response.Output);

@@ -1,12 +1,12 @@
 $(document).ready(function () {
 
-    UrlYukle('hepsi');
+    UrlYukle('-1');
 
     $('body').on('click', '.kategoriOgesi', function () {
-        var kod = $(this).attr('data-kisakod');
+        var kategoriID = $(this).attr('data-kategoriID');
         $('.kategoriOgesi').removeClass('active');
         $(this).addClass('active');
-        UrlYukle(kod);
+        UrlYukle(kategoriID);
     });
 
    
@@ -101,7 +101,7 @@ $(document).ready(function () {
                 $('#modalKategoriEkle').modal('hide')
                 $('#txtKategoriEkle').val('');
                 $('.kategoriOgesi').removeClass('active');
-                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kisaKod="' + kategori.kisaKod + '" data-kategoriAdi="' + kategori.kategoriAdi + '"><strong>' + kategoriAdi + '</strong><span class="badge">0</span><br>' + location.href.replace('#', '') + kategori.kisaKod + '</a>');
+                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kategoriID="' + kategori.kategoriID + '" data-kategoriAdi="' + kategori.kategoriAdi + '">' + kategoriAdi + '<span class="badge">0</span></a>');
                 $('#lstUrl > tbody').find('tr').remove();
                 $('.list-group-item.kategoriOgesi.active').focus();
 
@@ -114,11 +114,11 @@ $(document).ready(function () {
 
     });
 
-    function UrlYukle(kod) {
+    function UrlYukle(kategoriID) {
 
         $.ajax({
             type: "POST",
-            url: '/ajax/UrlListesi' + '?KisaKod=' + kod,
+            url: '/ajax/UrlListesi' + '?kategoriID=' + kategoriID,
 
             success: function (urls) {
                 //tabloyu temizle
@@ -135,12 +135,12 @@ $(document).ready(function () {
 
                 }
                 //yukarıda liste adını ve adresi göster
-                if (kod != 'hepsi') {
-                    $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="' + kod + '"]').attr('data-kategoriAdi') + '<br><small>' + location.href.replace('#', '') + kod + '</small>');
+                if (kategoriID != '-1') {
+                    $('#kategoriAdi').html($('#listeKategori>[data-kategoriID="' + kategoriID + '"]').attr('data-kategoriAdi'));
                 }
                 else {
-                    $('#kategoriAdi').html($('#listeKategori>[data-kisaKod="hepsi"]').attr('data-kategoriAdi'));
-                    $('#listeKategori>[data-kisaKod="hepsi"]').addClass('active');
+                    $('#kategoriAdi').html($('#listeKategori>[data-kategoriID="-1"]').attr('data-kategoriAdi'));
+                    $('#listeKategori>[data-kategoriID="-1"]').addClass('active');
                 }
 
 

@@ -10,7 +10,7 @@
 
      var db=Database.Open("u2p");
  
-     var kisaKod=Request["KisaKod"];
+     var kategoriID=Request["kategoriID"];
 
      if (string.IsNullOrEmpty(kisaKod))
      {
@@ -21,7 +21,7 @@
      
      using (db)
      {
-       var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE UserID=@0 AND KisaKod=@1",WebSecurity.CurrentUserId,kisaKod);
+       var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE UserID=@0 AND kategoriID=@1",WebSecurity.CurrentUserId,kategoriID);
       
        if (queryKategori==null)
        {
