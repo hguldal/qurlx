@@ -242,14 +242,41 @@ $(document).ready(function () {
             url: '/ajax/ErisimKullaniciCikar',
             data: "kisaKod=" + kisaKod + "&ePosta=" + ePosta,
             success: function (msg) {
-                 $("#cmbErisimIzinleri option:selected").remove();
-               
+                $("#cmbErisimIzinleri option:selected").remove();
+
             },
             error: function (msg) {
                 HataMesaji("Unexpected error!");
             }
         });
 
+    });
+
+    $('#cmbTags').selectize({
+        valueField: 'Tag',
+        labelField: 'TagLabel',
+        earchField: ['GrupAdi', 'adsoyad'],
+        create: false,
+        plugins: ['remove_button'],
+        maxItems: 10,
+
+        load: function (query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '/ajax/JsonEtiketListesi',
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    sorgu: query
+                },
+                error: function () {
+                    callback();
+                },
+                success: function (res) {
+                    callback(res);
+                }
+            });
+        }
     });
 
 });
