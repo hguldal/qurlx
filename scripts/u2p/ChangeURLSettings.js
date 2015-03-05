@@ -259,9 +259,9 @@ $(document).ready(function () {
         create: true,
         plugins: ['remove_button'],
         maxItems: null,
-        
+
         load: function (query, callback) {
-            if (!query.length) return callback();
+            if (query.length < 2) return callback();
             $.ajax({
                 url: '/ajax/JsonEtiketListesi',
                 type: 'GET',
@@ -279,17 +279,17 @@ $(document).ready(function () {
         },
 
 
-        onItemAdd: function (value, data) {
+        onItemAdd: function (value, $item) {
             var etiket = value;
 
             var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
-
+            if (etiket.length < 2) { return false; }
             $.ajax({
                 type: 'POST',
                 url: '/ajax/EtiketEkle',
                 data: "kisaKod=" + kisaKod + "&etiket=" + etiket,
                 success: function (msg) {
-                    MesajKutusu("OK",  etiket  + " was added");
+                    MesajKutusu("OK", etiket + " was added");
                 },
                 error: function (msg) {
                     HataMesaji("Unexpected error!");
@@ -308,7 +308,7 @@ $(document).ready(function () {
                 url: '/ajax/EtiketSil',
                 data: "kisaKod=" + kisaKod + "&etiket=" + etiket,
                 success: function (msg) {
-                    
+
                 },
                 error: function (msg) {
                     HataMesaji("Unexpected error!");
