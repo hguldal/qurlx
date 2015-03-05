@@ -13,9 +13,7 @@
     
      var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
 
-     var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisaKod=@0",kisaKod);
-
-     if (queryURL==null && queryKategori==null)
+     if (queryURL==null)
      {
 
          db.Close();
@@ -23,8 +21,7 @@
          Response.End();
      }
 
-     
-     if (queryURL!=null)
+     else
      {
          //url nin yöneticisi mi
          if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND UserID=@1",queryURL.urlID,WebSecurity.CurrentUserId)<1)
@@ -34,23 +31,10 @@
              Response.End();
          }
       }
-    
-     if (queryKategori!=null)
-     {
-         //yonetici mi ?
-
-         if (queryKategori.userID!=WebSecurity.CurrentUserId)
-         {
-             db.Close();
-             Response.StatusCode=401;
-             Response.End();
-         }
-     }
-
-     
+   
       var erisimKodu=KodUret.YeniKod(5);
 
-      db.Execute("INSERT INTO ErisimKodlari(kisaKod,erisimKodu) VALUES(@0,@1)",kisaKod,erisimKodu);
+      db.Execute("INSERT INTO URLErisimKodlari(urlID,erisimKodu) VALUES(@0,@1)",queryURL.urlID,erisimKodu);
       db.Close();
       Response.Write(erisimKodu);
       Response.End();

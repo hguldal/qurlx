@@ -7,22 +7,15 @@
                    
         }  
         
-     var db=Database.Open("u2p");  
-     var kategoriAdi=Request["KategoriAdi"];
-    var kisaKod="";
+    var db=Database.Open("u2p");  
+    var kategoriAdi=Request["KategoriAdi"];    
      using (db)
-     {
-       kisaKod=KodUret.YeniKod();
-  
-         while (db.QueryValue("SELECT COUNT(*) FROM KodCache WHERE kisaKod=@0",kisaKod)>0)
-             {
-                kisaKod=KodUret.YeniKod();
-             }
+     {  
 
-         db.Execute("INSERT INTO Kategori(KategoriAdi,userID,kisaKod,olusturmaTarihi) VALUES (@0,@1,@2,@3)",kategoriAdi,WebSecurity.CurrentUserId,kisaKod,DateTime.Now);
+         db.Execute("INSERT INTO Kategori(KategoriAdi,userID) VALUES (@0,@1)",kategoriAdi,WebSecurity.CurrentUserId);
          
      }
-    var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisaKod=@0",kisaKod);
+    var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kategoriID=@0",db.GetLastInsertId().ToString());
      Json.Write(queryKategori, Response.Output);
      db.Close();   
      Response.ContentType = "application/json";
