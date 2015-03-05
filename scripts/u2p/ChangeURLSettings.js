@@ -255,16 +255,10 @@ $(document).ready(function () {
     $('#cmbTags').selectize({
         valueField: 'etiketID',
         labelField: 'etiket',
-        earchField: ['etiket', 'etiket'],
+        searchField: ['etiket', 'etiket'],
         create: false,
         plugins: ['remove_button'],
         maxItems: 10,
-
-        render: {
-            option: function (item, escape) {
-                return item.etiket;
-            }
-        },
 
         load: function (query, callback) {
             if (!query.length) return callback();
@@ -273,7 +267,7 @@ $(document).ready(function () {
                 type: 'GET',
                 dataType: 'json',
                 data: {
-                    sorgu: query
+                    filtre: query
                 },
                 error: function () {
                     callback();
