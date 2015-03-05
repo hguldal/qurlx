@@ -297,12 +297,12 @@
                         
                     @foreach (var item in queryErisimIzinleri)
                         {
-                            <option value="@item.Email">@item.Email</option>
+                            <option value="@item.ePosta">@item.ePosta</option>
                          }
 
                     </select><br>
-                    <input type="text" class="form-control" placeholder="Please enter email address..."><br>
-                <button class="btn btn-info btn-sm"> Add User</button> <button class="btn btn-danger btn-sm"> Remove User</button>
+                    <input type="text" class="form-control" id="txtEposta" placeholder="Please enter email address..."><br>
+                <button class="btn btn-info btn-sm" id="btnErisimKullaniciEkle"> Add User</button> <button class="btn btn-danger btn-sm" id="btnErisimKullaniciCikar"> Remove User</button>
                 
                 </td>
             </tr>

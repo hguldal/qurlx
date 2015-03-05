@@ -203,4 +203,53 @@ $(document).ready(function () {
 
     });
 
+
+    $('#btnErisimKullaniciEkle').click(function () {
+        var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
+        var ePosta = $("#txtEposta").val();
+        $.ajax({
+            type: 'POST',
+            url: '/ajax/ErisimKullaniciEkle',
+            data: "kisaKod=" + kisaKod + "&ePosta=" + ePosta,
+            success: function (msg) {
+                if (msg == 'zatenyetkili') {
+                    HataMesaji("This user is already authorized");
+                    $("#txtEposta").focus();
+                    return false;
+                }
+                if (msg == 'kullaniciyok') {
+                    HataMesaji("Email address you have entered is not registered");
+                    $("#txtEposta").focus();
+                    return false;
+                }
+
+                $('#cmbErisimIzinleri').append('<option value="' + ePosta + '" selected >' + ePosta + '</option>');
+                $("#txtEposta").val('');
+                $("#txtEposta").focus();
+            },
+            error: function (msg) {
+                HataMesaji("Unexpected error!");
+            }
+        });
+
+    });
+
+    $('#btnErisimKullaniciCikar').click(function () {
+        var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
+        var ePosta = $("#cmbErisimIzinleri").val();
+        $.ajax({
+            type: 'POST',
+            url: '/ajax/ErisimKullaniciCikar',
+            data: "kisaKod=" + kisaKod + "&ePosta=" + ePosta,
+            success: function (msg) {
+                 $("#cmbErisimIzinleri option:selected").remove();
+               
+            },
+            error: function (msg) {
+                HataMesaji("Unexpected error!");
+            }
+        });
+
+    });
+
 });

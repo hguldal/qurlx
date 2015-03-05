@@ -36,7 +36,7 @@
 
           function HataMesaji(metin) {
              
-            $.growl.error({title:'Hata !', message: metin });
+            $.growl.error({title:'Error !', message: metin });
 
           }
  

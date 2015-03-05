@@ -1,0 +1,57 @@
+﻿@{
+    if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+     var db=Database.Open("u2p");
+ 
+     var kisaKod=Request["kisaKod"];
+     var ePosta=Request["ePosta"];
+    
+     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+
+     if (queryURL==null)
+     {
+
+         db.Close();
+         Response.StatusCode=500;
+         Response.End();
+     }
+
+     else
+     {
+         //url nin yöneticisi mi
+         if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND UserID=@1",queryURL.urlID,WebSecurity.CurrentUserId)<1)
+         {
+             db.Close();
+             Response.StatusCode=401;
+             Response.End();
+         }
+      }
+   
+
+      var queryKullanici=db.QuerySingle("SELECT * FROM Profiles WHERE ePosta=@0",ePosta);
+
+      if (queryKullanici==null)
+         {
+
+             db.Close();
+             Response.Write("kullaniciyok");
+             Response.End();
+         }
+
+     else
+         {
+            
+           db.Execute("DELETE FROM URLErisimIzni   WHERE  urlID=@0 AND userID=@1",queryURL.urlID,queryKullanici.userID);
+           db.Close();
+          
+        }
+      Response.Write("OK");
+      Response.End();
+}
+
