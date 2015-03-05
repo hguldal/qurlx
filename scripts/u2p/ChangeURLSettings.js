@@ -256,9 +256,9 @@ $(document).ready(function () {
         valueField: 'etiketID',
         labelField: 'etiket',
         searchField: ['etiket', 'etiket'],
-        create: false,
+        create: true,
         plugins: ['remove_button'],
-        maxItems: 10,
+        maxItems: null,
 
         load: function (query, callback) {
             if (!query.length) return callback();
@@ -276,7 +276,32 @@ $(document).ready(function () {
                     callback(res);
                 }
             });
+        },
+
+
+        onItemAdd: function (value, data) {
+            var etiket = value;
+
+            var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
+
+            $.ajax({
+                type: 'POST',
+                url: '/ajax/EtiketEkle',
+                data: "kisaKod=" + kisaKod + "&etiket=" + etiket,
+                success: function (msg) {
+
+                },
+                error: function (msg) {
+                    HataMesaji("Unexpected error!");
+                }
+            });
+
+        },
+
+        onItemRemove:function(value){
+            
         }
     });
+
 
 });

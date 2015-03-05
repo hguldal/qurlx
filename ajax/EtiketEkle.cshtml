@@ -1,0 +1,53 @@
+﻿@{
+    if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+     var db=Database.Open("u2p");
+ 
+     var kisaKod=Request["kisaKod"];
+     var etiket=Request["etiket"];
+    
+     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+
+     if (queryURL==null)
+     {
+
+         db.Close();
+         Response.StatusCode=500;
+         Response.End();
+     }
+
+     else
+     {
+         //url nin yöneticisi mi
+         if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND UserID=@1",queryURL.urlID,WebSecurity.CurrentUserId)<1)
+         {
+             db.Close();
+             Response.StatusCode=401;
+             Response.End();
+         }
+      }
+   
+ 
+      var queryEtiket=db.QuerySingle("SELECT * FROM Etiket WHERE etiket=@0",etiket);
+      
+      if (queryEtiket==null)
+      {
+        db.Execute("INSERT INTO Etiket(etiket,userID) VALUES(@0,@1)",etiket,WebSecurity.CurrentUserId);    
+        db.Execute("INSERT INTO URLEtiket(etiketID,urlID) VALUES(@0,@1)",db.GetLastInsertId(),queryURL.urlID);
+      }
+      else
+      {
+          db.Execute("INSERT INTO URLEtiket(etiketID,urlID) VALUES(@0,@1)",queryEtiket.etiketID,queryURL.urlID);
+      }
+
+      db.Close();
+      Response.Write("OK");
+      Response.End();
+}
+
