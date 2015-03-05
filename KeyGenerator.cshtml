@@ -14,101 +14,13 @@
     var queryUrl=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kod);
     var erisimAnahtari="";
  
-    //url yok mu ? yoksa kategori olabilir mi ?
     if (queryUrl==null)
-    {      
-       var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisaKod=@0",kod);
-       
-       if (queryKategori==null)
-         {
-             db.Close();
-             Response.Redirect("~/Error/Invalid-Url");//sistemde bu kodla kayıtlı bir url yada liste yok
-         }
-        
-         //sistemde bu kodla kayıtlı bir kategori var
-         else
-         {
-             //kategorinin sahibi oturum açmış kişi ise başka hiç bir koşula bakmaksızın direkt olarak adrese yönlendir.
-             if (queryKategori.UserID==WebSecurity.CurrentUserId)
-             {
-                 //anahtar oluştur
-                 erisimAnahtari=Guid.NewGuid().ToString();
-
-             }
-         
-            //belirlenen erişim süreleri belirlenmiş mi ve bu süreler içerisinde mi?
-            if (queryKategori.erisimBaslamaTarihi!=null && queryKategori.erisimBitisTarihi!=null )      
-              {
-                  if (queryKategori.erisimBaslamaTarihi>DateTime.Now || queryKategori.erisimBitisTarihi<DateTime.Now )
-                    {
-                        db.Close();
-                        Response.Redirect("~/Error/Access-is-Closed");
-                    }
-
-                    //anahtar oluştur
-                    erisimAnahtari=Guid.NewGuid().ToString();
-              }
-
-              //eğer adres herkese açık ise yine direkt olarak yönlendir.
-              if (queryKategori.erisimTuru==1)
-              {
-                  //anahtar oluştur
-                 erisimAnahtari=Guid.NewGuid().ToString();
-              }
-             
-             
-              //eğer adres üye olmayı gerektiriyorsa ve üye oturum açtı ise yine direkt olarak yönlendir.
-              else if (queryKategori.erisimTuru==2)
-              {
-                  if (WebSecurity.IsAuthenticated)
-                  {
-                      //anahtar oluştur
-                     erisimAnahtari=Guid.NewGuid().ToString();
-                  }
-                  else
-                  {
-                      db.Close();
-                      Response.Redirect("~/Error/Login");
-                  }
-              }
-              
-              //eğer adres sadece izin verilen kişilere açık ise 
-              else if (queryKategori.erisimTuru==3)
-              {
-                      
-                      if (db.QueryValue("SELECT COUNT(*) FROM KategoriErisimYetkisi WHERE kategoriID=@0 AND userID=@1",queryKategori.kategoriID,WebSecurity.CurrentUserId)>0)
-                      {
-                        //anahtar oluştur
-                        erisimAnahtari=Guid.NewGuid().ToString();
-                      }
-                 
-                      else
-                      {
-                         db.Close();
-                         Response.Redirect("~/ErisimKodGirisi?kod=" + queryKategori.kisaKod);//***********burası için dosya eklenicek
-                      }
-                  
-              }
-              
-              
-              //eğer adres sadece sahibine açık ise oturum açan kişinin sahip olup olmadığını kontrol et.
-              else if (queryKategori.erisimTuru==4)
-              {
-                  if (queryKategori.userID!=WebSecurity.CurrentUserId)
-                  {
-                        db.Close();
-                       Response.Redirect("~/Error/Access-Denied");
-                      
-                  }
-                     
-                   
-              }
-         }
-    
+    {
+      db.Close();
+      Response.Redirect("~/Error/Invalid-Url");
     }
     
-    //url mevcut
-    else
+    else    
     {
 
             //url sahibi oturum açmış kişi ise başka hiç bir koşula bakmaksızın direkt olarak adrese yönlendir.
@@ -161,7 +73,7 @@
               else if (queryUrl.erisimTuru==3)
               {
                      
-                      if (db.QueryValue("SELECT COUNT(*) FROM KategoriErisimYetkisi WHERE kategoriID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)>0)
+                      if (db.QueryValue("SELECT COUNT(*) FROM URLErisimIzni WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)>0)
                       {
                           //anahtar oluştur
                         erisimAnahtari=Guid.NewGuid().ToString();
@@ -193,7 +105,7 @@
     
     if (!string.IsNullOrEmpty(erisimAnahtari))
     {
-         db.Execute("INSERT INTO ErisimAnahtari(erisimAnahtari,kisaKod,olusturmaTarihi,IP) VALUES(@0,@1,@2,@3)",erisimAnahtari,kod,DateTime.Now,Request.UserHostAddress);
+         db.Execute("INSERT INTO URLErisimAnahtari(urlErisimAnahtari,urlID) VALUES(@0,@1)",erisimAnahtari,queryUrl.urlID);
          db.Close();
          Response.Redirect("~/Go?accessKey=" + erisimAnahtari + "&code=" + kod);   
     }

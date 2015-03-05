@@ -3,26 +3,23 @@
 
     var erisimAnahtari=Request.QueryString["accessKey"];
     var kisaKod=Request.QueryString["code"];
-    
-    var erisimAcik=(db.QueryValue("SELECT COUNT(*) FROM ErisimAnahtari WHERE erisimAnahtari=@0 AND kisaKod=@1",erisimAnahtari,kisaKod)>0);
-    
-    //tek kullanımlık anahtarı sil
-    db.Execute("DELETE FROM ErisimAnahtari WHERE erisimAnahtari=@0 AND kisaKod=@1",erisimAnahtari,kisaKod);
-    
+   
+   
     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
-    var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kisakod=@0",kisaKod);
-
-    //kod her iki nesnedede yoksa hata var ve tek neden olabilir verilen kod geçersiz
-    if (queryURL==null && queryKategori==null)
+     
+  
+    
+    if (queryURL==null)
     {
       db.Close();
       Response.Redirect("~/Error/Invalid-Url");
     }
 
-
-    if (queryURL!=null)
+    else
     {
-        //istatistik
+          var erisimAcik=(db.QueryValue("SELECT COUNT(*) FROM URLErisimAnahtari WHERE urlErisimAnahtari=@0 AND urlID=@1",erisimAnahtari,queryURL.urlID)>0);
+        //tek kullanımlık anahtarı sil
+        db.Execute("DELETE FROM URLErisimAnahtari WHERE urlErisimAnahtari=@0 AND urlID=@1",erisimAnahtari,queryURL.urlID);
         Response.Redirect(queryURL.url);
     }
 
