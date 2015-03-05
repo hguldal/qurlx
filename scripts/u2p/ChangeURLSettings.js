@@ -107,7 +107,7 @@ $(document).ready(function () {
         else {
 
 
-            window.location.href = '/ChangeSettings/' + msg;
+            window.location.href = '/ChangeURLSettings/' + msg;
 
             MesajKutusu("OK", "Settings were saved successfuly");
         }

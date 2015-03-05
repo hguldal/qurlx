@@ -41,13 +41,7 @@
                  Response.End();
              }
         
-            if(db.QueryValue("SELECT COUNT(*) FROM Kategori WHERE kisaKod=@0",deger)>0)
-
-             {
-                 Response.Write("kisakodvar");
-                 Response.End();
-             }
-
+            
          
             deger=URLDuzelt.RemoveAccent(deger);
             deger=URLDuzelt.Slugify(deger);

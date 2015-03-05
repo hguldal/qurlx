@@ -7,8 +7,6 @@
    
     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
      
-  
-    
     if (queryURL==null)
     {
       db.Close();
@@ -17,10 +15,10 @@
 
     else
     {
-          var erisimAcik=(db.QueryValue("SELECT COUNT(*) FROM URLErisimAnahtari WHERE urlErisimAnahtari=@0 AND urlID=@1",erisimAnahtari,queryURL.urlID)>0);
-        //tek kullanımlık anahtarı sil
-        db.Execute("DELETE FROM URLErisimAnahtari WHERE urlErisimAnahtari=@0 AND urlID=@1",erisimAnahtari,queryURL.urlID);
-        Response.Redirect(queryURL.url);
+      var erisimAcik=(db.QueryValue("SELECT COUNT(*) FROM URLErisimAnahtari WHERE urlErisimAnahtari=@0 AND urlID=@1",erisimAnahtari,queryURL.urlID)>0);
+      //tek kullanımlık anahtarı sil
+      db.Execute("DELETE FROM URLErisimAnahtari WHERE urlErisimAnahtari=@0 AND urlID=@1",erisimAnahtari,queryURL.urlID);
+      //Response.Redirect(queryURL.url);
     }
 
     db.Close();
