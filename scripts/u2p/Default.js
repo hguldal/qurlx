@@ -153,18 +153,18 @@ $(document).ready(function () {
 
     $('.menuKategoriSil').click(function () {
 
-        var kisaKod = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
-        if (kisaKod != 'hepsi') {
+        var kategoriID = $('.list-group-item.active.kategoriOgesi').attr('data-kategoriID')
+        if (kategoriID != '-1') {
 
             if (confirm('Are you sure ?')) {
                 $.ajax({
                     type: "POST",
                     dataType: 'json',
-                    url: '/ajax/KategoriSil' + '?KisaKod=' + kisaKod,
+                    url: '/ajax/KategoriSil' + '?kategoriID=' + kategoriID,
 
                     success: function (msg) {
                         $('#listeKategori').find('.list-group-item.active.kategoriOgesi').remove();
-                        UrlYukle('hepsi');
+                        UrlYukle('-1');
                         MesajKutusu('İşlem Tamam', 'List was deleted successfuly');
                     },
                     error: function (msg) {

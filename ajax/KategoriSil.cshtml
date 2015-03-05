@@ -12,7 +12,7 @@
  
      var kategoriID=Request["kategoriID"];
 
-     if (string.IsNullOrEmpty(kisaKod))
+     if (string.IsNullOrEmpty(kategoriID))
      {
          db.Close();   
          Response.StatusCode=500;

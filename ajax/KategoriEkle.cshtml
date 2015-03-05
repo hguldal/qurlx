@@ -9,13 +9,9 @@
         
     var db=Database.Open("u2p");  
     var kategoriAdi=Request["KategoriAdi"];    
-     using (db)
-     {  
-
-         db.Execute("INSERT INTO Kategori(KategoriAdi,userID) VALUES (@0,@1)",kategoriAdi,WebSecurity.CurrentUserId);
-         
-     }
-    var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kategoriID=@0",db.GetLastInsertId().ToString());
+     
+    db.Execute("INSERT INTO Kategori(KategoriAdi,userID) VALUES (@0,@1)",kategoriAdi,WebSecurity.CurrentUserId);
+     var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kategoriID=@0",db.GetLastInsertId().ToString());
      Json.Write(queryKategori, Response.Output);
      db.Close();   
      Response.ContentType = "application/json";
