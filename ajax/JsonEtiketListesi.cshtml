@@ -1,3 +1,12 @@
 ﻿@{
+      var db=Database.Open("u2p");
+ 
+   
     
+     var queryEtiketler=db.Query("SELECT * FROM Etiket WHERE yasaklanmis=0");
+
+    Json.Write(queryEtiketler, Response.Output);
+    db.Close();   
+    Response.ContentType = "application/json";
+    Response.End();
 }

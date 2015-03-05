@@ -253,12 +253,18 @@ $(document).ready(function () {
     });
 
     $('#cmbTags').selectize({
-        valueField: 'Tag',
-        labelField: 'TagLabel',
-        earchField: ['GrupAdi', 'adsoyad'],
+        valueField: 'etiketID',
+        labelField: 'etiket',
+        earchField: ['etiket', 'etiket'],
         create: false,
         plugins: ['remove_button'],
         maxItems: 10,
+
+        render: {
+            option: function (item, escape) {
+                return item.etiket;
+            }
+        },
 
         load: function (query, callback) {
             if (!query.length) return callback();
