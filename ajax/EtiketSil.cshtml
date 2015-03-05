@@ -38,21 +38,13 @@
       
       if (queryEtiket==null)
       {
-        db.Execute("INSERT INTO Etiket(etiket,userID) VALUES(@0,@1)",etiket,WebSecurity.CurrentUserId);    
-        db.Execute("INSERT INTO URLEtiket(etiketID,urlID) VALUES(@0,@1)",db.GetLastInsertId(),queryURL.urlID);
+             db.Close();
+             Response.StatusCode=401;
+             Response.End();
       }
       else
       {
-          if (db.QueryValue("SELECT COUNT(*) FROM URLEtiket WHERE urlID=@0 and etiketID=@1",queryURL.urlID,queryEtiket.etiketID)>0)
-          {
-              db.Close();
-              Response.Write("etiketzatenvar");
-              Response.End();
-          }
-          else
-          {
-          db.Execute("INSERT INTO URLEtiket(etiketID,urlID) VALUES(@0,@1)",queryEtiket.etiketID,queryURL.urlID);
-          }
+          db.Execute("DELETE FROM URLEtiket WHERE etiketID=@0 AND urlID=@1",queryEtiket.etiketID,queryURL.urlID);
       }
 
       db.Close();

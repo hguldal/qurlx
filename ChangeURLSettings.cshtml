@@ -31,6 +31,15 @@
     var queryKullanici=db.QuerySingle("SELECT * FROM Profiles WHERE UserID=@0",WebSecurity.CurrentUserId);
     var queryErisimKodlari=db.Query("SELECT * FROM URLErisimKodlari WHERE urlID=@0",queryURL.urlID);
     var queryErisimIzinleri=db.Query("SELECT * FROM URLErisimIzni INNER JOIN Profiles ON URLErisimIzni.userID=Profiles.userID WHERE urlID=@0 ",queryURL.urlID);
+    var queryEtiketler=db.Query("SELECT * FROM URLEtiket INNER JOIN Etiket on URLEtiket.etiketID=Etiket.etiketID WHERE urlID=@0",queryURL.urlID);
+    var stringEtiketler="";
+    foreach (var item in queryEtiketler)
+     {
+         
+         stringEtiketler=stringEtiketler + "," + item.etiket;
+         
+     }
+     stringEtiketler=stringEtiketler.TrimStart(',');
  
 
 }
@@ -270,6 +279,7 @@
             </tr>
             <tr>
                 <td>
+                   
                      <select id="cmbErisimKodlari" class="form-control" size="8">
                         
                     @foreach (var kod in queryErisimKodlari)
@@ -288,11 +298,8 @@
 
             <tr>
                <td>
-                <select id="cmbTags" class="form-control" size="8">
-                        
-                    
-
-                    </select>
+                   <input type="text" id="cmbTags" class="form-control" value="@stringEtiketler">
+                
                 </td>
             </tr>
             </table>

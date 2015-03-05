@@ -253,13 +253,13 @@ $(document).ready(function () {
     });
 
     $('#cmbTags').selectize({
-        valueField: 'etiketID',
+        valueField: 'etiket',
         labelField: 'etiket',
         searchField: ['etiket', 'etiket'],
         create: true,
         plugins: ['remove_button'],
         maxItems: null,
-
+        
         load: function (query, callback) {
             if (!query.length) return callback();
             $.ajax({
@@ -289,7 +289,7 @@ $(document).ready(function () {
                 url: '/ajax/EtiketEkle',
                 data: "kisaKod=" + kisaKod + "&etiket=" + etiket,
                 success: function (msg) {
-
+                    MesajKutusu("OK",  etiket  + " was added");
                 },
                 error: function (msg) {
                     HataMesaji("Unexpected error!");
@@ -298,8 +298,22 @@ $(document).ready(function () {
 
         },
 
-        onItemRemove:function(value){
-            
+        onItemRemove: function (value) {
+            var etiket = value;
+
+            var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
+
+            $.ajax({
+                type: 'POST',
+                url: '/ajax/EtiketSil',
+                data: "kisaKod=" + kisaKod + "&etiket=" + etiket,
+                success: function (msg) {
+                    
+                },
+                error: function (msg) {
+                    HataMesaji("Unexpected error!");
+                }
+            });
         }
     });
 
