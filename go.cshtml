@@ -13,6 +13,7 @@
       Response.Redirect("~/Error/Invalid-Url");
     }
 
+
     else
     {
       var erisimAcik=(db.QueryValue("SELECT COUNT(*) FROM URLErisimAnahtari WHERE urlErisimAnahtari=@0 AND urlID=@1",erisimAnahtari,queryURL.urlID)>0);

@@ -1,0 +1,24 @@
+﻿@{
+if (!WebSecurity.IsAuthenticated)
+{
+    Response.Redirect("~/Hesap/Giris");
+}
+
+Layout = "~/Paylasilan/_Layout.cshtml"; 
+
+var db=Database.Open("u2p");
+
+var kisaKod=Request["url"];
+
+var queryURL=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId); 
+}
+
+
+<div>
+
+
+        <input type="text" class="form-control" id="txtKategoriEkle" placeholder="Enter List Name...">
+
+</div>
+
+

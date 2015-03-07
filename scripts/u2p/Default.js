@@ -9,7 +9,7 @@ $(document).ready(function () {
         UrlYukle(kategoriID);
     });
 
-   
+
     $('body').on('click', '.lnkUrlSil', function () {
         var kisakod = $(this).attr('data-kisakod');
         var satir = $(this).closest('tr');
@@ -51,27 +51,27 @@ $(document).ready(function () {
             HataMesaji('URL Girmedin');
             return false;
         }
-        var kategori = $('.list-group-item.active.kategoriOgesi').attr('data-kisaKod')
+        var kategoriID = $('.list-group-item.active.kategoriOgesi').attr('data-kategoriID');
 
         $.ajax({
             type: "POST",
-            url: '/ajax/UrlEkle' + '?nUrl=' + url + '&kategori=' + kategori + '&aciklama=' + urlAciklama,
+            url: '/ajax/UrlEkle' + '?nUrl=' + url + '&kategoriID=' + kategoriID + '&aciklama=' + urlAciklama,
             dataType: 'json',
             success: function (msg) {
                 $('#modalURLEkle').modal('hide');
                 $('#txtURLEkle').val('');
                 $('#txtURLAciklama').val('');
                 var tr = $('<tr/>');
-                tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span></td><td>' + urlAciklama + '</td><td><a href="' + location.href.replace('#', '') + msg.kisaKod + '" title="' + msg.url + '" > ' + location.href.replace('#', '') + msg.kisaKod + '</a></td><td><a href="/ChangeURLSettings/' + msg.kisaKod +'" class="btn btn-xs btn-info" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" title="Delete URL" data-kisakod="' + msg.kisaKod + '"><span class="glyphicon glyphicon-trash"></span></a></td>');
+                tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span></td><td>' + urlAciklama + '</td><td><a href="' + location.href.replace('#', '') + msg.kisaKod + '" title="' + msg.url + '" > ' + location.href.replace('#', '') + msg.kisaKod + '</a></td><td><a href="/ChangeURLSettings/' + msg.kisaKod + '" class="btn btn-xs btn-info" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" title="Delete URL" data-kisakod="' + msg.kisaKod + '"><span class="glyphicon glyphicon-trash"></span></a></td>');
                 $('#lstUrl > tbody').prepend(tr);
 
                 var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
                 urlAdedi = urlAdedi + 1;
                 $('.list-group-item.active.kategoriOgesi > span.badge').html(urlAdedi);
 
-                var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
+                var toplamUrlAdedi = parseInt($('#listeKategori>[data-kategoriID="-1"]>span.badge').html());
                 toplamUrlAdedi = toplamUrlAdedi + 1;
-                $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
+                $('[data-kategoriID="-1"]>span.badge').html(toplamUrlAdedi);
 
 
             },
@@ -129,7 +129,7 @@ $(document).ready(function () {
 
                     var tr = $('<tr/>');
 
-                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span></td><td>' + urls[i].aciklama + '</td><td><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '" title="' + urls[i].url + '">' + location.href.replace('#', '') + urls[i].kisaKod + '</td><td><a href="/ChangeURLSettings/' + urls[i].kisaKod +'" class="btn btn-info btn-xs" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" title="Delete URL" data-kisaKod=' + urls[i].kisaKod + '><span class="glyphicon glyphicon-trash"></span></a></td>');
+                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span></td><td>' + urls[i].aciklama + '</td><td><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '" title="' + urls[i].url + '">' + location.href.replace('#', '') + urls[i].kisaKod + '</td><td><a href="/ChangeURLSettings/' + urls[i].kisaKod + '" class="btn btn-info btn-xs" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" title="Delete URL" data-kisaKod=' + urls[i].kisaKod + '><span class="glyphicon glyphicon-trash"></span></a></td>');
 
                     $('#lstUrl > tbody').prepend(tr);
 

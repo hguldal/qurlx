@@ -2,7 +2,7 @@
   
      var db=Database.Open("u2p");
      var url=Request["nUrl"];   
-     var kategori=Request["kategori"];
+     var kategoriID=Request["kategoriID"];
      var aciklama=Request["aciklama"];
 
      if (string.IsNullOrEmpty(url))
@@ -109,9 +109,9 @@
                         //yönetici olarak ata...
                         db.Execute("INSERT INTO UrlYonetici(urlID,userID) VALUES(@0,@1)",queryEklenenUrl.urlID,WebSecurity.CurrentUserId);
                     }
-                    if (kategori!="hepsi")
+                    if (kategoriID!="-1")
                     {
-                        var kategoriID=db.QueryValue("SELECT kategoriID FROM Kategori WHERE kisaKod=@0",kategori);
+                        
                         db.Execute("INSERT INTO UrlKategori(urlID,kategoriID) VALUES(@0,@1)",queryEklenenUrl.urlID,kategoriID);
                     }
                     
