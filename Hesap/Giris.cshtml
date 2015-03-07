@@ -24,7 +24,10 @@
            //Oturum açmayı dene eğer başarılıysa(Login() true döndürür) anasayfaya git aksi halde hata mesajı
             if (WebSecurity.Login(ePosta,parola))
             {
+
+                
                 Response.Redirect("~/"); //Giriş Başarılı Anasayfaya git...
+
             }
             else
             {
