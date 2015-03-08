@@ -19,6 +19,21 @@
       var erisimAcik=(db.QueryValue("SELECT COUNT(*) FROM URLErisimAnahtari WHERE urlErisimAnahtari=@0 AND urlID=@1",erisimAnahtari,queryURL.urlID)>0);
       //tek kullanımlık anahtarı sil
       db.Execute("DELETE FROM URLErisimAnahtari WHERE urlErisimAnahtari=@0 AND urlID=@1",erisimAnahtari,queryURL.urlID);
+
+     if (Request.Cookies["visit"]!=null)
+     {
+        
+         Response.Cookies["visit"].Value = "1";
+         Response.Cookies["visit"].Expires = DateTime.Now.AddHours(1);
+         //ziyaret kodu...
+     }
+
+    
+     if (Request.Cookies["visit"].Expires>DateTime.Now.AddHours(1))
+     {
+         Response.Cookies.Remove("visit");
+     }
+      
       //Response.Redirect(queryURL.url);
     }
 
