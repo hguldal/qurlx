@@ -1,0 +1,27 @@
+﻿@{
+    
+Ziyaretci z=null;
+    if (!Request.IsLocal)
+    {
+     z= Ziyaret.ZiyaretciBilgisiGetir(Request.UserHostAddress);
+    }
+ 
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+    </head>
+    <body>
+       @z.city - @z.country_name - @z.country_code - @z.ip-  @z.time_zone
+        @Request.Browser.IsMobileDevice
+        /
+        @Request.IsSecureConnection
+        /
+        @Request.UserLanguages[0] - @Request.Browser.MobileDeviceManufacturer  - @Request.Browser.MobileDeviceModel
+        - @Request.Browser.ScreenPixelsWidth   - @Request.Browser.Browser
+    </body>
+</html>

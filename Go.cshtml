@@ -30,7 +30,9 @@
          
             Response.Cookies.Add(cerez);
         
+            
             db.Execute("INSERT INTO Ziyaret(urlID,userID,tarih,IP) VALUES(@0,@1,@2,@3)",queryURL.urlID,WebSecurity.CurrentUserId,DateTime.Now,Request.UserHostAddress);
+            
      }
 
     else 
