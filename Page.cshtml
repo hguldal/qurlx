@@ -1,10 +1,10 @@
 ﻿@{
     
-Ziyaretci z=null;
-    if (!Request.IsLocal)
-    {
-     z= Ziyaret.ZiyaretciBilgisiGetir(Request.UserHostAddress);
-    }
+var db=Database.Open("u2p");
+var queryZiyaret=db.Query("SELECT * FROM Ziyaret");
+
+WebGrid g=new WebGrid(queryZiyaret);
+
  
 }
 
@@ -16,12 +16,6 @@ Ziyaretci z=null;
         <title></title>
     </head>
     <body>
-       @z.city - @z.country_name - @z.country_code - @z.ip-  @z.time_zone
-        @Request.Browser.IsMobileDevice
-        /
-        @Request.IsSecureConnection
-        /
-        @Request.UserLanguages[0] - @Request.Browser.MobileDeviceManufacturer  - @Request.Browser.MobileDeviceModel
-        - @Request.Browser.ScreenPixelsWidth   - @Request.Browser.Browser
+@g.GetHtml()
     </body>
 </html>
