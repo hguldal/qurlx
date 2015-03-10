@@ -1,0 +1,34 @@
+﻿@{
+     if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+     var db=Database.Open("u2p");
+ 
+     var kisaKod=Request["kisaKod"];
+    
+     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+
+     if (db.QueryValue("SELECT COUNT(*) FROM UrlYonetici WHERE urlID=@0 AND userID=@1",queryURL.urlID,WebSecurity.CurrentUserId)<1)
+     {
+         db.Close();
+         Response.StatusCode=401;
+         Response.End();
+     }
+
+
+   
+     var querySonuc=db.Query("SELECT country_code,count(*) as Count FROM Ziyaret WHERE urlID=@0 GROUP BY country_code",queryURL.urlID);
+    
+     Json.Write(querySonuc, Response.Output);
+    db.Close();   
+    Response.ContentType = "application/json";
+    Response.End();
+   
+ 
+}
+
