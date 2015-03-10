@@ -22,7 +22,7 @@
 
 
    
-     var querySonuc=db.Query("SELECT country_code,count(*) as Visitor FROM Ziyaret WHERE urlID=@0 GROUP BY country_code",queryURL.urlID);
+     var querySonuc=db.Query("SELECT country_name,count(*) as Visitor FROM Ziyaret WHERE urlID=@0 GROUP BY country_name",queryURL.urlID);
     
      Json.Write(querySonuc, Response.Output);
     db.Close();   

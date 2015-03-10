@@ -1,5 +1,4 @@
-$(document).ready(function () {
-    
+
         var gData = '{ ';
 
         gData += '"cols": [' +
@@ -9,14 +8,14 @@ $(document).ready(function () {
 
                                 '"rows": [';
 
-        $.ajax({
+        var r= $.ajax({
             type: "POST",
             url: '/ajax/stats/UlkeyeGore?kisaKod=' + '1w0i',
             dataType: 'json',
             success: function (data) {
 
                 for (var i = 0; i < data.length; i++) {
-                    gData += '{"c":[{"v":"' + data[i].country_code + '","f":null},{"v":' + data[i].Visitor + ',"f":null}]},';
+                    gData += '{"c":[{"v":"' + data[i].country_name + '","f":null},{"v":' + data[i].Visitor + ',"f":null}]},';
                 }
                 gData = gData.substring(0, gData.length - 1);
 
@@ -31,11 +30,11 @@ $(document).ready(function () {
         });
 
     google.load("visualization", "1", { packages: ["geochart"] });
-    google.setOnLoadCallback(drawRegionsMap);
+    google.setOnLoadCallback(haritaCiz);
 
-    function drawRegionsMap() {
+    function haritaCiz() {
 
-
+       
         var data = new google.visualization.DataTable(gData);
 
 
@@ -46,4 +45,3 @@ $(document).ready(function () {
         chart.draw(data, options);
     }
 
-});
