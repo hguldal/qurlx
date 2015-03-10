@@ -7,13 +7,14 @@ Layout = "~/Paylasilan/_Layout.cshtml";
 }
 <div class="row">
      <div class="col-md-6 column">
-    <div id="regions_div"></div>
+    <canvas id="myChart" width="400" height="400"></canvas>
+
          </div>
 </div>
  
 @section scripts
 {
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="@Href("~/scripts/ChartJS/Chart.js")"></script>
 <script src="@Href("~/scripts/u2p/ByCountry.js")"></script>
  
 }
