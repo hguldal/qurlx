@@ -31,6 +31,24 @@ $(document).ready(function () {
 
     });
 
+
+
+
+    $.each(data.billDetails, function(position, billDetail) {
+  // first use the invoiceDate as a label
+  if (billDetail.invoiceDate) {
+    // You should probably format that
+    chartData.labels.push(billDetail.invoiceDate); 
+  } else {
+    // your last data entry doesn't have an invoiceDate
+    chartData.labels.push(''); // blank or think of something creative
+  }
+
+  // add the totalBills and totalAmount to the dataset
+  chartData.datasets[0].data.push(billDetail.totalBills);
+  chartData.datasets[1].data.push(billDetail.totalAmount);
+});
+
     */
     
         var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
