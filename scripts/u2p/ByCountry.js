@@ -1,50 +1,49 @@
- 
+$(document).ready(function () {
+    
+        var gData = '{ ';
 
- 
-           
-
-        google.load("visualization", "1", { packages: ["barchart"] });
-        google.setOnLoadCallback(drawRegionsMap);
-
-        function drawRegionsMap() {
-
-            var gData = "{";
-            gData += '"cols": [' +
-                                '{"id":"","label":"Country","pattern":"","type":"string"' +
-                                '{"id":"","label":"Count","pattern":"","type":"number"' +
+        gData += '"cols": [' +
+                                '{"id":"","label":"Country","pattern":"","type":"string"},' +
+                                '{"id":"","label":"Visitor","pattern":"","type":"number"}' +
                                 '],' +
 
                                 '"rows": [';
 
-            $.ajax({
-                type: "POST",
-                url: '/ajax/stats/UlkeyeGore?kisaKod=' + '1w0i',
-                dataType: 'json',
-                success: function (data) {
-                    
-                    for (var i = 0; i < data.length; i++) {
-                        gData += 'dddf';
-                    }
-                    gData = gData.substring(1, gData.length - 1);
+        $.ajax({
+            type: "POST",
+            url: '/ajax/stats/UlkeyeGore?kisaKod=' + '1w0i',
+            dataType: 'json',
+            success: function (data) {
 
-                    gData += ']' +
+                for (var i = 0; i < data.length; i++) {
+                    gData += '{"c":[{"v":"' + data[i].country_code + '","f":null},{"v":' + data[i].Visitor + ',"f":null}]},';
+                }
+                gData = gData.substring(0, gData.length - 1);
+
+                gData += ']' +
                             '}';
 
-                },
-                error: function (msg) {
-                    HataMesaji("Unexpected Error !");
-                }
+            },
+            error: function (msg) {
+                HataMesaji("Unexpected Error !");
+            }
 
-            });
+        });
 
-            console.log(gData);
-          
-            var data = new google.visualization.DataTable(gData);
- 
-            
-            var options = {};
+    google.load("visualization", "1", { packages: ["geochart"] });
+    google.setOnLoadCallback(drawRegionsMap);
 
-            var chart = new google.visualization.BarChart(document.getElementById('regions_div'));
+    function drawRegionsMap() {
 
-            chart.draw(data, options);
-        }
+
+        var data = new google.visualization.DataTable(gData);
+
+
+        var options = {};
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(data, options);
+    }
+
+});
