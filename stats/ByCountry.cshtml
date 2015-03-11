@@ -8,14 +8,14 @@ Layout = "~/Paylasilan/_Layout.cshtml";
 <div class="row">
     <button id="grafikCiz"> Çiz</button>
      <div class="col-md-6 column">
-    <canvas id="myChart" width="320" height="200"></canvas>
+   <div id="container" style="width:100%; height:400px;"></div>
 
          </div>
 </div>
  
 @section scripts
 {
-<script src="@Href("~/scripts/ChartJS/Chart.min.js")"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="@Href("~/scripts/u2p/ByCountry.js")"></script>
  
 }
