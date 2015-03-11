@@ -12,8 +12,9 @@ Layout = "~/Paylasilan/_Layout.cshtml";
 
 }
 <div class="row">
-    <span class="pull-right" id="tarihAraligi"><span class="glyphicon glyphicon-calendar"></span> @DateTime.Now <b class="caret"></b> </span>
-    
+    <div class="pull-right">
+    <a href="#" class="btn btn-link" id="tarihAraligi" data-baslangic="" data-bitis=""><span class="glyphicon glyphicon-calendar"></span> @DateTime.Now <b class="caret"></b> </a>
+    </div>
     <button id="grafikCiz"> Çiz</button>
      <div class="col-md-6 column">
    <div id="container" style="width:100%; height:400px;"></div>
