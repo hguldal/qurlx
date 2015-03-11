@@ -19,7 +19,7 @@ $(function () {
 
 
   function (start, end) {
-      $('#tarihAraligi').html('<span class="glyphicon glyphicon-calendar"></span> ' + start.format('MMMM-DD-YYYY') + ':' + end.format('MMMM-DD-YYYY') + ' <b class="caret"></b>');
+      $('#tarihAraligi').html('<span class="glyphicon glyphicon-calendar"></span> ' + start.format('MMMM,DD YYYY') + '-' + end.format('MMMM,DD YYYY') + ' <b class="caret"></b>');
       $.ajax({
           type: "POST",
 
@@ -27,7 +27,7 @@ $(function () {
 
           success: function (msg) {
 
-              alert(msg);
+              
           },
           error: function (msg) {
               HataMesaji("Unexpected Error !");
