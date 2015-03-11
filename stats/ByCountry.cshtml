@@ -11,15 +11,19 @@ Layout = "~/Paylasilan/_Layout.cshtml";
 <link rel="stylesheet" href="@Href("~/scripts/daterangepicker/daterangepicker-bs3.css")" />
 
 }
+<h1>Stats </h1><button id="grafikCiz"> Çiz</button>
+<hr>
 <div class="row">
-    <div class="pull-right">
-    <a href="#" class="btn btn-link" id="tarihAraligi" data-baslangic="" data-bitis=""><span class="glyphicon glyphicon-calendar"></span> @DateTime.Now <b class="caret"></b> </a>
-    </div>
-    <button id="grafikCiz"> Çiz</button>
-     <div class="col-md-6 column">
-   <div id="container" style="width:100%; height:400px;"></div>
-
-         </div>
+    <div class="col-md-4 column">
+        <h4>Date Range</h4>
+         <a href="#" class="btn btn-link well" id="tarihAraligi" data-baslangic="" data-bitis=""><span class="glyphicon glyphicon-calendar"></span> @DateTime.Now <b class="caret"></b> </a>
+        </div>
+    <div class="col-md-8 column">
+   
+         <div id="container"></div>
+    
+     
+        </div>
 </div>
  
 @section scripts
