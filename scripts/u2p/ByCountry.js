@@ -1,7 +1,16 @@
 $(function () {
-    var bitis = new Date();
+    
 
+     var secenekler = {
+            chart: {
+                renderTo: 'container',
+                type: 'column'
 
+            },
+            series: []
+        };
+
+        var grafik = new Highcharts.Chart(secenekler);
 
     $('#tarihAraligi').daterangepicker(
   {
@@ -17,50 +26,39 @@ $(function () {
       endDate: moment()
   },
 
-
+   
   function (start, end) {
       $('#tarihAraligi').html('<span class="glyphicon glyphicon-calendar"></span> ' + start.format('MMMM,DD YYYY') + '-' + end.format('MMMM,DD YYYY') + ' <b class="caret"></b>');
-      $.ajax({
-          type: "POST",
 
-          url: '/ajax/deneme' + '?tarih=' + start.format('MMMM-DD-YYYY'),
+      $('#tarihAraligi').attr('data-baslangicTarihi', start.format('MM-DD-YYYY'));
+      $('#tarihAraligi').attr('data-bitisTarihi', end.format('MM-DD-YYYY'));
 
-          success: function (msg) {
-
-              
-          },
-          error: function (msg) {
-              HataMesaji("Unexpected Error !");
-          }
-      });
-
+      UlkelereGore_Grafik();
 
   });
 
-    $("#grafikCiz").click(function () {
+    function UlkelereGore_Grafik() {
 
-        var options = {
-            chart: {
-                renderTo: 'container',
-                type: 'column'
+        var baslangicTarihi = $('#tarihAraligi').attr('data-baslangicTarihi');
+        var bitisTarihi = $('#tarihAraligi').attr('data-bitisTarihi');
+        var kisaKod = $('#txtKisaKod').attr('data-Kisakod');
 
-            },
-            series: []
-        };
+      
 
-        var chart = new Highcharts.Chart(options);
-        var url = '/ajax/stats/UlkeyeGore?kisaKod=' + '1w0i';
-        chart.destroy();
+        var url = '/ajax/stats/UlkeyeGore?kisaKod=' + kisaKod + '&baslangicTarihi=' + baslangicTarihi + '&bitisTarihi=' + bitisTarihi;
 
+        grafik.destroy();
+       
         $.getJSON(url, function (yanit) {
 
             for (var i = 0; i < yanit.length; i++) {
-                options.series.push({ name: yanit[i].country_name, data: [yanit[i].Visitor] });
+                secenekler.series.push({ name: yanit[i].country_name, data: [yanit[i].Visitor] });
 
             }
 
-            chart = new Highcharts.Chart(options);
+            grafik = new Highcharts.Chart(secenekler);
         });
-    });
+    }
+
 
 });
