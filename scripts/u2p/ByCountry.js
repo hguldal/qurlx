@@ -37,7 +37,8 @@ $(function () {
                   'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
               },
               startDate: moment().subtract('days', 29),
-              endDate: moment()
+              endDate: moment(),
+              opens:'left'
           },
 
 
@@ -75,7 +76,7 @@ $(function () {
 
 
         secenekler.series = [];
-        secenekler.title.text = 'Visitor Stats by Country'
+        secenekler.title.text = 'Visitor by Country'
         secenekler.yAxis.title.text = 'Visitor';
         
 

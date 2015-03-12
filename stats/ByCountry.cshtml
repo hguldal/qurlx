@@ -14,19 +14,25 @@ DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
 <h1>Stats </h1>
 <hr>
 <div class="row" id="txtKisaKod" data-Kisakod="1w0i">
-    <div class="col-md-4 column">
-        <p><strong>Date Range</strong></p>
-         <a href="#" class="btn btn-link" id="tarihAraligi" data-baYil="@baslangicTarihi.Year" data-baAy="@baslangicTarihi.Month" data-baGun="@baslangicTarihi.Day" data-biYil="@DateTime.Now.Year" data-biAy="@DateTime.Now.Month" data-biGun="@DateTime.Now.Day"><span class="glyphicon glyphicon-calendar"></span> @baslangicTarihi.ToString("MM/dd/yyyy") - @DateTime.Now.ToString("MM/dd/yyyy") <b class="caret"></b> </a>
-        </div>
+    <div class="col-md-3 column">
+    
+         </div>
 
     
-    <div class="col-md-8 column">
+    <div class="col-md-6 column">
    
          <div id="grafikDiv"></div>
     
      
         </div>
-</div>
+
+    <div class="col-md-3 column">
+        
+             <h5>Options</h5>
+         <a href="#" class="btn btn-link" id="tarihAraligi" data-baYil="@baslangicTarihi.Year" data-baAy="@baslangicTarihi.Month" data-baGun="@baslangicTarihi.Day" data-biYil="@DateTime.Now.Year" data-biAy="@DateTime.Now.Month" data-biGun="@DateTime.Now.Day"><span class="glyphicon glyphicon-calendar"></span> @baslangicTarihi.ToString("MM/dd/yyyy") - @DateTime.Now.ToString("MM/dd/yyyy") <b class="caret"></b> </a>
+       
+        
+        </div>
  
 @section scripts
 {
