@@ -1,7 +1,11 @@
 ﻿@{
     
 Layout = "~/Paylasilan/_Layout.cshtml"; 
-
+var kisaKod=UrlData[0];
+if (string.IsNullOrEmpty(kisaKod))
+{
+    Response.Redirect("~/Error/Invalid-url");
+}
 DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
 
 }
@@ -11,23 +15,18 @@ DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
 <link rel="stylesheet" href="@Href("~/scripts/daterangepicker/daterangepicker-bs3.css")" />
 
 }
-<h1>Stats </h1>
+<h1>Stats <small>(@Request.Url.GetLeftPart(UriPartial.Authority)/@kisaKod)</small> </h1>
 <hr>
-<div class="row" id="txtKisaKod" data-Kisakod="1w0i">
+<div class="row" id="txtKisaKod" data-Kisakod="@kisaKod">
     <div class="col-md-3 column">
-    <div class="list-group" id="listeKategori">
-            
-            <a href="#" class="list-group-item  active"> By Country
-                    
-                    
-             </a>
 
-         <a href="#" class="list-group-item"> By City </a>
-        <a href="#" class="list-group-item"> By Month </a>
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation" class="active"><a href="#">By Country</a></li>
+                  <li role="presentation"><a href="#">By Country</a></li>
+              
+            </ul>
 
-  
-          
-</div>
+   
          </div>
 
     
@@ -45,6 +44,7 @@ DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
        
         
         </div>
+    </div>
  
 @section scripts
 {
