@@ -2,6 +2,16 @@ $(function () {
 
 
     var secenekler = {
+
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+
+        title: {
+            text: ''
+        },
         chart: {
             renderTo: 'grafikDiv',
             type: 'column'
@@ -12,7 +22,7 @@ $(function () {
 
     var grafik = new Highcharts.Chart(secenekler);
 
-
+    UlkelereGore_Grafik();
 
 
     $('#tarihAraligi').daterangepicker(
@@ -61,11 +71,15 @@ $(function () {
 
 
         grafik.destroy();
-        secenekler.series = [];
 
+
+        secenekler.series = [];
+        secenekler.title.text = 'Visitor Stats by Country'
+        secenekler.yAxis.title.text = 'Visitor';
+        
         $.getJSON(url, function (yanit) {
 
-            
+
             for (var i = 0; i < yanit.length; i++) {
                 secenekler.series.push({ name: yanit[i].country_name, data: [yanit[i].Visitor] });
 
@@ -75,5 +89,6 @@ $(function () {
         });
 
     }
+
 
 });

@@ -2,7 +2,7 @@
     
 Layout = "~/Paylasilan/_Layout.cshtml"; 
 
-   
+DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
 
 }
 @section styles
@@ -13,11 +13,13 @@ Layout = "~/Paylasilan/_Layout.cshtml";
 }
 <h1>Stats </h1>
 <hr>
-<div class="row" id="txtKisaKod" data-Kisakod="1w0i"> <h4>Date Range</h4>
+<div class="row" id="txtKisaKod" data-Kisakod="1w0i">
     <div class="col-md-4 column">
-       
-         <a href="#" class="btn btn-link" id="tarihAraligi" data-baYil="" data-baAy="" data-baGun="" data-biYil="" data-biAy="" data-biGun=""><span class="glyphicon glyphicon-calendar"></span> @DateTime.Now <b class="caret"></b> </a>
+        <p><strong>Date Range</strong></p>
+         <a href="#" class="btn btn-link" id="tarihAraligi" data-baYil="@baslangicTarihi.Year" data-baAy="@baslangicTarihi.Month" data-baGun="@baslangicTarihi.Day" data-biYil="@DateTime.Now.Year" data-biAy="@DateTime.Now.Month" data-biGun="@DateTime.Now.Day"><span class="glyphicon glyphicon-calendar"></span> @baslangicTarihi.ToString("MM/dd/yyyy") - @DateTime.Now.ToString("MM/dd/yyyy") <b class="caret"></b> </a>
         </div>
+
+    
     <div class="col-md-8 column">
    
          <div id="grafikDiv"></div>
