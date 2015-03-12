@@ -10,12 +10,17 @@ $(function () {
             gridLineWidth: 1
         },
 
+        xAxis: {
+            categories: []
+        },
+
         title: {
             text: ''
         },
         chart: {
             renderTo: 'grafikDiv',
-            type: 'column'
+            type: 'column',
+            defaultSeriesType: 'line'
 
         },
         series: []
@@ -52,7 +57,15 @@ $(function () {
               $('#tarihAraligi').attr('data-biAy', end.format('MM'));
               $('#tarihAraligi').attr('data-biGun', end.format('DD'));
 
-              UlkelereGore_Grafik();
+
+              var grafikTuru = $('#grafikDiv').attr('data-Grafik');
+              console.log(grafikTuru);
+              if (grafikTuru == 'gun') {
+                  GunlereGore_Grafik();
+              }
+              else if (grafikTuru == 'ulke') {
+                  UlkelereGore_Grafik();
+              }
 
           });
 
@@ -111,18 +124,20 @@ $(function () {
 
         grafik.destroy();
 
-
         secenekler.series = [];
+        secenekler.series = [{ name: 'Visitor', data: []}];
         secenekler.title.text = 'Visitor by Day'
         secenekler.yAxis.title.text = 'Visitor';
-        secenekler.chart.type = '';
-        
+        secenekler.chart.type = "line";
+
 
         $.getJSON(url, function (yanit) {
 
 
             for (var i = 0; i < yanit.length; i++) {
-                secenekler.series.push({ name: yanit[i].gun, data: [yanit[i].Visitor] });
+
+                secenekler.series[0].data.push(yanit[i].Visitor);
+                secenekler.xAxis.categories.push(yanit[i].gun);
 
             }
 
