@@ -2,7 +2,7 @@ $(function () {
 
 
     var secenekler = {
-       
+
         yAxis: {
             title: {
                 text: ''
@@ -23,7 +23,7 @@ $(function () {
 
     var grafik = new Highcharts.Chart(secenekler);
 
-    UlkelereGore_Grafik();
+    GunlereGore_Grafik();
 
 
     $('#tarihAraligi').daterangepicker(
@@ -38,7 +38,7 @@ $(function () {
               },
               startDate: moment().subtract('days', 29),
               endDate: moment(),
-              opens:'left'
+              opens: 'left'
           },
 
 
@@ -78,13 +78,51 @@ $(function () {
         secenekler.series = [];
         secenekler.title.text = 'Visitor by Country'
         secenekler.yAxis.title.text = 'Visitor';
-        
+
 
         $.getJSON(url, function (yanit) {
 
 
             for (var i = 0; i < yanit.length; i++) {
                 secenekler.series.push({ name: yanit[i].country_name, data: [yanit[i].Visitor] });
+
+            }
+
+            grafik = new Highcharts.Chart(secenekler);
+        });
+
+    }
+
+
+    function GunlereGore_Grafik() {
+
+        var baYil = $('#tarihAraligi').attr('data-baYil');
+        var baAy = $('#tarihAraligi').attr('data-baAy');
+        var baGun = $('#tarihAraligi').attr('data-baGun');
+        var biYil = $('#tarihAraligi').attr('data-biYil');
+        var biAy = $('#tarihAraligi').attr('data-biAy');
+        var biGun = $('#tarihAraligi').attr('data-biGun');
+
+
+        var kisaKod = $('#txtKisaKod').attr('data-Kisakod');
+
+        var url = '/ajax/stats/GunlereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun;
+
+
+        grafik.destroy();
+
+
+        secenekler.series = [];
+        secenekler.title.text = 'Visitor by Day'
+        secenekler.yAxis.title.text = 'Visitor';
+        secenekler.chart.type = '';
+        
+
+        $.getJSON(url, function (yanit) {
+
+
+            for (var i = 0; i < yanit.length; i++) {
+                secenekler.series.push({ name: yanit[i].gun, data: [yanit[i].Visitor] });
 
             }
 
