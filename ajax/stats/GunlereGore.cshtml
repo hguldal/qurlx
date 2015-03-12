@@ -35,7 +35,7 @@
 
 
    
-     var querySonuc=db.Query("SELECT CONVERT(NVARCHAR(10),tarih,121) as gun,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 GROUP BY tarih",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);
+     var querySonuc=db.Query("SELECT CONVERT(NVARCHAR(10),tarih,121) as gun,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 GROUP BY CONVERT(NVARCHAR(10),tarih,121)",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);
     
     
      
