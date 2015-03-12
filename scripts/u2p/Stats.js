@@ -57,18 +57,27 @@ $(function () {
               $('#tarihAraligi').attr('data-biAy', end.format('MM'));
               $('#tarihAraligi').attr('data-biGun', end.format('DD'));
 
+              GrafikOlustur();
 
-              var grafikTuru = $('#grafikDiv').attr('data-Grafik');
-              console.log(grafikTuru);
-              if (grafikTuru == 'gun') {
-                  GunlereGore_Grafik();
-              }
-              else if (grafikTuru == 'ulke') {
-                  UlkelereGore_Grafik();
-              }
 
           });
 
+    function GrafikOlustur() {
+
+        grafik.destroy();
+
+
+        secenekler.series = [];
+        secenekler.xAxis.categories = [];
+        var grafikTuru = $('#grafikDiv').attr('data-Grafik');
+
+        if (grafikTuru == 'gun') {
+            GunlereGore_Grafik();
+        }
+        else if (grafikTuru == 'ulke') {
+            UlkelereGore_Grafik();
+        }
+    }
 
     function UlkelereGore_Grafik() {
 
@@ -84,15 +93,10 @@ $(function () {
 
         var url = '/ajax/stats/UlkeyeGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun;
 
-
-        grafik.destroy();
-
-
-        secenekler.series = [];
         secenekler.title.text = 'Visitor by Country'
         secenekler.yAxis.title.text = 'Visitor';
-
-
+         secenekler.chart.type = "column";
+         secenekler.xAxis.categories.push('Countries');
         $.getJSON(url, function (yanit) {
 
 
@@ -122,9 +126,7 @@ $(function () {
         var url = '/ajax/stats/GunlereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun;
 
 
-        grafik.destroy();
-
-        secenekler.series = [];
+       
         secenekler.series = [{ name: 'Visitor', data: []}];
         secenekler.title.text = 'Visitor by Day'
         secenekler.yAxis.title.text = 'Visitor';
@@ -146,5 +148,12 @@ $(function () {
 
     }
 
+    $('.grafikTuru').click(function () {
+        $('#grafikDiv').attr('data-Grafik', $(this).attr('data-tur'));
+
+        GrafikOlustur();
+
+
+    });
 
 });
