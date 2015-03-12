@@ -6,7 +6,8 @@ $(function () {
         yAxis: {
             title: {
                 text: ''
-            }
+            },
+            gridLineWidth: 1
         },
 
         title: {
@@ -77,6 +78,7 @@ $(function () {
         secenekler.title.text = 'Visitor Stats by Country'
         secenekler.yAxis.title.text = 'Visitor';
         
+
         $.getJSON(url, function (yanit) {
 
 
