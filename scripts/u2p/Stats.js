@@ -2,7 +2,7 @@ $(function () {
 
 
     var secenekler = {
-
+       
         yAxis: {
             title: {
                 text: ''
