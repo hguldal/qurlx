@@ -101,6 +101,14 @@ $(function () {
             secenekler.yAxis.title.text = 'Visitor';
             secenekler.chart.type = "line";
         }
+        else if (grafikTuru == 'ay') {
+            url = '/ajax/stats/AylaraGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun;
+            secenekler.series = [{ name: 'Visitor', data: []}];
+            secenekler.title.text = 'Visitor by Month'
+            secenekler.yAxis.title.text = 'Visitor';
+            secenekler.chart.type = "line";
+
+        }
 
         //grafiğin türüne göre ajax isteği gönder ve gelen yanıtların işle
         $.getJSON(url, function (yanit) {
@@ -121,6 +129,14 @@ $(function () {
 
                 }
             }
+            else if (grafikTuru == 'ay') {
+                for (var i = 0; i < yanit.length; i++) {
+
+                    secenekler.series[0].data.push(yanit[i].Visitor);
+                    secenekler.xAxis.categories.push(AyAdi(yanit[i].ay));
+
+                }
+            }
 
             //grafiği çiz...
             grafik = new Highcharts.Chart(secenekler);
@@ -129,6 +145,12 @@ $(function () {
         });
 
 
+    }
+
+    function AyAdi(ayNumarasi) {
+        var ayAdlari = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        return ayAdlari[ayNumarasi - 1];
     }
 
 });
