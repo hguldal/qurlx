@@ -17,6 +17,40 @@ DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
 }
 <h1>Stats <small class="text-right">(@Request.Url.GetLeftPart(UriPartial.Authority)/@kisaKod)</small> </h1>
 <hr>
+<h4>Total Clicks</h4>
+<div class="row">
+          
+            <div class="col-md-2"> 
+                
+                <div class="panel panel-default well">
+                       
+                             <p class="text-center text-success">Today</p>
+                            <h2 class="text-center text-success">2</h2>
+                             
+                    </div>
+                </div>
+
+           <div class="col-md-2">
+                <div class="panel panel-default well">
+                       
+                             <p class="text-center text-info">This Month</p>
+                            <h2 class="text-center text-info">23</h2>
+                             
+                    </div>
+                </div>
+
+           <div class="col-md-2">
+                <div class="panel panel-default well">
+                        
+                             <p class="text-center text-danger">Total</p>
+                            <h2 class="text-center text-danger">12</h2>
+                             
+                    </div>
+                </div>
+         
+        </div>
+
+ <h4>Graphs</h4>
 <div class="row" id="txtKisaKod" data-Kisakod="@kisaKod">
     <div class="col-md-3 column">
 
@@ -36,36 +70,11 @@ DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
 
     
     <div class="col-md-6 column">
-       <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-info">
-                        <div class="panel-body">
-                             Basic panel example
-                             </div>
-                    </div>
-                </div>
-
-           <div class="col-md-4">
-                <div class="panel panel-success">
-                        <div class="panel-body">
-                             Basic panel example
-                             </div>
-                    </div>
-                </div>
-
-           <div class="col-md-4">
-                <div class="panel panel-danger">
-                        <div class="panel-body">
-                             <h4 class="text-center"><strong>Total Click </strong></h4>
-                            <h2 class="text-center">12</h2>
-                             </div>
-                    </div>
-                </div>
-         
-        </div>
+       
 
 
         <div class="row">
+           
             <div class="col-md-12">
                 <div id="grafikDiv" data-Grafik="gun"></div>
                 </div>
