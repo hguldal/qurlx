@@ -32,13 +32,9 @@
        
        db.Execute("DELETE FROM Url WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId);
      
-       var queryKategori=db.QuerySingle("SELECT * FROM URLKategori WHERE urlID=@0",queryUrl.urlID);
        
-       if (queryKategori!=null)
-       {
-        db.Execute("DELETE FROM UrlKategori WHERE urlID=@0 AND kategoriID=@1",queryUrl.urlID,queryKategori.kategoriID);
-       }
-
+       db.Execute("DELETE FROM UrlKategori WHERE urlID=@0",queryUrl.urlID);
+       
        Json.Write("OK", Response.Output);
        db.Close();   
        Response.ContentType = "application/json";
