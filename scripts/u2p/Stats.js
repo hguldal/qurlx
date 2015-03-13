@@ -1,6 +1,4 @@
 $(function () {
-
-
     var secenekler = {
 
         yAxis: {
@@ -28,7 +26,7 @@ $(function () {
 
     var grafik = new Highcharts.Chart(secenekler);
 
-    GunlereGore_Grafik();
+    GrafikCiz();
 
 
     $('#tarihAraligi').daterangepicker(
@@ -56,104 +54,81 @@ $(function () {
               $('#tarihAraligi').attr('data-biYil', end.format('YYYY'));
               $('#tarihAraligi').attr('data-biAy', end.format('MM'));
               $('#tarihAraligi').attr('data-biGun', end.format('DD'));
-
-              GrafikOlustur();
+              GrafikCiz();
 
 
           });
 
-    function GrafikOlustur() {
-
-        grafik.destroy();
-
-
-        secenekler.series = [];
-        secenekler.xAxis.categories = [];
-        var grafikTuru = $('#grafikDiv').attr('data-Grafik');
-
-        if (grafikTuru == 'gun') {
-            GunlereGore_Grafik();
-        }
-        else if (grafikTuru == 'ulke') {
-            UlkelereGore_Grafik();
-        }
-    }
-
-    function UlkelereGore_Grafik() {
-
-        var baYil = $('#tarihAraligi').attr('data-baYil');
-        var baAy = $('#tarihAraligi').attr('data-baAy');
-        var baGun = $('#tarihAraligi').attr('data-baGun');
-        var biYil = $('#tarihAraligi').attr('data-biYil');
-        var biAy = $('#tarihAraligi').attr('data-biAy');
-        var biGun = $('#tarihAraligi').attr('data-biGun');
-
-
-        var kisaKod = $('#txtKisaKod').attr('data-Kisakod');
-
-        var url = '/ajax/stats/UlkeyeGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun;
-
-        secenekler.title.text = 'Visitor by Country'
-        secenekler.yAxis.title.text = 'Visitor';
-         secenekler.chart.type = "column";
-         secenekler.xAxis.categories.push('Countries');
-        $.getJSON(url, function (yanit) {
-
-
-            for (var i = 0; i < yanit.length; i++) {
-                secenekler.series.push({ name: yanit[i].country_name, data: [yanit[i].Visitor] });
-
-            }
-
-            grafik = new Highcharts.Chart(secenekler);
-        });
-
-    }
-
-
-    function GunlereGore_Grafik() {
-
-        var baYil = $('#tarihAraligi').attr('data-baYil');
-        var baAy = $('#tarihAraligi').attr('data-baAy');
-        var baGun = $('#tarihAraligi').attr('data-baGun');
-        var biYil = $('#tarihAraligi').attr('data-biYil');
-        var biAy = $('#tarihAraligi').attr('data-biAy');
-        var biGun = $('#tarihAraligi').attr('data-biGun');
-
-
-        var kisaKod = $('#txtKisaKod').attr('data-Kisakod');
-
-        var url = '/ajax/stats/GunlereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun;
-
-
-       
-        secenekler.series = [{ name: 'Visitor', data: []}];
-        secenekler.title.text = 'Visitor by Day'
-        secenekler.yAxis.title.text = 'Visitor';
-        secenekler.chart.type = "line";
-
-
-        $.getJSON(url, function (yanit) {
-
-
-            for (var i = 0; i < yanit.length; i++) {
-
-                secenekler.series[0].data.push(yanit[i].Visitor);
-                secenekler.xAxis.categories.push(yanit[i].gun);
-
-            }
-
-            grafik = new Highcharts.Chart(secenekler);
-        });
-
-    }
-
     $('.grafikTuru').click(function () {
-        $('#grafikDiv').attr('data-Grafik', $(this).attr('data-tur'));
-
-        GrafikOlustur();
-
+        var grafikTuru = $(this).attr('data-tur');
+        $('#grafikDiv').attr('data-Grafik', grafikTuru);
+        $('#lstGrafikTurleri>li').removeClass('active');
+        $(this).closest('li').addClass('active');
+        GrafikCiz();
 
     });
+
+    /*  1:Ülkelere Göre 2:Günlere Göre */
+    function GrafikCiz() {
+        var baYil = $('#tarihAraligi').attr('data-baYil');
+        var baAy = $('#tarihAraligi').attr('data-baAy');
+        var baGun = $('#tarihAraligi').attr('data-baGun');
+        var biYil = $('#tarihAraligi').attr('data-biYil');
+        var biAy = $('#tarihAraligi').attr('data-biAy');
+        var biGun = $('#tarihAraligi').attr('data-biGun');
+        var kisaKod = $('#txtKisaKod').attr('data-Kisakod');
+        var url = '';
+        var grafikTuru = $('#grafikDiv').attr('data-Grafik');
+
+        //Grafik varsa temizle
+        grafik.destroy();
+        secenekler.series = [];
+        secenekler.xAxis.categories = [];
+
+        //Grafik seçenekleri
+        if (grafikTuru == 'ulke') {
+
+            url = '/ajax/stats/UlkeyeGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun;
+            secenekler.title.text = 'Visitor by Country'
+            secenekler.yAxis.title.text = 'Visitor';
+            secenekler.chart.type = "column";
+            secenekler.xAxis.categories.push('Countries');
+        }
+        else if (grafikTuru == 'gun') {
+            url = '/ajax/stats/GunlereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun;
+            secenekler.series = [{ name: 'Visitor', data: []}];
+            secenekler.title.text = 'Visitor by Day'
+            secenekler.yAxis.title.text = 'Visitor';
+            secenekler.chart.type = "line";
+        }
+
+        //grafiğin türüne göre ajax isteği gönder ve gelen yanıtların işle
+        $.getJSON(url, function (yanit) {
+
+            //ülkelere göre grafik
+            if (grafikTuru == 'ulke') {
+                for (var i = 0; i < yanit.length; i++) {
+                    secenekler.series.push({ name: yanit[i].country_name, data: [yanit[i].Visitor] });
+
+                }
+            }
+            //günlere göre grafik
+            else if (grafikTuru == 'gun') {
+                for (var i = 0; i < yanit.length; i++) {
+
+                    secenekler.series[0].data.push(yanit[i].Visitor);
+                    secenekler.xAxis.categories.push(yanit[i].gun);
+
+                }
+            }
+
+            //grafiği çiz...
+            grafik = new Highcharts.Chart(secenekler);
+            $('#grafikDiv').attr('data-Grafik', grafikTuru);
+
+        });
+
+
+    }
 
 });

@@ -19,6 +19,7 @@
      var biAy= int.Parse(Request["biAy"]);
      var biGun= int.Parse(Request["biGun"]);
 
+     var cihaz=Request["cihaz"];
      
     DateTime baslangicTarihi=new DateTime(baYil,baAy,baGun,0,0,0);
     DateTime bitisTarihi=new DateTime(biYil,biAy,biGun,23,59,59);
@@ -34,8 +35,9 @@
      }
 
 
+   IEnumerable<dynamic> querySonuc;
    
-     var querySonuc=db.Query("SELECT CONVERT(NVARCHAR(10),tarih,121) as gun,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 GROUP BY CONVERT(NVARCHAR(10),tarih,121)",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);
+   querySonuc=db.Query("SELECT CONVERT(NVARCHAR(10),tarih,121) as gun,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 GROUP BY CONVERT(NVARCHAR(10),tarih,121)",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);
     
     
      
