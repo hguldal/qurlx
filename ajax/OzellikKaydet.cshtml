@@ -13,7 +13,7 @@
      var alan=Request["name"];
      var deger=Request["value"];
      
-     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0 AND userID=@1",kisaKod,WebSecurity.CurrentUserId);
 
      if (queryURL==null)
      {
@@ -25,14 +25,7 @@
 
     else
      {
-         //url nin yöneticisi mi
-         if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND UserID=@1",queryURL.urlID,WebSecurity.CurrentUserId)<1)
-         {
-             db.Close();
-             Response.StatusCode=401;
-             Response.End();
-         }
-
+         
          if (alan=="kisaKod")
          {
             if (db.QueryValue("SELECT COUNT(*) FROM URL WHERE kisaKod=@0",deger)>0)
