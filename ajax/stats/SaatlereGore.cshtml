@@ -39,15 +39,15 @@
   
    if (cihaz=="mobil")
    {
-       querySonuc=db.Query("SELECT datepart(yy,tarih) as yil,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 AND isMobileDevice='True' GROUP BY datepart(yy,tarih)",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);       
+       querySonuc=db.Query("SELECT datepart(hh,tarih) as saat,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 AND isMobileDevice='True' GROUP BY datepart(hh,tarih)",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);       
    }
    else if (cihaz=="desktop")
    {
-        querySonuc=db.Query("SELECT datepart(yy,tarih) as yil,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 AND isMobileDevice='False' GROUP BY datepart(yy,tarih)",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);       
+        querySonuc=db.Query("SELECT datepart(hh,tarih) as saat,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 AND isMobileDevice='False' GROUP BY datepart(hh,tarih)",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);       
    }
    else
    {
-       querySonuc=db.Query("SELECT datepart(yy,tarih) as yil,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 GROUP BY datepart(yy,tarih)",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);       
+       querySonuc=db.Query("SELECT datepart(hh,tarih) as saat,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 GROUP BY datepart(hh,tarih)",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);       
    }
    
      

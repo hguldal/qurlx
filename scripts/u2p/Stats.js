@@ -119,6 +119,15 @@ $(function () {
 
         }
 
+       else if (grafikTuru == 'saat') {
+            url = '/ajax/stats/SaatlereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun;
+            secenekler.series = [{ name: 'Visitor', data: []}];
+            secenekler.title.text = 'Visitor by Hour'
+            secenekler.yAxis.title.text = 'Visitor';
+            secenekler.chart.type = "line";
+
+        }
+
         //grafiğin türüne göre ajax isteği gönder ve gelen yanıtların işle
         $.getJSON(url, function (yanit) {
 
@@ -152,6 +161,15 @@ $(function () {
 
                     secenekler.series[0].data.push(yanit[i].Visitor);
                     secenekler.xAxis.categories.push(yanit[i].yil);
+
+                }
+            }
+
+            else if (grafikTuru == 'saat') {
+                for (var i = 0; i < yanit.length; i++) {
+
+                    secenekler.series[0].data.push(yanit[i].Visitor);
+                    secenekler.xAxis.categories.push(yanit[i].saat);
 
                 }
             }
