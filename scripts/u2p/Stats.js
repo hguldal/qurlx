@@ -68,7 +68,7 @@ $(function () {
 
     });
 
-    /*  1:Ülkelere Göre 2:Günlere Göre */
+    
     function GrafikCiz() {
         var baYil = $('#tarihAraligi').attr('data-baYil');
         var baAy = $('#tarihAraligi').attr('data-baAy');
@@ -110,6 +110,15 @@ $(function () {
 
         }
 
+        else if (grafikTuru == 'yil') {
+            url = '/ajax/stats/YillaraGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun;
+            secenekler.series = [{ name: 'Visitor', data: []}];
+            secenekler.title.text = 'Visitor by Year'
+            secenekler.yAxis.title.text = 'Visitor';
+            secenekler.chart.type = "line";
+
+        }
+
         //grafiğin türüne göre ajax isteği gönder ve gelen yanıtların işle
         $.getJSON(url, function (yanit) {
 
@@ -120,6 +129,7 @@ $(function () {
 
                 }
             }
+
             //günlere göre grafik
             else if (grafikTuru == 'gun') {
                 for (var i = 0; i < yanit.length; i++) {
@@ -134,6 +144,14 @@ $(function () {
 
                     secenekler.series[0].data.push(yanit[i].Visitor);
                     secenekler.xAxis.categories.push(AyAdi(yanit[i].ay));
+
+                }
+            }
+            else if (grafikTuru == 'yil') {
+                for (var i = 0; i < yanit.length; i++) {
+
+                    secenekler.series[0].data.push(yanit[i].Visitor);
+                    secenekler.xAxis.categories.push(yanit[i].yil);
 
                 }
             }
