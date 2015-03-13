@@ -24,9 +24,9 @@
     DateTime bitisTarihi=new DateTime(biYil,biAy,biGun,23,59,59);
 
 
-     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0 AND userID=@1",kisaKod,WebSecurity.CurrentUserId);
 
-     if (db.QueryValue("SELECT COUNT(*) FROM UrlYonetici WHERE urlID=@0 AND userID=@1",queryURL.urlID,WebSecurity.CurrentUserId)<1)
+     if (queryURL==null)
      {
          db.Close();
          Response.StatusCode=401;
