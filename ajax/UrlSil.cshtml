@@ -30,8 +30,8 @@
          Response.End();
        }
        
-       db.Execute("DELETE FROM UrlKullanici WHERE urlID=@0 AND UserID=@1",queryUrl.urlID,WebSecurity.CurrentUserId);
-       db.Execute("DELETE FROM UrlYonetici WHERE urlID=@0 AND UserID=@1",queryUrl.urlID,WebSecurity.CurrentUserId);
+       db.Execute("DELETE FROM Url WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId);
+     
        var queryKategori=db.QuerySingle("SELECT * FROM URLKategori WHERE urlID=@0",queryUrl.urlID);
        
        if (queryKategori!=null)

@@ -13,11 +13,11 @@
     
     if (kategoriID=="-1")
     {
-        queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKullanici ON Url.urlID=UrlKullanici.urlID WHERE userID=@0 ORDER BY Url.urlID ASC",WebSecurity.CurrentUserId);
+        queryURLs =db.Query("SELECT * FROM Url WHERE userID=@0 ORDER BY urlID ASC",WebSecurity.CurrentUserId);
     }
     else
     {
-        queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKategori ON Url.urlID=UrlKategori.urlID INNER JOIN Kategori ON UrlKategori.kategoriID=Kategori.kategoriID WHERE Kategori.kategoriID=@0",kategoriID);
+        queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKategori ON Url.urlID=UrlKategori.urlID INNER JOIN Kategori ON UrlKategori.kategoriID=Kategori.kategoriID WHERE Kategori.kategoriID=@0 AND Url.userID=@1",kategoriID,WebSecurity.CurrentUserId);
     }
 
     Json.Write(queryURLs, Response.Output);

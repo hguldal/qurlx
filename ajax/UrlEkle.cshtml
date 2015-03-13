@@ -31,56 +31,7 @@
 
      using (db)
      {
-
-        var queryUrl=db.QuerySingle("SELECT * FROM Url WHERE url=@0",url);
-        
-        //url daha önce kayıt edilmiş mi ?
-         if (queryUrl!=null)
-         {           
-             //url'yi kayıtlı bir üye mi kaydetmiş ?
-             if (db.QueryValue("SELECT COUNT(*) FROM UrlYonetici WHERE urlID=@0",queryUrl.urlID)>0)
-             {
-                 //üye kullanıcı ise bu URL yi onun listesine ekle
-                 if (WebSecurity.IsAuthenticated)
-                    {
-                        if (db.QueryValue("SELECT COUNT(*) FROM UrlKullanici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)<1)
-                        {
-                         db.Execute("INSERT INTO URLKullanici(urlID,userID) VALUES(@0,@1)",queryUrl.urlID,WebSecurity.CurrentUserId);
-                        }
-                    }
-            
-             }
-             
-             else
-             {
-                //url kayıtlı ama sahibi yok ise
-                 if (WebSecurity.IsAuthenticated)
-                    {
-                        if (db.QueryValue("SELECT COUNT(*) FROM UrlYonetici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)<1)
-                        {
-                            db.Execute("INSERT INTO UrlYonetici(urlID,userID) VALUES(@0,@1)",queryUrl.urlID,WebSecurity.CurrentUserId);
-                        }
-
-                        if (db.QueryValue("SELECT COUNT(*) FROM UrlKullanici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)<1)
-                        {
-                            db.Execute("INSERT INTO UrlKullanici(urlID,userID) VALUES(@0,@1)",queryUrl.urlID,WebSecurity.CurrentUserId);
-                        }
-                    }
-            
-             }
-
-             //url bilgilerini json olarak döndür
-              Json.Write(queryUrl, Response.Output);
-              db.Close();   
-              Response.ContentType = "application/json";
-              Response.End();
-         }
-         
-         //url henüz kayıt edilmemiş
-         else
-         
-         {
-                // url için yeni bir erişim kodu üret
+              // url için yeni bir erişim kodu üret
                var urlKisaKod=KodUret.YeniKod();
 
                //kullanılmamış bir kod bulana kadar dön
@@ -98,17 +49,11 @@
                     }
                     
                     //url 'yi ekle
-                    db.Execute("INSERT INTO Url(olusturmaTarihi,url,kisaKod,aciklama) VALUES(@0,@1,@2,@3)",DateTime.Now,url,urlKisaKod,aciklama);
+                    db.Execute("INSERT INTO Url(olusturmaTarihi,url,kisaKod,aciklama,userID) VALUES(@0,@1,@2,@3,@4)",DateTime.Now,url,urlKisaKod,aciklama,WebSecurity.CurrentUserId);
                     
                     var queryEklenenUrl=db.QuerySingle("SELECT * FROM Url WHERE url=@0",url);
-                    
-                    if (WebSecurity.IsAuthenticated)
-                    {
-                        //kullanıcı olarak ata...
-                        db.Execute("INSERT INTO UrlKullanici(urlID,userID) VALUES(@0,@1)",queryEklenenUrl.urlID,WebSecurity.CurrentUserId);
-                        //yönetici olarak ata...
-                        db.Execute("INSERT INTO UrlYonetici(urlID,userID) VALUES(@0,@1)",queryEklenenUrl.urlID,WebSecurity.CurrentUserId);
-                    }
+                   
+
                     if (kategoriID!="-1")
                     {
                         
@@ -123,7 +68,7 @@
             }
 
 
-       }
+       
 }
 
 
