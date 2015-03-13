@@ -1,12 +1,24 @@
 ﻿@{
-    
-Layout = "~/Paylasilan/_Layout.cshtml"; 
+
+if (!WebSecurity.IsAuthenticated)
+{
+Response.Redirect("~/Hesap/Giris");
+}
+
+Layout = "~/Paylasilan/_Layout.cshtml";
+var db=Database.Open("u2p");    
+ 
 var kisaKod=UrlData[0];
 if (string.IsNullOrEmpty(kisaKod))
 {
     Response.Redirect("~/Error/Invalid-url");
 }
 DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
+var queryUrl=db.QuerySingle("SELECT * FROM Url WHERE kisaKod=@0 AND userID=@1",kisaKod,WebSecurity.CurrentUserId);
+if (queryUrl==null)
+{
+     Response.Redirect("~/Error/Invalid-url");
+}
 
 }
 @section styles
@@ -25,7 +37,7 @@ DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
                 <div class="panel panel-default well">
                        
                              <p class="text-center text-info">Today</p>
-                            <h2 class="text-center text-info">2</h2>
+                            <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(dd,tarih)=@1",queryUrl.urlID,DateTime.Now.Day)</h2>
                              
                     </div>
                 </div>
@@ -34,7 +46,7 @@ DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
                 <div class="panel panel-default well">
                        
                              <p class="text-center text-info">This Month</p>
-                            <h2 class="text-center text-info">23</h2>
+                            <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(mm,tarih)=@1",queryUrl.urlID,DateTime.Now.Month)</h2>
                              
                     </div>
                 </div>
@@ -43,7 +55,7 @@ DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
                 <div class="panel panel-default well">
                        
                              <p class="text-center text-info">This Year</p>
-                            <h2 class="text-center text-info">23</h2>
+                            <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(yy,tarih)=@1",queryUrl.urlID,DateTime.Now.Year)</h2>
                              
                     </div>
                 </div>
@@ -115,3 +127,6 @@ DateTime baslangicTarihi=DateTime.Now.AddMonths(-1);
  
 }
 
+@{
+    db.Close();
+}
