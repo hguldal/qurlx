@@ -68,7 +68,7 @@ $(function () {
 
     });
 
-    
+
     function GrafikCiz() {
         var baYil = $('#tarihAraligi').attr('data-baYil');
         var baAy = $('#tarihAraligi').attr('data-baAy');
@@ -170,5 +170,14 @@ $(function () {
 
         return ayAdlari[ayNumarasi - 1];
     }
+
+
+    $('#cmbCihazTuru').selectize({
+
+        onItemAdd:
+            function (data, $item) {
+
+            }
+    });
 
 });
