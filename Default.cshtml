@@ -34,17 +34,17 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
             }
           
 </div>
-        <button class="btn btn-xs btn-link" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
-        <button class="btn btn-xs btn-link menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
-        <button class="btn btn-xs btn-link"> <span class="glyphicon glyphicon-cog"></span> List Settings</button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
+        <button class="btn btn-danger menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
+      
         
           
         </div>
     <div class="col-md-6 column">
          <h2 id="kategoriAdi">URLs</h2><hr>
         
-              <button class="btn btn-xs btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus-sign"></span> Add New URL</button>
-              <br>
+              <button class="btn btn-success" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus-sign"></span> Add New URL</button>
+              <br><br>
 
     <table class="table table-hover" id="lstUrl">
         <thead>
