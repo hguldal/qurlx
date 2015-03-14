@@ -44,63 +44,72 @@ if (queryUrl==null)
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="dashboard">
         <br>
-            <div class="panel panel-info">
-            <div class="panel-heading">Total Clicks</div>
-              <div class="panel-body">
-                <div class="row">
+        <div class="row">
+            <div class="col-md-12 column">
+              <div class="panel panel-info">
+                <div class="panel-heading">Total Clicks</div>
+                         <div class="panel-body">
+                                <div class="row">
 
-            <div class="col-md-2"> 
+                                                <div class="col-md-2"> 
                 
-                <div class="panel panel-default well">
-                       
-                             <p class="text-center text-info">Today</p>
-                            <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(dd,tarih)=@1",queryUrl.urlID,DateTime.Now.Day)</h2>
+                                                    <div class="panel panel-success">
+                                                                  <div class="panel-heading text-center">Today</div>
+                                                                 
+                                                                <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(dd,tarih)=@1",queryUrl.urlID,DateTime.Now.Day)</h2>
                              
-                    </div>
-                </div>
+                                                        </div>
+                                                    </div>
 
-           <div class="col-md-2">
-                <div class="panel panel-default well">
-                       
-                             <p class="text-center text-info">This Month</p>
-                            <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(mm,tarih)=@1",queryUrl.urlID,DateTime.Now.Month)</h2>
+                                               <div class="col-md-2">
+                                                    <div class="panel panel-info">
+                                                                 <div class="panel-heading text-center">This Month</div>
+                                                                 
+                                                                <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(mm,tarih)=@1",queryUrl.urlID,DateTime.Now.Month)</h2>
                              
-                    </div>
-                </div>
+                                                        </div>
+                                                    </div>
 
-    <div class="col-md-2">
-                <div class="panel panel-default well">
-                       
-                             <p class="text-center text-info">This Year</p>
-                            <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(yy,tarih)=@1",queryUrl.urlID,DateTime.Now.Year)</h2>
+                                              <div class="col-md-2">
+                                                    <div class="panel panel-danger">
+                                                                <div class="panel-heading text-center">This Year</div>
+                                                                 
+                                                                <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(yy,tarih)=@1",queryUrl.urlID,DateTime.Now.Year)</h2>
                              
-                    </div>
-                </div>
+                                                        </div>
+                                                    </div>
 
-           <div class="col-md-2">
-                <div class="panel panel-default well">
-                        
-                             <p class="text-center text-success">Total</p>
-                            <h2 class="text-center text-success">12</h2>
-                             
-                    </div>
-                </div>
-
+                                              
     
          
-        </div>
-              </div>
+                                </div>
+                            </div>
+               </div>
+            </div>
         </div>
 
-        <div class="panel panel-info">
-            <div class="panel-heading">Cities</div>
-              <div class="panel-body">
-                <div class="row">
 
-           
+        <br>
+        <div class="row">
+            <div class="col-md-4 column">
+              <div class="panel panel-info">
+                <div class="panel-heading">Cities</div>
+                         <div class="panel-body">
+                                
+                           </div>
+               </div>
+            </div>
+
+            <div class="col-md-4 column">
+              <div class="panel panel-info">
+                <div class="panel-heading">Countries</div>
+                         <div class="panel-body">
+                                
+                           </div>
+               </div>
+            </div>
         </div>
-              </div>
-        </div>
+        
         
 <br>
 
