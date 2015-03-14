@@ -79,7 +79,7 @@ $(function () {
         var kisaKod = $('#txtKisaKod').attr('data-Kisakod');
         var url = '';
         var grafikTuru = $('#grafikDiv').attr('data-Grafik');
-        var cihaz = $('#cmbCihazTuru').val();
+        var cihaz = $('#grafikDiv').attr('data-CihazTuru');
 
         //Grafik varsa temizle
         grafik.destroy();
@@ -195,7 +195,9 @@ $(function () {
 
         onItemAdd:
             function (data, $item) {
+                $('#grafikDiv').attr('data-CihazTuru', data);
 
+                GrafikCiz();
             }
     });
 
