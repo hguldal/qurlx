@@ -19,6 +19,9 @@ if (queryUrl==null)
 {
      Response.Redirect("~/Error/Invalid-url");
 }
+var querySehirler=db.Query("SELECT city,count(*) as adet FROM Ziyaret  WHERE urlID=@0 GROUP BY city",queryUrl.urlID);
+var queryUlkeler=db.Query("SELECT country_name,count(*) as adet FROM Ziyaret  WHERE urlID=@0 GROUP BY country_name",queryUrl.urlID);
+var queryTarayicilar=db.Query("SELECT browserName,count(*) as adet FROM Ziyaret  WHERE urlID=@0 GROUP BY browserName",queryUrl.urlID);
 
 }
 @section styles
@@ -46,15 +49,12 @@ if (queryUrl==null)
         <br>
         <div class="row">
             <div class="col-md-12 column">
-              <div class="panel panel-info">
-                <div class="panel-heading">Total Clicks</div>
-                         <div class="panel-body">
-                                <div class="row">
+              <div class="row">
 
                                                 <div class="col-md-2"> 
                 
                                                     <div class="panel panel-success">
-                                                                  <div class="panel-heading text-center">Today</div>
+                                                                  <div class="panel-heading text-center"><span class="glyphicon glyphicon-th-list"></span> Today</div>
                                                                  
                                                                 <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(dd,tarih)=@1",queryUrl.urlID,DateTime.Now.Day)</h2>
                              
@@ -63,7 +63,7 @@ if (queryUrl==null)
 
                                                <div class="col-md-2">
                                                     <div class="panel panel-info">
-                                                                 <div class="panel-heading text-center">This Month</div>
+                                                                 <div class="panel-heading text-center"><span class="glyphicon glyphicon-th"></span> This Month</div>
                                                                  
                                                                 <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(mm,tarih)=@1",queryUrl.urlID,DateTime.Now.Month)</h2>
                              
@@ -72,7 +72,7 @@ if (queryUrl==null)
 
                                               <div class="col-md-2">
                                                     <div class="panel panel-danger">
-                                                                <div class="panel-heading text-center">This Year</div>
+                                                                <div class="panel-heading text-center"><span class="glyphicon glyphicon-th-large"></span> This Year</div>
                                                                  
                                                                 <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(yy,tarih)=@1",queryUrl.urlID,DateTime.Now.Year)</h2>
                              
@@ -83,8 +83,6 @@ if (queryUrl==null)
     
          
                                 </div>
-                            </div>
-               </div>
             </div>
         </div>
 
@@ -93,18 +91,57 @@ if (queryUrl==null)
         <div class="row">
             <div class="col-md-4 column">
               <div class="panel panel-info">
-                <div class="panel-heading">Cities</div>
+                <div class="panel-heading"><span class="glyphicon glyphicon-home"></span> Cities</div>
                          <div class="panel-body">
-                                
+                                <table class="table">
+                                    <thead>
+                                        <tr><td><strong>City</strong></td><td><strong>Total Click</strong></td></tr>
+                                    </thead>
+                                    <tbody>
+                                            @foreach (var oge in querySehirler)
+                                            {
+                                                <tr><td>@oge.city</td><td>@oge.adet</td></tr>
+                                            }
+                                    </tbody>
+                                </table>
                            </div>
                </div>
             </div>
 
             <div class="col-md-4 column">
               <div class="panel panel-info">
-                <div class="panel-heading">Countries</div>
+                <div class="panel-heading"><span class="glyphicon glyphicon-globe"></span> Countries</div>
                          <div class="panel-body">
-                                
+                                <table class="table">
+                                    <thead>
+                                        <tr><td><strong>Country</strong></td><td><strong>Total Click</strong></td></tr>
+                                    </thead>
+                                    <tbody>
+                                            @foreach (var oge in queryUlkeler)
+                                            {
+                                                <tr><td>@oge.country_name</td><td>@oge.adet</td></tr>
+                                            }
+                                    </tbody>
+                                </table>
+                           </div>
+               </div>
+            </div>
+
+            <div class="col-md-4 column">
+              <div class="panel panel-info">
+                <div class="panel-heading"><span class="glyphicon glyphicon-screenshot"></span> Browsers</div>
+                         <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr><td><strong>Browser</strong></td><td><strong>Total Click</strong></td></tr>
+                                    </thead>
+                                    <tbody>
+                                            @foreach (var oge in queryTarayicilar)
+                                            {
+                                                <tr><td>@oge.browserName</td><td>@oge.adet</td></tr>
+                                            }
+                                    </tbody>
+                                </table>
                            </div>
                </div>
             </div>
