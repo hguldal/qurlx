@@ -19,7 +19,7 @@
      var biAy= int.Parse(Request["biAy"]);
      var biGun= int.Parse(Request["biGun"]);
 
-     
+      var cihaz=Request["cihaz"];
     DateTime baslangicTarihi=new DateTime(baYil,baAy,baGun,0,0,0);
     DateTime bitisTarihi=new DateTime(biYil,biAy,biGun,23,59,59);
 
@@ -40,7 +40,7 @@
    
      querySonuc=db.Query("SELECT country_name,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 AND isMobileDevice='True' GROUP BY country_name",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);
      }
-     else if(cihaz=="desktop")
+     else if (cihaz=="desktop")
      {
          querySonuc=db.Query("SELECT country_name,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 AND isMobileDevice='False' GROUP BY country_name",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);
      }

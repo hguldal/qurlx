@@ -128,6 +128,24 @@ $(function () {
             secenekler.chart.type = "line";
 
         }
+        else if (grafikTuru == 'dil') {
+
+            url = '/ajax/stats/DillereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
+            secenekler.title.text = 'Visitor by Language'
+            secenekler.yAxis.title.text = 'Visitor';
+            secenekler.chart.type = "column";
+            secenekler.xAxis.categories.push('Languages');
+        }
+
+        else if (grafikTuru == 'tarayici') {
+
+            url = '/ajax/stats/TarayicilaraGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
+            secenekler.title.text = 'Visitor by Browser'
+            secenekler.yAxis.title.text = 'Visitor';
+            secenekler.chart.type = "column";
+            secenekler.xAxis.categories.push('Browsers');
+        }
+
 
         //grafiğin türüne göre ajax isteği gönder ve gelen yanıtların işle
         $.getJSON(url, function (yanit) {
@@ -171,6 +189,21 @@ $(function () {
 
                     secenekler.series[0].data.push(yanit[i].Visitor);
                     secenekler.xAxis.categories.push(yanit[i].saat);
+
+                }
+            }
+            //dillere göre grafik
+            else if (grafikTuru == 'dil') {
+                for (var i = 0; i < yanit.length; i++) {
+                    secenekler.series.push({ name: yanit[i].language, data: [yanit[i].Visitor] });
+
+                }
+            }
+
+             //tarayicilara göre grafik
+            else if (grafikTuru == 'tarayici') {
+                for (var i = 0; i < yanit.length; i++) {
+                    secenekler.series.push({ name: yanit[i].browserName, data: [yanit[i].Visitor] });
 
                 }
             }
