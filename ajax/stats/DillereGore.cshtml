@@ -1,0 +1,61 @@
+﻿@{
+     if (!WebSecurity.IsAuthenticated)
+   
+        {
+            Response.StatusCode=401;
+            Response.End();
+                   
+        }  
+
+     var db=Database.Open("u2p");
+ 
+     var kisaKod=Request["kisaKod"];
+    
+     var baYil= int.Parse(Request["baYil"]);
+     var baAy= int.Parse(Request["baAy"]);
+     var baGun= int.Parse(Request["baGun"]);
+
+     var biYil= int.Parse(Request["biYil"]);
+     var biAy= int.Parse(Request["biAy"]);
+     var biGun= int.Parse(Request["biGun"]);
+
+    var cihaz=Request["cihaz"];
+
+    DateTime baslangicTarihi=new DateTime(baYil,baAy,baGun,0,0,0);
+    DateTime bitisTarihi=new DateTime(biYil,biAy,biGun,23,59,59);
+
+
+     var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0 AND userID=@1",kisaKod,WebSecurity.CurrentUserId);
+
+     if (queryURL==null)
+     {
+         db.Close();
+         Response.StatusCode=401;
+         Response.End();
+     }
+
+      IEnumerable<dynamic> querySonuc;
+  
+   if (cihaz=="mobil")
+       {
+   
+          querySonuc=db.Query("SELECT language,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 AND isMobileDevice='true' GROUP BY language",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);
+      }
+      else if (cihaz=="desktop")
+      {
+          querySonuc=db.Query("SELECT language,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 AND isMobileDevice='false' GROUP BY language",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);
+      }
+      else 
+      {
+          querySonuc=db.Query("SELECT language,count(*) as Visitor FROM Ziyaret WHERE CONVERT(NVARCHAR(10),tarih,121)>=@0 AND CONVERT(NVARCHAR(10),tarih,121) <=@1 AND urlID=@2 GROUP BY language",baslangicTarihi.ToString("yyyy-MM-dd"),bitisTarihi.ToString("yyyy-MM-dd"),queryURL.urlID);
+      }
+    
+    
+     
+    Json.Write(querySonuc, Response.Output);
+    db.Close();   
+    Response.ContentType = "application/json";
+    Response.End();
+ 
+}
+
