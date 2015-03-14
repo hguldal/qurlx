@@ -24,7 +24,7 @@
     {
 
             //url sahibi oturum açmış kişi ise başka hiç bir koşula bakmaksızın direkt olarak adrese yönlendir.
-             if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)>0)
+             if (queryUrl.userID==WebSecurity.CurrentUserId)
              {
                  //anahtar oluştur
                  erisimAnahtari=Guid.NewGuid().ToString();
@@ -92,7 +92,7 @@
               //eğer adres sadece sahibine açık ise oturum açan kişinin sahip olup olmadığını kontrol et.
               else if (queryUrl.erisimTuru==4)
               {
-                   if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND userID=@1",queryUrl.urlID,WebSecurity.CurrentUserId)<1)
+                   if (queryUrl.userID!=WebSecurity.CurrentUserId)
                      {
                          db.Close();
                         Response.Redirect("~/Error/Access-Denied");

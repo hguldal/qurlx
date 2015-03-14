@@ -27,14 +27,32 @@ if (queryUrl==null)
 <link rel="stylesheet" href="@Href("~/scripts/daterangepicker/daterangepicker-bs3.css")" />
 
 }
+
+
 <h1>Stats <small class="text-right">(@Request.Url.GetLeftPart(UriPartial.Authority)/@kisaKod)</small> </h1>
-<hr>
-<h4>Total Clicks</h4>
+<br>
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#dashboard" aria-controls="home" role="tab" data-toggle="tab">Dashboard</a></li>
+    <li role="presentation"><a href="#graph" aria-controls="profile" role="tab" data-toggle="tab">Graphs</a></li>
+    
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="dashboard">
+            
+        
+<br>
 <div class="row">
+
+
           
             <div class="col-md-2"> 
                 
-                <div class="panel panel-default well">
+                <div class="panel panel-info">
                        
                              <p class="text-center text-info">Today</p>
                             <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(dd,tarih)=@1",queryUrl.urlID,DateTime.Now.Day)</h2>
@@ -68,14 +86,20 @@ if (queryUrl==null)
                              
                     </div>
                 </div>
+
+    
          
         </div>
-
- <h4>Graphs</h4>
-<div class="row" id="txtKisaKod" data-Kisakod="@kisaKod">
+    
+    </div>
+    <div role="tabpanel" class="tab-pane" id="graph">
+            <br>
+        <div class="row" id="txtKisaKod" data-Kisakod="@kisaKod">
     <div class="col-md-3 column">
-
-           <ul class="nav nav-pills nav-stacked" id="lstGrafikTurleri">
+        <div class="panel panel-info">
+              <div class="panel-heading">Graph Source</div>
+              <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked" id="lstGrafikTurleri">
                <li role="presentation"><a href="#" class="grafikTuru" data-tur="saat">By Hour</a></li>
                 <li role="presentation" class="active"><a href="#" class="grafikTuru" data-tur="gun">By Day</a></li>
                <li role="presentation"><a href="#" class="grafikTuru" data-tur="ay">By Month</a></li>
@@ -85,6 +109,9 @@ if (queryUrl==null)
                <li role="presentation"><a href="#"  class="grafikTuru" data-tur="tarayici">Browser</a></li>
               
             </ul>
+              </div>
+         </div>
+           
 
 
          </div>
@@ -92,12 +119,18 @@ if (queryUrl==null)
     
     <div class="col-md-6 column">
        
-
-
         <div class="row">
            
             <div class="col-md-12">
-                <div id="grafikDiv" data-Grafik="gun"></div>
+                  <div class="panel panel-info">
+                      <div class="panel-heading">Graph</div>
+                      <div class="panel-body">
+                        <div id="grafikDiv" data-Grafik="gun"></div>
+                      </div>
+                    </div>
+                     
+                
+                      
                 </div>
             </div>
      
@@ -105,7 +138,10 @@ if (queryUrl==null)
 
     <div class="col-md-3 column">
         
-           <p>Date Range:</p> 
+        <div class="panel panel-info">
+             <div class="panel-heading">Options</div>
+                 <div class="panel-body">
+                       <p>Date Range:</p> 
          <a href="#" class="btn btn-link" id="tarihAraligi" data-baYil="@baslangicTarihi.Year" data-baAy="@baslangicTarihi.Month" data-baGun="@baslangicTarihi.Day" data-biYil="@DateTime.Now.Year" data-biAy="@DateTime.Now.Month" data-biGun="@DateTime.Now.Day"><span class="glyphicon glyphicon-calendar"></span> @baslangicTarihi.ToString("MM/dd/yyyy") - @DateTime.Now.ToString("MM/dd/yyyy") <b class="caret"></b> </a>
         <p>Device Type:</p>
         <select id="cmbCihazTuru">
@@ -114,9 +150,29 @@ if (queryUrl==null)
             <option value="mobil"> Mobile</option>
         </select>
        
+                 </div>
+              </div>
+
+         
         
         </div>
     </div>
+    
+    </div>
+    
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
  
 @section scripts
 {

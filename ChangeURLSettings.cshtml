@@ -14,7 +14,7 @@
         Response.Redirect("~/Error/Invalid-Url");
     }
 
-    var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0",kisaKod);
+    var queryURL=db.QuerySingle("SELECT * FROM URL WHERE kisaKod=@0 AND userID=@1",kisaKod,WebSecurity.CurrentUserId);
   
     if (queryURL==null)
     {
@@ -22,12 +22,7 @@
        Response.Redirect("~/Error/Invalid-Url");
     }
 
-    if (db.QueryValue("SELECT COUNT(*) FROM URLYonetici WHERE urlID=@0 AND UserID=@1",queryURL.urlID,WebSecurity.CurrentUserId)<1)
-    {
-        db.Close();
-        Response.Redirect("~/Error/you-have-no-permission");
-    }
-
+   
     var queryKullanici=db.QuerySingle("SELECT * FROM Profiles WHERE UserID=@0",WebSecurity.CurrentUserId);
     var queryErisimKodlari=db.Query("SELECT * FROM URLErisimKodlari WHERE urlID=@0",queryURL.urlID);
     var queryErisimIzinleri=db.Query("SELECT * FROM URLErisimIzni INNER JOIN Profiles ON URLErisimIzni.userID=Profiles.userID WHERE urlID=@0 ",queryURL.urlID);
