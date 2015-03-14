@@ -17,6 +17,11 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
     <div class="col-md-3 column">
     <h2>My Lists</h2>
         <hr>
+
+             <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
+        <button class="btn btn-danger menuKategoriSil btn-sm"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
+      
+     <br><br>
          <div class="list-group" id="listeKategori">
             
             <a href="#" class="list-group-item kategoriOgesi active" data-kategoriID="-1" data-kategoriAdi="All URLs">All URLs
@@ -34,16 +39,13 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
             }
           
 </div>
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
-        <button class="btn btn-danger menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
       
-        
           
         </div>
     <div class="col-md-6 column">
          <h2 id="kategoriAdi">URLs</h2><hr>
         
-              <button class="btn btn-success" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus-sign"></span> Add New URL</button>
+              <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus"></span> Add New URL</button>
               <br><br>
 
     <table class="table table-hover" id="lstUrl">
