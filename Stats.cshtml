@@ -32,7 +32,9 @@ var queryTarayicilar=db.Query("SELECT browserName,count(*) as adet FROM Ziyaret 
 }
 
 
-<h1>Stats <small class="text-right">(@Request.Url.GetLeftPart(UriPartial.Authority)/@kisaKod)</small> </h1>
+<h1>Stats</h1>
+<hr>
+<p class="alert alert-warning"><strong>URL:</strong> @Request.Url.GetLeftPart(UriPartial.Authority)/@kisaKod</p>
 <br>
 <div role="tabpanel">
 
@@ -157,7 +159,7 @@ var queryTarayicilar=db.Query("SELECT browserName,count(*) as adet FROM Ziyaret 
         <div class="row" id="txtKisaKod" data-Kisakod="@kisaKod">
     <div class="col-md-3 column">
         <div class="panel panel-info">
-              <div class="panel-heading"><span class="glyphicon glyphicon-calendar"></span> Graph Source</div>
+              <div class="panel-heading"><span class="glyphicon glyphicon-calendar"></span> Graph Type</div>
               <div class="panel-body">
                 <ul class="nav nav-pills nav-stacked" id="lstGrafikTurleri">
                <li role="presentation"><a href="#" class="grafikTuru" data-tur="saat">By Hour</a></li>
