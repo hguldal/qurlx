@@ -15,16 +15,16 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
 <div class="row">
     
     <div class="col-md-3 column">
-    <h2>My Lists</h2>
-        <hr>
-
-             <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
-        <button class="btn btn-danger menuKategoriSil btn-sm"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
-      
-     <br><br>
+        <div class="panel panel-success">
+                <div class="panel-heading"><h2>My Lists</h2></div>
+    
+            <div class="panel-body">
+             <button class="btn btn-link" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
+        <button class="btn btn-link menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
+     
          <div class="list-group" id="listeKategori">
             
-            <a href="#" class="list-group-item kategoriOgesi active" data-kategoriID="-1" data-kategoriAdi="All URLs">All URLs
+            <a href="#" class="list-group-item kategoriOgesi active" data-kategoriID="-1" data-kategoriAdi="My URLs">All URLs
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM Url WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
                     
              </a>
@@ -40,14 +40,16 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
           
 </div>
       
-          
+          </div>
         </div>
-    <div class="col-md-6 column">
-         <h2 id="kategoriAdi">URLs</h2><hr>
+        </div>
+    <div class="col-md-9 column">
+         <div class="panel panel-info">
+                <div class="panel-heading"> <h2 id="kategoriAdi">My URLs</h2></div>
         
-              <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus"></span> Add New URL</button>
-              <br><br>
-
+        <div class="panel-body"> 
+              <button class="btn btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus"></span> Add New URL</button>
+            
     <table class="table table-hover" id="lstUrl">
         <thead>
             <tr><td style="width:15px"></td><td style="width:200px"><strong>Description</strong></td><td><strong>URL</strong></td><td></td></tr>
@@ -56,12 +58,11 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
        
             </tbody>
     </table>
+            </div>
+             </div>
         </div>
 
-    <div class="col-md-3 column">
-        <h2>Most Popular</h2>
-        <hr>
-     </div>
+    
 </div>
 
 <div class="modal" id="modalURLEkle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
