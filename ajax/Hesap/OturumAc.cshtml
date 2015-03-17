@@ -1,9 +1,27 @@
 ﻿@{
-  if (!WebSecurity.IsAuthenticated)
+ 
+   var ePosta=Request["txtEposta"];
+   var parola=Request["txtParola"];  
+    
+    try 
     {
-         Response.StatusCode=403;
+        if (WebSecurity.Login(ePosta,parola))
+        {
+            Response.Write("OK");
+            Response.End();
+        }
+        else 
+        {
+            Response.StatusCode=400;
+            Response.End();
+        }
+    }
+    
+    catch (Exception e)
+    {
+        Response.Write(e.Message);
         Response.End();
     }
-   var ePosta=Request.Form["txtEposta"];
-    var parola=Request.Form["txtYeniParola"];  
+
+    
 }
