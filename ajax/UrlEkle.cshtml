@@ -52,7 +52,7 @@
                     }
                     
                     //url 'yi ekle
-                    db.Execute("INSERT INTO Url(olusturmaTarihi,url,kisaKod,aciklama,userID) VALUES(@0,@1,@2,@3,@4)",DateTime.Now,url,urlKisaKod,aciklama,WebSecurity.CurrentUserId);
+                    db.Execute("INSERT INTO Url(olusturmaTarihi,url,kisaKod,aciklama,userID,IP) VALUES(@0,@1,@2,@3,@4,@5)",DateTime.Now,url,urlKisaKod,aciklama,WebSecurity.CurrentUserId,Request.UserHostAddress);
                     
                     var queryEklenenUrl=db.QuerySingle("SELECT * FROM Url WHERE url=@0",url);
                    
