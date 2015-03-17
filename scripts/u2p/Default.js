@@ -136,10 +136,10 @@ $(document).ready(function () {
                 }
                 //yukarıda liste adını ve adresi göster
                 if (kategoriID != '-1') {
-                    $('#kategoriAdi').html($('#listeKategori>[data-kategoriID="' + kategoriID + '"]').attr('data-kategoriAdi'));
+                    $('#kategoriAdi').html('<span class="glyphicon glyphicon-link"></span> ' + $('#listeKategori>[data-kategoriID="' + kategoriID + '"]').attr('data-kategoriAdi'));
                 }
                 else {
-                    $('#kategoriAdi').html($('#listeKategori>[data-kategoriID="-1"]').attr('data-kategoriAdi'));
+                    $('#kategoriAdi').html('<span class="glyphicon glyphicon-link"></span> ' + $('#listeKategori>[data-kategoriID="-1"]').attr('data-kategoriAdi'));
                     $('#listeKategori>[data-kategoriID="-1"]').addClass('active');
                 }
 
