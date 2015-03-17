@@ -2,9 +2,6 @@
   
      var db=Database.Open("u2p");
      var url=Request["nUrl"];   
-     var kategoriID=Request["kategoriID"];
-     var aciklama=Request["aciklama"];
-
      
      if (string.IsNullOrEmpty(url))
      {
@@ -52,16 +49,11 @@
                     }
                     
                     //url 'yi ekle
-                    db.Execute("INSERT INTO Url(olusturmaTarihi,url,kisaKod,aciklama,userID) VALUES(@0,@1,@2,@3,@4)",DateTime.Now,url,urlKisaKod,aciklama,WebSecurity.CurrentUserId);
+                    db.Execute("INSERT INTO Url(olusturmaTarihi,url,kisaKod,userID) VALUES(@0,@1,@2,@3)",DateTime.Now,url,urlKisaKod,0);
                     
-                    var queryEklenenUrl=db.QuerySingle("SELECT * FROM Url WHERE url=@0",url);
+                    var urlID=db.GetLastInsertId();
+                    var queryEklenenUrl=db.QuerySingle("SELECT * FROM Url WHERE urlID=@0",urlID);
                    
-
-                    if (kategoriID!="-1")
-                    {
-                        
-                        db.Execute("INSERT INTO UrlKategori(urlID,kategoriID) VALUES(@0,@1)",queryEklenenUrl.urlID,kategoriID);
-                    }
                     
                     Json.Write(queryEklenenUrl, Response.Output);
                     db.Close();   
