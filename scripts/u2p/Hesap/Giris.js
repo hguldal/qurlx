@@ -9,8 +9,7 @@ $("#btnLogin").click(function () {
         success: function (msg) {
             
                 location.href = "/";
-            
-           
+        
         },
         error: function (msg) {
 
