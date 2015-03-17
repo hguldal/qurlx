@@ -5,6 +5,14 @@
      var kategoriID=Request["kategoriID"];
      var aciklama=Request["aciklama"];
 
+     var queryReAdet=db.QueryValue("SELECT COUNT(*) FROM Url WHERE IP=@0 AND datepart(hh,olusturmaTarihi)=@1",Request.UserHostAddress,DateTime.Now.Hour);
+
+     if (queryReAdet>100)
+     {
+              db.Close();
+           Response.StatusCode=500;
+           Response.End();
+     }
      
      if (string.IsNullOrEmpty(url))
      {
@@ -12,7 +20,7 @@
        Response.StatusCode=500;
        Response.End();
      }
-
+     
     
 
      if (!(url.StartsWith("http://") || url.StartsWith("https://")))
