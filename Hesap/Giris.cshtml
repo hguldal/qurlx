@@ -1,6 +1,6 @@
 ﻿@{
     Page.Title = "Giriş";
-    Layout = Href("~/Paylasilan/_LayoutMisafir.cshtml"); 
+    Layout = Href("~/Paylasilan/_Layout.cshtml"); 
     var ePosta="";
     var parola="";
     var hataMesaji="";
@@ -37,35 +37,63 @@
     }
 }
 
+ 
 
-
-<div>
-     <h3>Giriş</h3>
-   
-   @if (!string.IsNullOrEmpty(hataMesaji))
-   {
-        <div class="alert alert-danger">
-				
-				 <strong>Hata ! </strong>@hataMesaji 
-			</div>
-   }
-    <form class="form center-form" role="form" method="post" action="#">
-				<div class="form-group">
-					 <label for="txtEposta">E-Posta</label><input class="form-control" placeholder="E-Posta adresini buraya gir..." value="@ePosta" id="txtEposta" name="txtEposta" type="email" required />
-				</div>
-				<div class="form-group">
-					 <label for="txtParola">Parola</label><input class="form-control" placeholder="Parolanı buraya gir..." id="txtParola" name="txtParola" type="password" required />
-				</div>
-				
-				<button type="submit" class="btn btn-primary">Giriş</button> 
-                  
-			</form>
-    <br>
-    
-
-    <br>
-    <hr>
   
-    <a class="btn btn-success" href="@Href("~/Hesap/Yeni")"> Yeni Hesap Oluştur</a> <a class="btn btn-primary" href="@Href("~/Hesap/ParolamiUnuttum")">Parolamı Unuttum ?</a>
-</div>
+   
+   <div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 text-center">
+                           <h1><i class="fa fa-play-circle"></i><strong> OURLEX</strong> </h1>
+                             @if (!string.IsNullOrEmpty(hataMesaji))
+                                   {
+                                        <div class="alert alert-danger">
+				
+				                                 <strong>Hata ! </strong>@hataMesaji 
+			                                </div>
+                                   }
+   
+                            </div>
+                         
+   <div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                  
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <div class="panel-title">LOGIN</div>
+                       
+                    </div>     
 
+                    <div style="padding-top:30px" class="panel-body" >
+
+                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                            
+                        <form  class="form-horizontal" role="form">
+                                    
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input type="email" class="form-control" id="txtEposta" name="txtEposta" value="" placeholder="E-mail..." required autofocus="true">                                        
+                                    </div>
+                                
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                        <input  type="password" class="form-control" id="txtParola" name="txtParola" placeholder="Password..." required>
+                                    </div>
+                                    
+
+                                <div style="margin-top:10px" class="form-group">
+                                    <!-- Button -->
+                                    <div class="col-sm-12 controls">
+                                      
+                                      <button class="btn btn-success" type="submit"> Login</button>
+
+                                    </div>
+                                    
+                                </div>
+
+
+                                
+                            </form>     
+
+
+
+                        </div>                     
+                    </div>  
+        </div>
+        

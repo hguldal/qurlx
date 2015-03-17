@@ -1,0 +1,9 @@
+﻿@{
+  if (!WebSecurity.IsAuthenticated)
+    {
+         Response.StatusCode=403;
+        Response.End();
+    }
+   var ePosta=Request.Form["txtEposta"];
+    var parola=Request.Form["txtYeniParola"];  
+}
