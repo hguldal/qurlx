@@ -4,7 +4,8 @@
      var url=Request["nUrl"];   
      
      var queryReAdet=db.QueryValue("SELECT COUNT(*) FROM Url WHERE IP=@0 AND datepart(hh,olusturmaTarihi)=@1",Request.UserHostAddress,DateTime.Now.Hour);
-
+     var googleSafe="https://sb-ssl.google.com/safebrowsing/api/lookup?client=demo-app&key=AIzaSyDYF2551G79-XieSHaIXmzfclylL1bD-jk&appver=1.5.2&pver=3.1&url=http%3A%2F%2Fianfette.org%2F";
+     
      if (queryReAdet>100)
      {
               db.Close();
@@ -37,6 +38,8 @@
      }
 
      url=urlDuzgun.AbsoluteUri;
+
+
 
      using (db)
      {
