@@ -6,17 +6,20 @@ using System.IO;
 
 public class GoogleSafeBrowsing
 {
-    public static int AdresKontrol(string adres)
+    public static int AdresKontrol(string adres) 
     {
+        try
+        {
+             var googleSafeLookupAdres="https://sb-ssl.google.com/safebrowsing/api/lookup?client=ourlex&key=AIzaSyDYF2551G79-XieSHaIXmzfclylL1bD-jk&appver=1.5.2&pver=3.1&url=" + HttpUtility.UrlEncode(adres);
+             WebRequest objRequest = HttpWebRequest.Create(googleSafeLookupAdres);
+             HttpWebResponse objResponse= (HttpWebResponse) objRequest.GetResponse();
+             return Convert.ToInt32(objResponse.StatusCode);
+                //durum kodu=200 ise URL güvenli değil
+         }
 
-        
-         var googleSafeLookupAdres="https://sb-ssl.google.com/safebrowsing/api/lookup?client=ourlex&key=AIzaSyDYF2551G79-XieSHaIXmzfclylL1bD-jk&appver=1.5.2&pver=3.1&url=" + HttpUtility.UrlEncode(adres);
-          
-       
-          WebRequest objRequest = HttpWebRequest.Create(googleSafeLookupAdres);
-          HttpWebResponse objResponse= (HttpWebResponse) objRequest.GetResponse();
-          
-         return Convert.ToInt32(objResponse.StatusCode);
-                
-        } 
+         catch
+         {
+             return 204;
+         }
+      } 
 }
