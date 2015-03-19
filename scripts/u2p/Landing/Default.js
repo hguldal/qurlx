@@ -15,7 +15,7 @@ $('#btnKisalt').click(function () {
 
             },
             error: function (msg) {
-                HataMesaji("Unexpected Error !");
+                HataMesaji("URL could not shortened. Unexpected Error !");
             }
         });
     }
