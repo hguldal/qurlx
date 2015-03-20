@@ -62,7 +62,7 @@ $(document).ready(function () {
                 $('#txtURLEkle').val('');
                 $('#txtURLAciklama').val('');
                 var tr = $('<tr/>');
-                tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span></td><td>' + urlAciklama + '</td><td><a href="' + location.href.replace('#', '') + msg.kisaKod + '" title="' + msg.url + '" > ' + location.href.replace('#', '') + msg.kisaKod + '</a></td><td><a href="/ChangeURLSettings/' + msg.kisaKod + '" class="btn btn-xs btn-success" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" title="Delete URL" data-kisakod="' + msg.kisaKod + '"><span class="glyphicon glyphicon-trash"></span></a> <a href="Stats/' + msg.kisaKod + '" class="btn btn-xs btn-info" title="URL Stats"><span class="glyphicon glyphicon-stats"></span></a></td>');
+                tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span></td><td>' + urlAciklama + '</td><td><a href="' + location.href.replace('#', '') + msg.kisaKod + '" title="' + msg.url + '" > ' + location.href.replace('#', '') + msg.kisaKod + '</a></td><td><a href="/ChangeURLSettings/' + msg.kisaKod + '" class="btn btn-success" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-danger lnkUrlSil" title="Delete URL" data-kisakod="' + msg.kisaKod + '"><span class="glyphicon glyphicon-trash"></span></a> <a href="Stats/' + msg.kisaKod + '" class="btn btn-info" title="URL Stats"><span class="glyphicon glyphicon-stats"></span></a></td>');
                 $('#lstUrl > tbody').prepend(tr);
 
                 var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
@@ -129,14 +129,14 @@ $(document).ready(function () {
 
                     var tr = $('<tr/>');
 
-                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span></td><td>' + urls[i].aciklama + '</td><td><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '" title="' + urls[i].url + '">' + location.href.replace('#', '') + urls[i].kisaKod + '</td><td><a href="/ChangeURLSettings/' + urls[i].kisaKod + '" class="btn btn-success btn-xs" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-xs btn-danger lnkUrlSil" title="Delete URL" data-kisaKod=' + urls[i].kisaKod + '><span class="glyphicon glyphicon-trash"></span></a> <a href="Stats/' + urls[i].kisaKod + '" class="btn btn-xs btn-info" title="URL Stats"><span class="glyphicon glyphicon-stats"></span></a></td>');
+                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span></td><td>' + urls[i].aciklama + '</td><td><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '" title="' + urls[i].url + '">' + location.href.replace('#', '') + urls[i].kisaKod + '</td><td><a href="/ChangeURLSettings/' + urls[i].kisaKod + '" class="btn btn-success" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-danger lnkUrlSil" title="Delete URL" data-kisaKod=' + urls[i].kisaKod + '><span class="glyphicon glyphicon-trash"></span></a> <a href="Stats/' + urls[i].kisaKod + '" class="btn btn-info" title="URL Stats"><span class="glyphicon glyphicon-stats"></span></a></td>');
 
                     $('#lstUrl > tbody').prepend(tr);
 
                 }
                 //yukarıda liste adını ve adresi göster
                 if (kategoriID != '-1') {
-                    $('#kategoriAdi').html('<span class="glyphicon glyphicon-link"></span> ' + $('#listeKategori>[data-kategoriID="' + kategoriID + '"]').attr('data-kategoriAdi'));
+                    $('#kategoriAdi').html('<span class="glyphicon glyphicon-link"></span> ' + $('#listeKategori>[data-kategoriID="' + kategoriID + '"]').attr('data-kategoriAdi') + ' (' +  '<a href="' + location.href.replace('#', '') + 'List/' + kategoriID  +'">'  + location.href.replace('#', '') + 'List/' + kategoriID  + '</a>)');
                 }
                 else {
                     $('#kategoriAdi').html('<span class="glyphicon glyphicon-link"></span> ' + $('#listeKategori>[data-kategoriID="-1"]').attr('data-kategoriAdi'));

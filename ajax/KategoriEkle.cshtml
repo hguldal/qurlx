@@ -20,7 +20,7 @@
                 }
      
      
-    db.Execute("INSERT INTO Kategori(kategoriID,KategoriAdi,userID) VALUES (@0,@1,@2)",kategoriID, kategoriAdi,WebSecurity.CurrentUserId);
+    db.Execute("INSERT INTO Kategori(kategoriID,KategoriAdi,userID,olusturmaTarihi) VALUES (@0,@1,@2,@3)",kategoriID, kategoriAdi,WebSecurity.CurrentUserId,DateTime.Now);
      var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kategoriID=@0",kategoriID);
      Json.Write(queryKategori, Response.Output);
      db.Close();   

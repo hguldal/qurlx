@@ -20,7 +20,8 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
     
             <div class="panel-body">
              <button class="btn btn-link" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
-        <button class="btn btn-link menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
+             <button class="btn btn-link menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
+             
      
          <div class="list-group" id="listeKategori">
             
@@ -33,10 +34,13 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
             {             
                  <a href="#" class="list-group-item kategoriOgesi" data-kategoriID="@item.kategoriID" data-kategoriAdi="@item.kategoriAdi">@item.kategoriAdi
                    <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URLKategori WHERE kategoriID=@0",item.kategoriID)</span>
+                     
                 </a>
                 
                     
             }
+
+             <button class="btn btn-link"> <span class="glyphicon glyphicon-pushpin" id="lnkUrlErisimineAc"></span> Create URL for Selected List</button>
           
 </div>
       
