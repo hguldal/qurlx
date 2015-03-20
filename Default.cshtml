@@ -13,7 +13,24 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
 
 
 <div class="row">
-    
+    <div class="col-md-9 column">
+         <div class="panel panel-danger">
+                <div class="panel-heading"> <h5 id="kategoriAdi"><span class="glyphicon glyphicon-link"></span> My URLs</h5></div>
+        
+        <div class="panel-body"> 
+              <button class="btn btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus"></span> Add New URL</button>
+            
+    <table class="table table-hover" id="lstUrl">
+        <thead>
+            <tr><td style="width:15px"></td><td style="width:200px"><strong>Description</strong></td><td><strong>URL</strong></td><td></td></tr>
+            </thead>
+        <tbody>
+       
+            </tbody>
+    </table>
+            </div>
+             </div>
+        </div>
     <div class="col-md-3 column">
         <div class="panel panel-info">
                 <div class="panel-heading"><h5><span class="glyphicon glyphicon-list-alt"></span>  My Lists</h5></div>
@@ -47,24 +64,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
           </div>
         </div>
         </div>
-    <div class="col-md-9 column">
-         <div class="panel panel-danger">
-                <div class="panel-heading"> <h5 id="kategoriAdi"><span class="glyphicon glyphicon-link"></span> My URLs</h5></div>
-        
-        <div class="panel-body"> 
-              <button class="btn btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus"></span> Add New URL</button>
-            
-    <table class="table table-hover" id="lstUrl">
-        <thead>
-            <tr><td style="width:15px"></td><td style="width:200px"><strong>Description</strong></td><td><strong>URL</strong></td><td></td></tr>
-            </thead>
-        <tbody>
-       
-            </tbody>
-    </table>
-            </div>
-             </div>
-        </div>
+    
 
     
 </div>
