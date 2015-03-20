@@ -8,10 +8,20 @@
         }  
         
     var db=Database.Open("u2p");  
-    var kategoriAdi=Request["KategoriAdi"];    
+    var kategoriAdi=Request["KategoriAdi"];   
+    Random r=new Random();
+     // kategori için yeni bir ID üret
+               var kategoriID=r.Next(10000,102343454);
+
+               //kullanılmamış bir ID bulana kadar dön
+                while (db.QueryValue("SELECT COUNT(*) FROM Kategori WHERE kategoriID=@0",kategoriID)>0)
+                {
+                   kategoriID=r.Next(1234,102343454);
+                }
      
-    db.Execute("INSERT INTO Kategori(KategoriAdi,userID) VALUES (@0,@1)",kategoriAdi,WebSecurity.CurrentUserId);
-     var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kategoriID=@0",db.GetLastInsertId().ToString());
+     
+    db.Execute("INSERT INTO Kategori(kategoriID,KategoriAdi,userID) VALUES (@0,@1,@2)",kategoriID, kategoriAdi,WebSecurity.CurrentUserId);
+     var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kategoriID=@0",kategoriID);
      Json.Write(queryKategori, Response.Output);
      db.Close();   
      Response.ContentType = "application/json";
