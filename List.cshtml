@@ -1,7 +1,17 @@
 ﻿@{
      Layout="~/Paylasilan/_Layout.cshtml";
 
-     var kisaKod=Request["kisaKod"];
+     var db=Database.Open("u2p");
+     var kategoriID=UrlData[0];
+     if (string.IsNullOrEmpty(kategoriID))
+     {
+         db.Close();
+         Response.Redirect("~/Error/Invalid-Url");
+     }
+     var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kategoriID=@0",kategoriID);
+     var queryURLs=db.Query("SELECT * FROM URL INNER JOIN URLKategori ON url.urlID=UrlKategori.urlID WHERE kategoriID=@0",kategoriID);
+     
+
     
 }
 <div class="row">
@@ -9,17 +19,22 @@
     
     <div class="col-md-12 column">
          <div class="panel panel-info">
-                <div class="panel-heading"> <h5 id="kategoriAdi"><span class="glyphicon glyphicon-link"></span>URLs</h5></div>
+                <div class="panel-heading"> <h5 id="kategoriAdi"><span class="glyphicon glyphicon-link"></span> @queryKategori.kategoriAdi URLs</h5></div>
         
         <div class="panel-body"> 
              
             
     <table class="table table-hover" id="lstUrl">
         <thead>
-            <tr><td style="width:15px"></td><td style="width:200px"><strong>Description</strong></td><td><strong>URL</strong></td><td></td></tr>
+            <tr><td style="width:15px"></td><td style="width:200px"><strong>Description</strong></td><td><strong>URL</strong></td></tr>
             </thead>
         <tbody>
-       
+            @foreach (var item in queryURLs)
+            {
+            <tr>
+                <td><span class="glyphicon glyphicon-link"></span></td><td>@item.aciklama</td><td><a href="@Request.Url.GetLeftPart(UriPartial.Authority)/@item.kisaKod">@Request.Url.GetLeftPart(UriPartial.Authority)/@item.kisaKod</a></td>
+            </tr>
+            }
         </tbody>
     </table>
          

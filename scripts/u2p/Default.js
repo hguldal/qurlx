@@ -136,7 +136,7 @@ $(document).ready(function () {
                 }
                 //yukarıda liste adını ve adresi göster
                 if (kategoriID != '-1') {
-                    $('#kategoriAdi').html('<span class="glyphicon glyphicon-link"></span> ' + $('#listeKategori>[data-kategoriID="' + kategoriID + '"]').attr('data-kategoriAdi') + ' (' +  '<a href="' + location.href.replace('#', '') + 'List/' + kategoriID  +'">'  + location.href.replace('#', '') + 'List/' + kategoriID  + '</a>)');
+                    $('#kategoriAdi').html('<span class="glyphicon glyphicon-link"></span> ' + $('#listeKategori>[data-kategoriID="' + kategoriID + '"]').attr('data-kategoriAdi') + ' ' +  '<a href="' + location.href.replace('#', '') + 'List/' + kategoriID  +'" class="pull-right">'  + location.href.replace('#', '') + 'List/' + kategoriID  + '</a>');
                 }
                 else {
                     $('#kategoriAdi').html('<span class="glyphicon glyphicon-link"></span> ' + $('#listeKategori>[data-kategoriID="-1"]').attr('data-kategoriAdi'));

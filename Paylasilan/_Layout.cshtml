@@ -19,8 +19,8 @@
       @RenderSection("styles", required: false)
   </head>
 
-  <body style="background-image: url(/Paylasilan/Custom/img/12.jpg);background-repeat: repeat;">
-      @if (WebSecurity.IsAuthenticated){
+  <body style="background-color: black;">
+     
     <div class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -38,8 +38,8 @@
             
         </div>
         <div class="navbar-collapse collapse">
-          
-        
+          @if (WebSecurity.IsAuthenticated)
+        {
           <ul class="nav navbar-nav navbar-right">
             
               <li class="dropdown">
@@ -64,11 +64,11 @@
 
             
           </ul>
-           
+         }  
         </div>
       </div>
     </div>
-    }
+   
     <div class="container-fluid">
         
      @RenderBody()
