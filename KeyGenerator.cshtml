@@ -47,8 +47,11 @@
               //eğer adres herkese açık ise yine direkt olarak yönlendir.
               if (queryUrl.erisimTuru==1)
               {
-                //anahtar oluştur
-                 erisimAnahtari=Guid.NewGuid().ToString();
+                    //anahtar oluştur ve adrese yönlendir
+                     erisimAnahtari=Guid.NewGuid().ToString();
+                    db.Execute("INSERT INTO URLErisimAnahtari(urlErisimAnahtari,urlID) VALUES(@0,@1)",erisimAnahtari,queryUrl.urlID);
+                    db.Close();
+                     Response.Redirect("~/Go?accessKey=" + erisimAnahtari + "&code=" + kod); 
  
               }
              

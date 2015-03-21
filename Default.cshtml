@@ -11,11 +11,12 @@ var db=Database.Open("u2p");
 var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId);
 }
 
-
+<h1>URL Management</h1>
+<hr>
 <div class="row">
     <div class="col-md-9 column">
          <div class="panel panel-danger">
-                <div class="panel-heading"> <h5 id="kategoriAdi"><span class="glyphicon glyphicon-link"></span> My URLs</h5></div>
+                <div class="panel-heading"> <h5 id="kategoriAdi"><span class="glyphicon glyphicon-link"></span> URLs</h5></div>
         
         <div class="panel-body"> 
               <button class="btn btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus"></span> Add New URL</button>
@@ -33,7 +34,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
         </div>
     <div class="col-md-3 column">
         <div class="panel panel-info">
-                <div class="panel-heading"><h5><span class="glyphicon glyphicon-list-alt"></span>  My Lists</h5></div>
+                <div class="panel-heading"><h5><span class="glyphicon glyphicon-list-alt"></span> Lists</h5></div>
     
             <div class="panel-body">
              <button class="btn btn-link" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
@@ -42,7 +43,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
      
          <div class="list-group" id="listeKategori">
             
-            <a href="#" class="list-group-item kategoriOgesi active" data-kategoriID="-1" data-kategoriAdi="My URLs">All URLs
+            <a href="#" class="list-group-item kategoriOgesi active" data-kategoriID="-1" data-kategoriAdi="URLs">All URLs
                     <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM Url WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
                     
              </a>
