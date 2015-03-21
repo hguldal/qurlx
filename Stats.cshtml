@@ -32,9 +32,9 @@ var queryTarayicilar=db.Query("SELECT browserName,count(*) as adet FROM Ziyaret 
 }
 
 
-<h1>Stats</h1>
+<h1><span class="glyphicon glyphicon-tasks"></span> Stats</h1>
 <hr>
-<h4><strong>URL:</strong> @Request.Url.GetLeftPart(UriPartial.Authority)/@kisaKod</h4>
+<h4>@Request.Url.GetLeftPart(UriPartial.Authority)/@kisaKod</h4>
 <br>
 <div role="tabpanel">
 
