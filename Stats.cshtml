@@ -55,7 +55,7 @@ var queryTarayicilar=db.Query("SELECT browserName,count(*) as adet FROM Ziyaret 
 
                                                 <div class="col-md-2"> 
                 
-                                                    <div class="panel panel-success">
+                                                    <div class="panel panel-info">
                                                                   <div class="panel-heading text-center"><span class="glyphicon glyphicon-th-list"></span> Today</div>
                                                                  
                                                                 <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(dd,tarih)=@1",queryUrl.urlID,DateTime.Now.Day)</h2>
@@ -73,7 +73,7 @@ var queryTarayicilar=db.Query("SELECT browserName,count(*) as adet FROM Ziyaret 
                                                     </div>
 
                                               <div class="col-md-2">
-                                                    <div class="panel panel-danger">
+                                                    <div class="panel panel-info">
                                                                 <div class="panel-heading text-center"><span class="glyphicon glyphicon-th-large"></span> This Year</div>
                                                                  
                                                                 <h2 class="text-center text-info">@db.QueryValue("SELECT COUNT(*) FROM Ziyaret WHERE urlID=@0 AND datepart(yy,tarih)=@1",queryUrl.urlID,DateTime.Now.Year)</h2>
