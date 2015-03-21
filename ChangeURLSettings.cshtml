@@ -44,11 +44,12 @@
 
 
 }
-
+<h1>Settings</h1>
+<hr>
 <div class="row">
      <div class="col-md-12 column">
     <div class="panel panel-success">
-                <div class="panel-heading"><h5 id="lblKisaKod" data-kisaKod="@kisaKod"><span class="glyphicon glyphicon-cog"></span>  URL Settings</h5></div>
+                <div class="panel-heading"><h5 id="lblKisaKod" data-kisaKod="@kisaKod"><span class="glyphicon glyphicon-cog"></span>  @Request.Url.GetLeftPart(UriPartial.Authority)/@queryURL.kisaKod</h5></div>
     
             <div class="panel-body">
     <div class="col-md-4 column">
