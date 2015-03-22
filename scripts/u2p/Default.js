@@ -16,10 +16,6 @@ $(document).ready(function () {
                         $(satir).remove();
                     });
 
-                    var toplamUrlAdedi = parseInt($('#listeKategori>[data-kategoriID="-1"]>span.badge').html());
-                    toplamUrlAdedi = toplamUrlAdedi - 1;
-                    $('[data-kategoriID="-1"]>span.badge').html(toplamUrlAdedi);
-
                 },
                 error: function (msg) {
                     HataMesaji("Unexpected Error !");
@@ -30,7 +26,6 @@ $(document).ready(function () {
         }
 
     });
-
 
     $("#btnURLEkle").click(function () {
 
@@ -87,7 +82,6 @@ $(document).ready(function () {
         });
 
     });
-
 
 
     $('.menuKategoriSil').click(function () {
