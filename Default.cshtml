@@ -9,10 +9,10 @@
 
     var kategoriID=Request.QueryString["list"];
      IEnumerable<dynamic> queryURLs;
-     IEnumerable<dynamic> queryKategori;
+     
 
     var db=Database.Open("u2p");
-
+    var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kategoriID=-1");
     if (string.IsNullOrEmpty(kategoriID))
         {
             queryURLs =db.Query("SELECT * FROM Url WHERE userID=@0 ORDER BY urlID ASC",WebSecurity.CurrentUserId);
@@ -29,9 +29,34 @@
 <h1><span class="glyphicon glyphicon-random"></span> URL Management</h1>
 <hr>
 <div class="row">
+    <div class="col-md-3 column">
+        <div class="panel panel-info">
+                <div class="panel-heading"><h5><span class="glyphicon glyphicon-list-alt"></span> Lists</h5></div>
+    
+            <div class="panel-body">
+             <button class="btn btn-link" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
+             <button class="btn btn-link menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
+             
+     
+         <div class="list-group" id="listeKategori">
+            
+            <a href="@Href("~/")" class="list-group-item kategoriOgesi" data-kategoriID="-1">All URLs</a>
+  
+            @foreach (var item in queryKategoriler)
+            {             
+              <a href="@Href("~/")?list=@item.kategoriID" class="list-group-item kategoriOgesi" data-kategoriID="@item.kategoriID">@item.kategoriAdi</a>
+                  
+            }
+
+            
+</div>
+      
+          </div>
+        </div>
+        </div>
     <div class="col-md-9 column">
          <div class="panel panel-info">
-                <div class="panel-heading"> <h5 id="kategoriAdi"><span class="glyphicon glyphicon-link"></span></h5></div>
+                <div class="panel-heading"> <h5 id="kategoriAdi"><span class="glyphicon glyphicon-link"></span> URLs [@if (queryKategori==null){<text>All</text>} else {<text> @queryKategori.kategoriAdi</text>}]</h5> </div>
         
         <div class="panel-body"> 
               <button class="btn btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus"></span> Add New URL</button>
@@ -51,31 +76,7 @@
             </div>
              </div>
         </div>
-    <div class="col-md-3 column">
-        <div class="panel panel-info">
-                <div class="panel-heading"><h5><span class="glyphicon glyphicon-list-alt"></span> Lists</h5></div>
     
-            <div class="panel-body">
-             <button class="btn btn-link" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
-             <button class="btn btn-link menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
-             
-     
-         <div class="list-group" id="listeKategori">
-            
-            <a href="@Href("~/")" class="list-group-item kategoriOgesi active" data-kategoriID="-1">All URLs</a>
-  
-            @foreach (var item in queryKategoriler)
-            {             
-                 <a href="@Href("~/")?list=@item.kategoriID" class="list-group-item kategoriOgesi" data-kategoriID="@item.kategoriID">@item.kategoriAdi</a>
-                  
-            }
-
-            
-</div>
-      
-          </div>
-        </div>
-        </div>
     
 
     
