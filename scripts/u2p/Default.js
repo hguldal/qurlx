@@ -1,15 +1,5 @@
 $(document).ready(function () {
 
-    UrlYukle('-1');
-
-    $('body').on('click', '.kategoriOgesi', function () {
-        var kategoriID = $(this).attr('data-kategoriID');
-        $('.kategoriOgesi').removeClass('active');
-        $(this).addClass('active');
-        UrlYukle(kategoriID);
-    });
-
-
     $('body').on('click', '.lnkUrlSil', function () {
         var kisakod = $(this).attr('data-kisakod');
         var satir = $(this).closest('tr');
@@ -26,9 +16,9 @@ $(document).ready(function () {
                         $(satir).remove();
                     });
 
-                    var toplamUrlAdedi = parseInt($('#listeKategori>[data-kisaKod="hepsi"]>span.badge').html());
+                    var toplamUrlAdedi = parseInt($('#listeKategori>[data-kategoriID="-1"]>span.badge').html());
                     toplamUrlAdedi = toplamUrlAdedi - 1;
-                    $('[data-kisaKod="hepsi"]>span.badge').html(toplamUrlAdedi);
+                    $('[data-kategoriID="-1"]>span.badge').html(toplamUrlAdedi);
 
                 },
                 error: function (msg) {
@@ -48,7 +38,7 @@ $(document).ready(function () {
         var urlAciklama = $('#txtURLAciklama').val();
 
         if (url == '' || url == null) {
-            HataMesaji('URL Girmedin');
+            HataMesaji('Enter URL');
             return false;
         }
         var kategoriID = $('.list-group-item.active.kategoriOgesi').attr('data-kategoriID');
@@ -65,15 +55,7 @@ $(document).ready(function () {
                 tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span></td><td>' + urlAciklama + '</td><td><a href="' + location.href.replace('#', '') + msg.kisaKod + '" title="' + msg.url + '" > ' + location.href.replace('#', '') + msg.kisaKod + '</a></td><td><a href="/ChangeURLSettings/' + msg.kisaKod + '" class="btn btn-success" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-danger lnkUrlSil" title="Delete URL" data-kisakod="' + msg.kisaKod + '"><span class="glyphicon glyphicon-trash"></span></a> <a href="Stats/' + msg.kisaKod + '" class="btn btn-info" title="URL Stats"><span class="glyphicon glyphicon-stats"></span></a></td>');
                 $('#lstUrl > tbody').prepend(tr);
 
-                var urlAdedi = parseInt($('.list-group-item.active.kategoriOgesi > span.badge').html());
-                urlAdedi = urlAdedi + 1;
-                $('.list-group-item.active.kategoriOgesi > span.badge').html(urlAdedi);
-
-                var toplamUrlAdedi = parseInt($('#listeKategori>[data-kategoriID="-1"]>span.badge').html());
-                toplamUrlAdedi = toplamUrlAdedi + 1;
-                $('[data-kategoriID="-1"]>span.badge').html(toplamUrlAdedi);
-
-
+                
             },
             error: function (msg) {
                 HataMesaji("Unexpected Error !");
@@ -96,16 +78,8 @@ $(document).ready(function () {
             url: '/ajax/KategoriEkle' + '?KategoriAdi=' + kategoriAdi,
 
             success: function (kategori) {
-
-                var liste = $('#listeKategori');
-                $('#modalKategoriEkle').modal('hide')
-                $('#txtKategoriEkle').val('');
-                $('.kategoriOgesi').removeClass('active');
-                liste.append('<a href="#" class="list-group-item kategoriOgesi active" data-kategoriID="' + kategori.kategoriID + '" data-kategoriAdi="' + kategori.kategoriAdi + '">' + kategoriAdi + '<span class="badge">0</span></a>');
-                $('#lstUrl > tbody').find('tr').remove();
-                $('.list-group-item.kategoriOgesi.active').focus();
-
-
+                location.href = '/' + kategori.kategoriID;
+                
             },
             error: function (msg) {
                 HataMesaji("Unexpected Error !");
@@ -114,42 +88,7 @@ $(document).ready(function () {
 
     });
 
-    function UrlYukle(kategoriID) {
 
-        $.ajax({
-            type: "POST",
-            url: '/ajax/UrlListesi' + '?kategoriID=' + kategoriID,
-
-            success: function (urls) {
-                //tabloyu temizle
-                $('#lstUrl > tbody').find('tr').remove();
-
-                //urlleri tek tek tabloya ekle
-                for (var i = 0; i < urls.length; i++) {
-
-                    var tr = $('<tr/>');
-
-                    tr.append('<td><span class="glyphicon glyphicon-link" aria-hidden="true"></span></td><td>' + urls[i].aciklama + '</td><td><a href="' + location.href.replace('#', '') + urls[i].kisaKod + '" title="' + urls[i].url + '">' + location.href.replace('#', '') + urls[i].kisaKod + '</td><td><a href="/ChangeURLSettings/' + urls[i].kisaKod + '" class="btn btn-success" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-danger lnkUrlSil" title="Delete URL" data-kisaKod=' + urls[i].kisaKod + '><span class="glyphicon glyphicon-trash"></span></a> <a href="Stats/' + urls[i].kisaKod + '" class="btn btn-info" title="URL Stats"><span class="glyphicon glyphicon-stats"></span></a></td>');
-
-                    $('#lstUrl > tbody').prepend(tr);
-
-                }
-                //yukarıda liste adını ve adresi göster
-                if (kategoriID != '-1') {
-                    $('#kategoriAdi').html('<span class="glyphicon glyphicon-link"></span> ' + $('#listeKategori>[data-kategoriID="' + kategoriID + '"]').attr('data-kategoriAdi') + ' ' +  '<a href="' + location.href.replace('#', '') + 'List/' + kategoriID  +'" class="pull-right">'  + location.href.replace('#', '') + 'List/' + kategoriID  + '</a>');
-                }
-                else {
-                    $('#kategoriAdi').html('<span class="glyphicon glyphicon-link"></span> ' + $('#listeKategori>[data-kategoriID="-1"]').attr('data-kategoriAdi'));
-                    $('#listeKategori>[data-kategoriID="-1"]').addClass('active');
-                }
-
-
-            },
-            error: function (msg) {
-                HataMesaji("Unexpected Error !");
-            }
-        });
-    }
 
     $('.menuKategoriSil').click(function () {
 
@@ -164,8 +103,8 @@ $(document).ready(function () {
 
                     success: function (msg) {
                         $('#listeKategori').find('.list-group-item.active.kategoriOgesi').remove();
-                        UrlYukle('-1');
-                        MesajKutusu('İşlem Tamam', 'List was deleted successfuly');
+                        location.href = '/';
+
                     },
                     error: function (msg) {
                         HataMesaji("Unexpected Error !");

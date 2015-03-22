@@ -1,14 +1,29 @@
 ﻿@{
     
-if (!WebSecurity.IsAuthenticated)
-{
-Response.Redirect("~/Landing");
-}
-Layout = "~/Paylasilan/_Layout.cshtml"; 
+    if (!WebSecurity.IsAuthenticated)
+    {
+    Response.Redirect("~/Landing");
+    }
 
-var db=Database.Open("u2p");
+    Layout = "~/Paylasilan/_Layout.cshtml"; 
 
-var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId);
+    var kategoriID=Request.QueryString["list"];
+     IEnumerable<dynamic> queryURLs;
+     IEnumerable<dynamic> queryKategori;
+
+    var db=Database.Open("u2p");
+
+    if (string.IsNullOrEmpty(kategoriID))
+        {
+            queryURLs =db.Query("SELECT * FROM Url WHERE userID=@0 ORDER BY urlID ASC",WebSecurity.CurrentUserId);
+        }
+        else
+        {
+            queryURLs =db.Query("SELECT * FROM Url INNER JOIN UrlKategori ON Url.urlID=UrlKategori.urlID INNER JOIN Kategori ON UrlKategori.kategoriID=Kategori.kategoriID WHERE Kategori.kategoriID=@0 AND Url.userID=@1",kategoriID,WebSecurity.CurrentUserId);
+            queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kategoriID=@0 AND userID=@1",kategoriID,WebSecurity.CurrentUserId);
+        }
+
+    var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecurity.CurrentUserId);
 }
 
 <h1><span class="glyphicon glyphicon-random"></span> URL Management</h1>
@@ -16,7 +31,7 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
 <div class="row">
     <div class="col-md-9 column">
          <div class="panel panel-info">
-                <div class="panel-heading"> <h5 id="kategoriAdi"><span class="glyphicon glyphicon-link"></span> URLs</h5></div>
+                <div class="panel-heading"> <h5 id="kategoriAdi"><span class="glyphicon glyphicon-link"></span></h5></div>
         
         <div class="panel-body"> 
               <button class="btn btn-link" data-toggle="modal" data-target="#modalURLEkle"> <span class="glyphicon glyphicon-plus"></span> Add New URL</button>
@@ -24,6 +39,10 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
     <table class="table table-hover" id="lstUrl">
         <thead>
             <tr><td></td><td><strong>Description</strong></td><td><strong>URL</strong></td><td></td></tr>
+            @foreach (var item in queryURLs)
+            {
+                <tr><td><span class="glyphicon glyphicon-link"></span></td><td>@item.aciklama</td><td><a href="@Request.Url.GetLeftPart(UriPartial.Authority)/@item.kisaKod" title="@item.url">@Request.Url.GetLeftPart(UriPartial.Authority)/@item.kisaKod</a></td><td><a href="@Href("~/ChangeURLSettings")/@item.kisaKod" class="btn btn-success" title="Change Settings"><span class="glyphicon glyphicon-cog"></span></a> <a href="#" class="btn btn-danger lnkUrlSil" title="Delete URL" data-kisaKod=@item.kisaKod><span class="glyphicon glyphicon-trash"></span></a> <a href="@Href("~/Stats")/@item.kisaKod" class="btn btn-info" title="URL Stats"><span class="glyphicon glyphicon-stats"></span></a></td></tr>
+             }
             </thead>
         <tbody>
        
@@ -43,23 +62,15 @@ var queryKategoriler=db.Query("SELECT * FROM Kategori WHERE userID=@0",WebSecuri
      
          <div class="list-group" id="listeKategori">
             
-            <a href="#" class="list-group-item kategoriOgesi active" data-kategoriID="-1" data-kategoriAdi="URLs">All URLs
-                    <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM Url WHERE UserID=@0",WebSecurity.CurrentUserId)</span>
-                    
-             </a>
+            <a href="@Href("~/")" class="list-group-item kategoriOgesi active" data-kategoriID="-1">All URLs</a>
   
             @foreach (var item in queryKategoriler)
             {             
-                 <a href="#" class="list-group-item kategoriOgesi" data-kategoriID="@item.kategoriID" data-kategoriAdi="@item.kategoriAdi">@item.kategoriAdi
-                   <span class="badge">@db.QueryValue("SELECT COUNT(*) FROM URLKategori WHERE kategoriID=@0",item.kategoriID)</span>
-                     
-                </a>
-                
-                    
+                 <a href="@Href("~/")?list=@item.kategoriID" class="list-group-item kategoriOgesi" data-kategoriID="@item.kategoriID">@item.kategoriAdi</a>
+                  
             }
 
             
-          
 </div>
       
           </div>
