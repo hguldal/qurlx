@@ -26,9 +26,7 @@ $(function () {
 
     var grafik = new Highcharts.Chart(secenekler);
 
-    GrafikCiz();
-
-
+   
     $('#tarihAraligi').daterangepicker(
           {
               ranges: {
