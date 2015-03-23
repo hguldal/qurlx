@@ -21,7 +21,6 @@
        db.Close();
        Response.Redirect("~/Error/Invalid-Url");
     }
-
    
     var queryKullanici=db.QuerySingle("SELECT * FROM Profiles WHERE UserID=@0",WebSecurity.CurrentUserId);
     var queryErisimKodlari=db.Query("SELECT * FROM URLErisimKodlari WHERE urlID=@0",queryURL.urlID);
@@ -40,9 +39,7 @@
 }
 @section styles
 {
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-
-
+    link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 }
 <h1><span class="glyphicon glyphicon-cog"></span> Settings</h1>
 <hr>

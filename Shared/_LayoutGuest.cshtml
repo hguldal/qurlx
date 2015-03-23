@@ -18,21 +18,21 @@
     <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
      <link rel="stylesheet" href="@Href("~/scripts/jquery.growl/jquery.growl.css")">
-      <link rel="stylesheet" href="@Href("~/scripts/selectize/dist/css/selectize.bootstrap3.css")">
+      
     
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
 
- <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand page-scroll" href="#page-top">
-                    <i class="fa fa-play-circle"></i> ourlex [Beta]
+                    <i class="fa fa-play-circle"></i> ourlex
                 </a>
             </div>
 
@@ -56,10 +56,13 @@
             </div>
             <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
-    </nav>
+        
 
-  @RenderBody()
+    </nav> <!-- end of navbar-->
+
+    <!-- Content-->
+    @RenderBody()
+    <!-- End of Content-->
     
     <footer>
         <div class="container text-center">
@@ -67,19 +70,14 @@
         </div>
     </footer>
 
-       <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
-       <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-   
-    <!-- Plugin JavaScript -->
+         <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
+         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
          <script src="@Href("~/scripts/jquery.blockUI.js")"></script>
-       <script src="@Href("~/scripts/jquery.growl/jquery.growl.js")"></script>
-       <script src="@Href("~/scripts/selectize/dist/js/standalone/selectize.js")"></script>
-      <script src="@Href("~/scripts/autolinker/Autolinker.js")"></script>
-       <script src="@Href("~/scripts/u2pglobal.min.js")"></script>
-      <script src="@Href("~/scripts/jquery.timeago.js")"></script>
-    <script src="@Href("~/Shared/Custom/js/jquery.easing.min.js")"></script>
-     <script src="@Href("~/Shared/Custom/js/grayscale.js")"></script>
-    <script src="@Href("~/scripts/u2p/Landing/Default.min.js")"></script>
+         <script src="@Href("~/scripts/jquery.growl/jquery.growl.js")"></script>
+         <script src="@Href("~/scripts/u2pglobal.min.js")"></script>
+         <script src="@Href("~/Shared/Custom/js/jquery.easing.min.js")"></script>
+         <script src="@Href("~/Shared/Custom/js/grayscale.js")"></script>
+         <script src="@Href("~/scripts/u2p/Landing/Default.min.js")"></script>
 
 </body>
 
