@@ -217,7 +217,7 @@
 
                         <div class="form-group">
                         <select id="cmbBitisTarihiYil" class="form-control cmbBitisTarihi" data-ilkdeger="@queryURL.erisimBitisTarihi.Year">
-                        @for (var i=2015;i<=2045;i++)
+                        @for (var i=DateTime.Now.Year;i<=DateTime.Now.Year+30;i++)
                         {
                         <option value="@i">@i</option>
                         }
