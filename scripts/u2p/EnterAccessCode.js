@@ -11,7 +11,7 @@ $(document).ready(function () {
         }
         $.ajax({
             type: 'POST',
-            url: '/ajax/ErisimKoduKontrol',
+            url: '/Ajax/ErisimKoduKontrol',
             data: "kisaKod=" + kisaKod + "&erisimKodu=" + erisimKodu,
             success: function (msg) {
                 if (msg == "OK") {

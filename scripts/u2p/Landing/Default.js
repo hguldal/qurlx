@@ -5,7 +5,7 @@ $('#btnKisalt').click(function () {
         $.ajax({
             type: "POST",
             dataType: 'json',
-            url: '/ajax/UrlEklePublic' + '?nUrl=' + url,
+            url: '/Ajax/UrlEklePublic' + '?nUrl=' + url,
 
             success: function (msg) {
                 $('#txtUrl').val(window.location.host + '/' + msg.kisaKod);

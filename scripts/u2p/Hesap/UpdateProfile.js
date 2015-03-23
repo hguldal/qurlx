@@ -64,7 +64,7 @@
      else {
 
          $.ajax({
-             url: '/ajax/Account/UpdateProfile.cshtml',
+             url: '/Ajax/Account/UpdateProfile.cshtml',
              data: d,
              cache: false,
              contentType: false,

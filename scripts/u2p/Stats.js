@@ -87,21 +87,21 @@ $(function () {
         //Grafik seçenekleri
         if (grafikTuru == 'ulke') {
 
-            url = '/ajax/stats/UlkeyeGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
+            url = '/Ajax/stats/UlkeyeGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
             secenekler.title.text = 'Visitor by Country'
             secenekler.yAxis.title.text = 'Visitor';
             secenekler.chart.type = "column";
             secenekler.xAxis.categories.push('Countries');
         }
         else if (grafikTuru == 'gun') {
-            url = '/ajax/stats/GunlereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
+            url = '/Ajax/stats/GunlereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
             secenekler.series = [{ name: 'Visitor', data: []}];
             secenekler.title.text = 'Visitor by Day'
             secenekler.yAxis.title.text = 'Visitor';
             secenekler.chart.type = "line";
         }
         else if (grafikTuru == 'ay') {
-            url = '/ajax/stats/AylaraGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
+            url = '/Ajax/stats/AylaraGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
             secenekler.series = [{ name: 'Visitor', data: []}];
             secenekler.title.text = 'Visitor by Month'
             secenekler.yAxis.title.text = 'Visitor';
@@ -110,7 +110,7 @@ $(function () {
         }
 
         else if (grafikTuru == 'yil') {
-            url = '/ajax/stats/YillaraGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
+            url = '/Ajax/stats/YillaraGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
             secenekler.series = [{ name: 'Visitor', data: []}];
             secenekler.title.text = 'Visitor by Year'
             secenekler.yAxis.title.text = 'Visitor';
@@ -119,7 +119,7 @@ $(function () {
         }
 
         else if (grafikTuru == 'saat') {
-            url = '/ajax/stats/SaatlereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
+            url = '/Ajax/stats/SaatlereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
             secenekler.series = [{ name: 'Visitor', data: []}];
             secenekler.title.text = 'Visitor by Hour'
             secenekler.yAxis.title.text = 'Visitor';
@@ -128,7 +128,7 @@ $(function () {
         }
         else if (grafikTuru == 'dil') {
 
-            url = '/ajax/stats/DillereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
+            url = '/Ajax/stats/DillereGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
             secenekler.title.text = 'Visitor by Language'
             secenekler.yAxis.title.text = 'Visitor';
             secenekler.chart.type = "column";
@@ -137,7 +137,7 @@ $(function () {
 
         else if (grafikTuru == 'tarayici') {
 
-            url = '/ajax/stats/TarayicilaraGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
+            url = '/Ajax/stats/TarayicilaraGore?kisaKod=' + kisaKod + '&baYil=' + baYil + '&baAy=' + baAy + '&baGun=' + baGun + '&biYil=' + biYil + '&biAy=' + biAy + '&biGun=' + biGun + '&cihaz=' + cihaz;
             secenekler.title.text = 'Visitor by Browser'
             secenekler.yAxis.title.text = 'Visitor';
             secenekler.chart.type = "column";

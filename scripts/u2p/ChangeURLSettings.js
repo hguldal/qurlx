@@ -23,7 +23,7 @@ $(document).ready(function () {
                 var deger = data;
                 $.ajax({
                     type: 'POST',
-                    url: '/ajax/OzellikKaydet',
+                    url: '/Ajax/OzellikKaydet',
                     data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
                     success: function (msg) {
                         MesajKutusu("OK", "Settings were saved successfuly");
@@ -46,7 +46,7 @@ $(document).ready(function () {
                 console.log("pk=" + kisaKod + "&name=" + alan + '&value=' + deger);
                 $.ajax({
                     type: 'POST',
-                    url: '/ajax/OzellikKaydet',
+                    url: '/Ajax/OzellikKaydet',
                     data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
                     success: function (msg) {
                         MesajKutusu("OK", "Settings were saved successfuly");
@@ -71,7 +71,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/ajax/OzellikKaydet',
+            url: '/Ajax/OzellikKaydet',
             data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
             success: function (msg) {
                 MesajKutusu("OK", "Settings were saved successfuly");
@@ -93,7 +93,7 @@ $(document).ready(function () {
 
     name: 'kisaKod',
 
-    url: '/ajax/OzellikKaydet',
+    url: '/Ajax/OzellikKaydet',
 
     display: function (value) {
         $(this).text(value + '');
@@ -123,7 +123,7 @@ $(document).ready(function () {
 
     name: 'aciklama',
 
-    url: '/ajax/OzellikKaydet',
+    url: '/Ajax/OzellikKaydet',
 
     display: function (value) {
         $(this).text(value + '');
@@ -154,7 +154,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/ajax/OzellikKaydet',
+            url: '/Ajax/OzellikKaydet',
             data: "pk=" + kisaKod + "&name=" + alan + '&value=' + deger,
             success: function (msg) {
                 MesajKutusu("OK", "Settings were saved successfuly");
@@ -173,7 +173,7 @@ $(document).ready(function () {
         var kisaKod = $("#lblKisaKod").attr("data-kisaKod");
         $.ajax({
             type: 'POST',
-            url: '/ajax/ErisimKoduUret',
+            url: '/Ajax/ErisimKoduUret',
             data: "kisaKod=" + kisaKod,
             success: function (msg) {
                 $('#cmbErisimKodlari').prepend('<option value="' + msg + '" selected >' + msg + '</option>');
@@ -191,7 +191,7 @@ $(document).ready(function () {
         var erisimKodu = $('#cmbErisimKodlari').val();
         $.ajax({
             type: 'POST',
-            url: '/ajax/ErisimKoduSil',
+            url: '/Ajax/ErisimKoduSil',
             data: "kisaKod=" + kisaKod + "&erisimKodu=" + erisimKodu,
             success: function (msg) {
                 $("#cmbErisimKodlari option:selected").remove();
@@ -209,7 +209,7 @@ $(document).ready(function () {
         var ePosta = $("#txtEposta").val();
         $.ajax({
             type: 'POST',
-            url: '/ajax/ErisimKullaniciEkle',
+            url: '/Ajax/ErisimKullaniciEkle',
             data: "kisaKod=" + kisaKod + "&ePosta=" + ePosta,
             success: function (msg) {
                 if (msg == 'zatenyetkili') {
@@ -239,7 +239,7 @@ $(document).ready(function () {
         var ePosta = $("#cmbErisimIzinleri").val();
         $.ajax({
             type: 'POST',
-            url: '/ajax/ErisimKullaniciCikar',
+            url: '/Ajax/ErisimKullaniciCikar',
             data: "kisaKod=" + kisaKod + "&ePosta=" + ePosta,
             success: function (msg) {
                 $("#cmbErisimIzinleri option:selected").remove();
@@ -263,7 +263,7 @@ $(document).ready(function () {
         load: function (query, callback) {
             if (query.length < 2) return callback();
             $.ajax({
-                url: '/ajax/JsonEtiketListesi',
+                url: '/Ajax/JsonEtiketListesi',
                 type: 'GET',
                 dataType: 'json',
                 data: {
@@ -286,7 +286,7 @@ $(document).ready(function () {
             if (etiket.length < 2) { return false; }
             $.ajax({
                 type: 'POST',
-                url: '/ajax/EtiketEkle',
+                url: '/Ajax/EtiketEkle',
                 data: "kisaKod=" + kisaKod + "&etiket=" + etiket,
                 success: function (msg) {
                     MesajKutusu("OK", etiket + " was added");
@@ -305,7 +305,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/ajax/EtiketSil',
+                url: '/Ajax/EtiketSil',
                 data: "kisaKod=" + kisaKod + "&etiket=" + etiket,
                 success: function (msg) {
 

@@ -8,7 +8,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: "POST",
-                url: '/ajax/UrlSil?' + 'KisaKod=' + kisakod,
+                url: '/Ajax/UrlSil?' + 'KisaKod=' + kisakod,
                 dataType: 'json',
                 success: function (msg) {
 
@@ -40,7 +40,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/ajax/UrlEkle' + '?nUrl=' + url + '&kategoriID=' + kategoriID + '&aciklama=' + urlAciklama,
+            url: '/Ajax/UrlEkle' + '?nUrl=' + url + '&kategoriID=' + kategoriID + '&aciklama=' + urlAciklama,
             dataType: 'json',
             success: function (msg) {
                 $('#modalURLEkle').modal('hide');
@@ -70,7 +70,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             dataType: 'json',
-            url: '/ajax/KategoriEkle' + '?KategoriAdi=' + kategoriAdi,
+            url: '/Ajax/KategoriEkle' + '?KategoriAdi=' + kategoriAdi,
 
             success: function (kategori) {
                 location.href = '/' + kategori.kategoriID;
@@ -93,7 +93,7 @@ $(document).ready(function () {
                 $.ajax({
                     type: "POST",
                     dataType: 'json',
-                    url: '/ajax/KategoriSil' + '?kategoriID=' + kategoriID,
+                    url: '/Ajax/KategoriSil' + '?kategoriID=' + kategoriID,
 
                     success: function (msg) {
                         
