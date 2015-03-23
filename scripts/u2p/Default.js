@@ -36,7 +36,7 @@ $(document).ready(function () {
             HataMesaji('Enter URL');
             return false;
         }
-        var kategoriID = $('.list-group-item.active.kategoriOgesi').attr('data-kategoriID');
+        var kategoriID = $('#lstUrl').attr('data-kategoriID');
 
         $.ajax({
             type: "POST",
@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     $('.menuKategoriSil').click(function () {
 
-        var kategoriID = $('.list-group-item.active.kategoriOgesi').attr('data-kategoriID')
+        var kategoriID = $('#lstUrl').attr('data-kategoriID')
         if (kategoriID != '-1') {
 
             if (confirm('Are you sure ?')) {
@@ -96,7 +96,7 @@ $(document).ready(function () {
                     url: '/ajax/KategoriSil' + '?kategoriID=' + kategoriID,
 
                     success: function (msg) {
-                        $('#listeKategori').find('.list-group-item.active.kategoriOgesi').remove();
+                        
                         location.href = '/';
 
                     },
