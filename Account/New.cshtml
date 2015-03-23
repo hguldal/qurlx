@@ -6,9 +6,9 @@
 }
 
 <div>
-    <h2>Yeni Hesap</h2>
+    <h2>New Account</h2>
     <hr>
-<form class="form-horizontal" id="frmYeniUye" action="@Href("~/ajax/Hesap/Yeni.cshtml")" method="post">
+<form class="form-horizontal" id="frmYeniUye" action="@Href("~/ajax/Account/New.cshtml")" method="post">
     
     <div class="form-group">
 					 <label for="txtEposta" class="col-sm-3 control-label">E-Posta:</label><div class="col-sm-9"><input class="form-control"  id="txtEposta" name="txtEposta" type="email" /></div>
@@ -47,5 +47,5 @@
 {
     <script src="@Href("~/scripts/jquery.form.js")"></script>
     <script src="@Href("~/scripts/jquery.validate.js")"></script>
-    <script src="@Href("~/scripts/u2p/Hesap/Yeni.js")"></script>
+    <script src="@Href("~/scripts/u2p/Account/New.js")"></script>
 }

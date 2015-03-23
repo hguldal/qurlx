@@ -2,7 +2,7 @@
     Layout = Href("~/Paylasilan/_Layout.cshtml"); 
      if (!WebSecurity.IsAuthenticated)
     {
-        Response.Redirect("~/Hesap/Giris");
+        Response.Redirect("~/Account/Login");
     }
     var db=Database.Open("u2p");
     var queryUser=db.QuerySingle("select * from Profiles WHERE userID=@0",WebSecurity.CurrentUserId);
@@ -50,5 +50,5 @@
 {
     <script src="@Href("~/scripts/jquery.form.js")"></script>
     <script src="@Href("~/scripts/jquery.validate.js")"></script>
-    <script src="@Href("~/scripts/u2p/Hesap/ProfilGuncelle.js")"></script>
+    <script src="@Href("~/scripts/u2p/Account/UpdateProfile.js")"></script>
 }

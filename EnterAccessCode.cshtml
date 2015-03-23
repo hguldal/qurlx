@@ -4,7 +4,7 @@ var kisaKod=Request["shortcode"];
 
 if (!WebSecurity.IsAuthenticated)
 {
-    Response.Redirect("~/Hesap/Giris?returnURL=/EnterAccessCode?shortcode=" + kisaKod);
+    Response.Redirect("~/Account/Login?returnURL=/EnterAccessCode?shortcode=" + kisaKod);
 }
 
 Layout = "~/Paylasilan/_Layout.cshtml"; 

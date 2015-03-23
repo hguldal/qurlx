@@ -1,7 +1,7 @@
 ﻿@{
     if (!WebSecurity.IsAuthenticated)
     {
-        Response.Redirect("~/Hesap/Giris");
+        Response.Redirect("~/Account/Login");
     }
     Layout = "~/Paylasilan/_Layout.cshtml"; 
 

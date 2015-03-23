@@ -48,18 +48,18 @@
                          <button class="btn btn-link menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
              
      
-                             <div class="list-group" id="listeKategori">
+                             <div class="list-group">
             
-                        <a href="@Href("~/")" class="list-group-item kategoriOgesi" data-kategoriID="-1">All URLs</a>
+                                <a href="@Href("~/")" class="list-group-item" data-kategoriID="-1">All URLs</a>
   
-                        @foreach (var item in queryKategoriler)
-                        {             
-                          <a href="@Href("~/")?list=@item.kategoriID" class="list-group-item kategoriOgesi" data-kategoriID="@item.kategoriID">@item.kategoriAdi</a>
+                                    @foreach (var item in queryKategoriler)
+                                    {             
+                                      <a href="@Href("~/")?list=@item.kategoriID" class="list-group-item" data-kategoriID="@item.kategoriID">@item.kategoriAdi</a>
                   
-                        }
+                                    }
 
             
-            </div>
+                                </div>
       
                          </div><!--end of panel body-->
          </div><!--end of panel-->
