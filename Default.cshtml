@@ -2,21 +2,22 @@
     
     if (!WebSecurity.IsAuthenticated)
     {
-    Response.Redirect("~/Landing");
+        Response.Redirect("~/Landing");
     }
 
     Layout = "~/Paylasilan/_Layout.cshtml"; 
 
     var kategoriID=Request.QueryString["list"];
-     IEnumerable<dynamic> queryURLs;
+    IEnumerable<dynamic> queryURLs;
      
-     if (string.IsNullOrEmpty(kategoriID))
-        {
-            kategoriID="-1";
-        }
+    if (string.IsNullOrEmpty(kategoriID))
+       {
+         kategoriID="-1";
+       }
 
     var db=Database.Open("u2p");
     var queryKategori=db.QuerySingle("SELECT * FROM Kategori WHERE kategoriID=@0",kategoriID);
+    
     if (kategoriID=="-1")
         {
             queryURLs =db.Query("SELECT * FROM Url WHERE userID=@0 ORDER BY urlID ASC",WebSecurity.CurrentUserId);
@@ -35,29 +36,35 @@
 <div class="row">
     <div class="col-md-3 column">
         <div class="panel panel-info">
-                <div class="panel-heading"><h5><span class="glyphicon glyphicon-list-alt"></span> Lists</h5></div>
+                <div class="panel-heading">
+                    <h5>
+                        <span class="glyphicon glyphicon-list-alt"></span> Lists
+                    </h5>
+                
+                </div> <!--end of panel heading-->
     
-            <div class="panel-body">
-             <button class="btn btn-link" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
-             <button class="btn btn-link menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
+                <div class="panel-body">
+                         <button class="btn btn-link" data-toggle="modal" data-target="#modalKategoriEkle"> <span class="glyphicon glyphicon-plus"></span> Add New List</button>
+                         <button class="btn btn-link menuKategoriSil"> <span class="glyphicon glyphicon-trash"></span> Delete List</button>
              
      
-         <div class="list-group" id="listeKategori">
+                             <div class="list-group" id="listeKategori">
             
-            <a href="@Href("~/")" class="list-group-item kategoriOgesi" data-kategoriID="-1">All URLs</a>
+                        <a href="@Href("~/")" class="list-group-item kategoriOgesi" data-kategoriID="-1">All URLs</a>
   
-            @foreach (var item in queryKategoriler)
-            {             
-              <a href="@Href("~/")?list=@item.kategoriID" class="list-group-item kategoriOgesi" data-kategoriID="@item.kategoriID">@item.kategoriAdi</a>
+                        @foreach (var item in queryKategoriler)
+                        {             
+                          <a href="@Href("~/")?list=@item.kategoriID" class="list-group-item kategoriOgesi" data-kategoriID="@item.kategoriID">@item.kategoriAdi</a>
                   
-            }
+                        }
 
             
-</div>
+            </div>
       
-          </div>
-        </div>
-        </div>
+                         </div><!--end of panel body-->
+         </div><!--end of panel-->
+    </div> <!--end of left column-->
+
     <div class="col-md-9 column">
          <div class="panel panel-info">
                 <div class="panel-heading"> <h5><span class="glyphicon glyphicon-link"></span> URLs [@if (queryKategori==null){<text>All</text>} else {<text> @queryKategori.kategoriAdi</text>}]</h5> </div>
@@ -79,12 +86,10 @@
     </table>
             </div>
              </div>
-        </div>
-    
-    
-
-    
+        </div> <!--end of right column-->
 </div>
+
+<!--modal windows-->
 
 <div class="modal" id="modalURLEkle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
