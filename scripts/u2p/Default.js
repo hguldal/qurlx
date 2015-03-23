@@ -73,7 +73,7 @@ $(document).ready(function () {
             url: '/Ajax/KategoriEkle' + '?KategoriAdi=' + kategoriAdi,
 
             success: function (kategori) {
-                location.href = '/' + kategori.kategoriID;
+                location.href = '/?list=' + kategori.kategoriID;
                 
             },
             error: function (msg) {
