@@ -34,8 +34,8 @@
 
             if (!Request.IsLocal)
                 {
-                    z= Ziyaret.ZiyaretciBilgisiGetir(Request.UserHostAddress);
-                    db.Execute("INSERT INTO Ziyaret(urlID,userID,tarih,IP,country_code,country_name,region_code,region_name,city,zip_code,time_zone,latitude,longitude,isMobileDevice,isSecureConnection,browserName,language,mobileDeviceModel,mobileDeviceManufacturer) VALUES(@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15,@16,@17,@18)",queryURL.urlID,WebSecurity.CurrentUserId,DateTime.Now,Request.UserHostAddress,z.country_code,z.country_name,z.region_code,z.region_name,z.city,z.zip_code,z.time_zone,z.latitude,z.longitude,Request.Browser.IsMobileDevice.ToString(),Request.IsSecureConnection.ToString(),Request.Browser.Browser,Request.UserLanguages[0],Request.Browser.MobileDeviceModel,Request.Browser.MobileDeviceManufacturer);
+                   // z= Ziyaret.ZiyaretciBilgisiGetir(Request.UserHostAddress);
+                   // db.Execute("INSERT INTO Ziyaret(urlID,userID,tarih,IP,country_code,country_name,region_code,region_name,city,zip_code,time_zone,latitude,longitude,isMobileDevice,isSecureConnection,browserName,language,mobileDeviceModel,mobileDeviceManufacturer) VALUES(@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15,@16,@17,@18)",queryURL.urlID,WebSecurity.CurrentUserId,DateTime.Now,Request.UserHostAddress,z.country_code,z.country_name,z.region_code,z.region_name,z.city,z.zip_code,z.time_zone,z.latitude,z.longitude,Request.Browser.IsMobileDevice.ToString(),Request.IsSecureConnection.ToString(),Request.Browser.Browser,Request.UserLanguages[0],Request.Browser.MobileDeviceModel,Request.Browser.MobileDeviceManufacturer);
                 }
             
      }
@@ -52,8 +52,8 @@
 
            if (!Request.IsLocal)
                 {
-                    z= Ziyaret.ZiyaretciBilgisiGetir(Request.UserHostAddress);
-                    db.Execute("INSERT INTO Ziyaret(urlID,userID,tarih,IP,country_code,country_name,region_code,region_name,city,zip_code,time_zone,latitude,longitude,isMobileDevice,isSecureConnection,browserName,language,mobileDeviceModel,mobileDeviceManufacturer) VALUES(@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15,@16,@17,@18)",queryURL.urlID,WebSecurity.CurrentUserId,DateTime.Now,Request.UserHostAddress,z.country_code,z.country_name,z.region_code,z.region_name,z.city,z.zip_code,z.time_zone,z.latitude,z.longitude,Request.Browser.IsMobileDevice.ToString(),Request.IsSecureConnection.ToString(),Request.Browser.Browser,Request.UserLanguages[0],Request.Browser.MobileDeviceModel,Request.Browser.MobileDeviceManufacturer);
+                   // z= Ziyaret.ZiyaretciBilgisiGetir(Request.UserHostAddress);
+                   // db.Execute("INSERT INTO Ziyaret(urlID,userID,tarih,IP,country_code,country_name,region_code,region_name,city,zip_code,time_zone,latitude,longitude,isMobileDevice,isSecureConnection,browserName,language,mobileDeviceModel,mobileDeviceManufacturer) VALUES(@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15,@16,@17,@18)",queryURL.urlID,WebSecurity.CurrentUserId,DateTime.Now,Request.UserHostAddress,z.country_code,z.country_name,z.region_code,z.region_name,z.city,z.zip_code,z.time_zone,z.latitude,z.longitude,Request.Browser.IsMobileDevice.ToString(),Request.IsSecureConnection.ToString(),Request.Browser.Browser,Request.UserLanguages[0],Request.Browser.MobileDeviceModel,Request.Browser.MobileDeviceManufacturer);
                }
          }
          
