@@ -6,7 +6,7 @@
     }
 
     Layout = "~/Shared/_Layout.cshtml"; 
-
+    
     var kategoriID=Request.QueryString["list"];
     IEnumerable<dynamic> queryURLs;
      
@@ -33,6 +33,7 @@
 
 <h1><span class="glyphicon glyphicon-random"></span> URL Management</h1>
 <hr>
+
 <div class="row">
     <div class="col-md-3 column">
         <div class="panel panel-info">
